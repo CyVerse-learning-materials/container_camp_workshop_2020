@@ -1,11 +1,8 @@
 **Agenda**
 ==========
 
-Below are the schedule and classroom materials for Container Camp at The University of Arizona, which will run from March 10th to 13th, 2019. Container Camp will be held in U Arizona's Drachman Hall, Rm A116.  You can find a map of that location `here <https://goo.gl/7Yv4PA>`_. For nearest parking garage, it is the Highland Street Garage, where daily parking is $8/day; it's about a 2 block walk (east) to Drachman from the garage.
+Below are the schedule and classroom materials for Container Camp at The University of Arizona, which will run from March 10th to 13th, 2020. 
 
-This workshop runs under a `Code of Conduct <../getting_started/main.html>`_. Please respect it and be excellent to each other!
-
-Twitter hash tag: #cc2020
 
 .. list-table::
     :header-rows: 1
@@ -54,6 +51,13 @@ Twitter hash tag: #cc2020
       - 5:00-5:30
       - Instructor Debrief
       - 
+.. list-table::
+    :header-rows: 1
+
+    * - Day
+      - Time
+      - Topic/Activity
+      - Notes/Links
     * - 03/11/20 (Wednesday)
       - 8:00-8:30
       - Instructor Briefing
@@ -94,6 +98,14 @@ Twitter hash tag: #cc2020
       - 5:00-6:00
       - Debriefing with instructors
       - 
+      
+.. list-table::
+    :header-rows: 1
+
+    * - Day
+      - Time
+      - Topic/Activity
+      - Notes/Links
     * - 03/12/20 (Thursday)
       - 8:30-8:45
       - Review Day 2 
@@ -130,6 +142,14 @@ Twitter hash tag: #cc2020
       - 5:00-6:00
       - Debriefing with instructors
       - 
+
+.. list-table::
+    :header-rows: 1
+
+    * - Day
+      - Time
+      - Topic/Activity
+      - Notes/Links
     * - 03/13/20 (Friday)
       - 8:30-8:45
       - Review Day 3
