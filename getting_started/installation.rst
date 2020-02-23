@@ -24,8 +24,8 @@ Please complete the minimum Setup Instructions to prepare for the Container Camp
       - Register for your Dockerhub account at `https://hub.docker.com/ <https://hub.docker.com/>`_.
     * - Text Editor
       - Please ensure that you have a Text editor of your choice. Any decent text editor would be sufficient and
-        recommended ones include Sublime2 and Atom
-      - Register for Sublime at `https://www.sublimetext.com/ <https://www.sublimetext.com/>`_. Register for Atom at `https://atom.io/ <https://atom.io/>`_.
+        recommended ones include Atom, Sublime, & VSCode
+      - Download Sublime at `https://www.sublimetext.com/ <https://www.sublimetext.com/>`_. Download Atom at `https://atom.io/ <https://atom.io/>`_. Download VSCode at `https://code.visualstudio.com/ <https://code.visualstudio.com/>`_
     * - Slack for networking
       - We will be using Slack extensively for communication and networking purposes
       - Register for Slack at `https://slack.com/ <https://slack.com/>`_.
@@ -55,7 +55,7 @@ Listed below are some extra downloads that are not required for the workshop, bu
         configuration and installation at the workshop.
       - - `Download Cyberduck <https://cyberduck.io/>`_
         - `Download CyVerse Cyberduck connection profile <https://wiki.cyverse.org/wiki/download/attachments/18188197/iPlant%20Data%20Store.cyberduckprofile?version=1&modificationDate=1436557522000&api=v2>`_
-    * - iCommands
-      - iCommands are third-party software for command-line connection to the
+    * - iRODS ``iCommands``
+      - iCommands are command-line software to connect to the
         CyVerse Data Store.
       - Download and installation instructions available at `CyVerse Learning Center <https://cyverse-data-store-guide.readthedocs-hosted.com/en/latest/step2.html>`__
