@@ -39,4 +39,3 @@ Couldn't find what you were looking for?
 
 .. |CyVerse logo| image:: ../img/cyverse_cmyk.png
   :width: 500
-  :height: 100
