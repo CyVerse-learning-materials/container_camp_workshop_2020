@@ -15,10 +15,11 @@ Expected outcomes:
 .. toctree::
    :maxdepth: 1
    :caption: Getting Started
-
+  
    getting_started/main
    getting_started/code_conduct
    getting_started/installation
+   getting_started/location
    getting_started/agenda
    getting_started/about_cyverse
 
