@@ -47,7 +47,7 @@ Listed below are some extra downloads that are not required for the workshop, bu
         IT administrators, and anybody is looking to manage system remotely
       - - `Download PuTTY <https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html>`_
         - `Download mobaXterm <https://mobaxterm.mobatek.net>`_
-        - `Update Windows 10 to use Linux Bash <https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/>`_ 
+        - Update Windows 10 & install `Windows Subsystem for Linux v2 (WSL2) <https://docs.microsoft.com/en-us/windows/wsl/wsl2-install>`_ 
     * - Cyberduck
       - Cyberduck is a third-party tool for uploading/downloading data to CyVerse Data Store.
         Currently, this tool is available for Windows/MacOS only. You will need
