@@ -1,6 +1,6 @@
 .. include:: ./cyverse_rst_defined_substitutions.txt
 
-|CyVerse_logo2|
+|CyVerse_logo2|_
 
 |Home_Icon|_
 `Learning Center Home <http://learning.cyverse.org/>`_
