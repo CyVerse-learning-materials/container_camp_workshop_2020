@@ -87,3 +87,12 @@ Expected outcomes:
 
 .. |cc-boat| image:: ./img/cc-boat.png
   :width: 800
+
+.. |CyVerse_logo2| image:: ./img/cyverse_cmyk.png
+    :width: 500
+    :height: 100
+.. _CyVerse_logo2: http://learning.cyverse.org/
+
+.. |Home_Icon| image:: ./img/homeicon.png
+    :width: 25
+    :height: 25
