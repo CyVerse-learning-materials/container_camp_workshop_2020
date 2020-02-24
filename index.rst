@@ -90,7 +90,7 @@ Expected outcomes:
 
 .. |CyVerse_logo2| image:: ./img/cyverse_cmyk.png
     :width: 500
-    :height: 100
+
 .. _CyVerse_logo2: http://learning.cyverse.org/
 
 .. |Home_Icon| image:: ./img/homeicon.png
