@@ -1,4 +1,4 @@
-.. include:: ./cyverse_rst_defined_substitutions.txt
+.. include:: ../cyverse_rst_defined_substitutions.txt
 
 |CyVerse_logo2|_
 
@@ -42,5 +42,6 @@ Couldn't find what you were looking for?
 
 - Post an issue on the documentation `issue tracker <https://github.com/CyVerse-learning-materials/container_camp_workshop_2019/issues>`_ on GitHub
 
-.. |CyVerse logo| image:: ../img/cyverse_cmyk.png
-  :width: 500
+.. |CyVerse_logo2| image:: ./img/cyverse_learning.png
+    :width: 500
+.. _CyVerse_logo2: http://learning.cyverse.org/
