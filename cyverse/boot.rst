@@ -84,9 +84,9 @@ Before deleting an instance make sure you backup your data, once the instance is
 
   It is advisable to delete the machine if you are not planning to use it in future to save valuable resources. However if you want to use it in future, you can suspend it.
 
-.. |CyVerse logo| image:: ../img/cyverse_rgb.png
+.. |CyVerse_logo2| image:: ../img/cyverse_learning.png
     :width: 500
-.. _CyVerse logo: http://learning.cyverse.org/
+.. _CyVerse_logo2: http://learning.cyverse.org/
 
 .. |atmo-1.1| image:: ../img/atmo-1.1.png
   :width: 700
