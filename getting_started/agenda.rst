@@ -17,11 +17,11 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * - Day
       - Time
       - Topic/Activity
-      - Notes/Links
+      - Objectives
     * - 03/10/20 (Tuesday)
       - 11:00-12:00
       - Laptop check and pre-installation checklist
-      - final checks to make sure you're ready
+      - Final check to make sure you're ready
     * - 
       - 11:30-12:00
       - Instructor briefing
@@ -29,7 +29,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * - 
       - 12:00-12:15
       - Welcome & Logistics (Tyson Swetnam)
-      - Code of Conduct & Expectations
+      - Cover Expectations for CC
     * - 
       - 12:15-1:00
       - General overview of container technology landscape (Nirav Merchant)
@@ -37,24 +37,25 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * - 
       - 1:00-2:10
       - What is a container? (Tyson Swetnam)
-      - Basics of what containers are & why we might use them
+      - Basics & why you might use a container image for research
     * - 
       - 2:10-2:30
       - Coffee & Snack break
       - time to talk and network
     * - 
       - 2:30-3:00
-      - Finding the right container (Tyson Swetnam)
-      - searching for containers on the internet
+      - Searching Image Registries (Amanda Cooksey)
+      - Finding the right image, downloading (pulling)
     * - 
       - 3:00-4:00
-      - Running a container locally and on cloud (Tyson Swetnam)   
-      - `Introduction to Docker <../docker/dockerintro.html>`_
+      - `Running a container <../docker/dockerintro.html>`_ (Tyson Swetnam)   
+      - Start a container, add a volume, opening ports, monitor, clean up 
     * - 
       - 4:00-5:00
-      - Building and modifying your own containers (Tyson Swetnam) 
-      - `Advanced Docker <../docker/dockeradvanced.html>`_ 
+      - `Modifying a image recipe <../docker/dockeradvanced.html>`_: (Tyson Swetnam) 
+      - Customizing images to fit your specific use
     * -
+      - `Advanced Docker
       - 5:00-5:30
       - Instructor Debrief
       - 
@@ -76,10 +77,10 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * - 
       - 8:45-9:45
       - Case Study: Pegasus (Mats Rynge)
-      - how containers are used at scale
+      - Containers used at scale
     * - 
       - 9:45-10:10 
-      - Bring your containers to CyVerse (TBA)
+      - Bringing your container image to CyVerse (Amanda Cooksey)
       - Tool integration in the DE (interactive, executable, & OpenScienceGrid)
     * - 
       - 10:10-10:30
@@ -92,7 +93,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * -
       - 11:00-12:00
       - Continuous Integration with GitHub (TBA)
-      - 
+      - Building your images with CI/CD for automation and scaling
     * -
       - 12:00-1:00
       - Lunch Break (on your own)
@@ -119,16 +120,16 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - time for questions, comments, suggestions 
     * - 
       - 8:45-10:10
-      - Introduction to Singularity (TBA)
-      - 
+      - Introduction to Singularity (Tyson Swetnam)
+      - Using Docker on HPC 
     * -
       - 10:10-10:30
       - Coffee and snacks with networking
       - Served in A127-29 across the hall (pls no food/bev in A116)
     * -
       - 10:30-12:00
-      - Integration of Singularity with Docker
-      - 
+      - Integration of Singularity with Docker (John Fonner)
+      - Using Docker & Singularity on remote systems
     * -
       - 12:00-1:00
       - Lunch Break (on your own)
@@ -136,7 +137,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * - 
       - 1:00-3:10
       - Project Time
-      - BYOD & BYOA
+      - Bring Your Own Data (BYOD) & Bring your Own Analyses (BYOA)
     * - 
       - 3:10-3:30
       - Coffee & Snack break
