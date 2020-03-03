@@ -39,9 +39,8 @@ Please cite CyVerse appropriately when you make use of our resources,
 `CyVerse citation
 policy <http://www.cyverse.org/acknowledge-and-cite-cyverse>`__
 
-.. |CyVerse_logo2| image:: ./img/cyverse_cmyk.png
+.. |CyVerse_logo2| image:: ../img/cyverse_learning.png
     :width: 500
-    :height: 100
 .. _CyVerse_logo2: http://learning.cyverse.org/
 
 .. |Home_Icon| image:: ./img/homeicon.png
