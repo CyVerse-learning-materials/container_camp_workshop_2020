@@ -42,6 +42,6 @@ Couldn't find what you were looking for?
 
 - Post an issue on the documentation `issue tracker <https://github.com/CyVerse-learning-materials/container_camp_workshop_2019/issues>`_ on GitHub
 
-.. |CyVerse_logo2| image:: ./img/cyverse_learning.png
+.. |CyVerse_logo2| image:: ../img/cyverse_learning.png
     :width: 500
 .. _CyVerse_logo2: http://learning.cyverse.org/
