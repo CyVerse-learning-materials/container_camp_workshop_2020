@@ -44,3 +44,7 @@ CatTran Route Map: https://parking.arizona.edu/cattran/cat-tran-routes/
 .. |Github Repo Link|  raw:: html
 
    <a href="https://github.com/CyVerse-learning-materials/foss-2020/tree/master/CyVerse/getting_started/agenda.rst" target="blank">Github Repo Link</a>
+
+.. |CyVerse_logo2| image:: ../img/cyverse_learning.png
+    :width: 500
+.. _CyVerse_logo2: http://learning.cyverse.org/
