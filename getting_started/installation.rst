@@ -66,3 +66,7 @@ Listed below are some extra downloads that are not required for the workshop, bu
       - iCommands are command-line software to connect to the
         CyVerse Data Store.
       - Download and installation instructions available at `CyVerse Learning Center <https://cyverse-data-store-guide.readthedocs-hosted.com/en/latest/step2.html>`__
+
+.. |CyVerse_logo2| image:: ../img/cyverse_learning.png
+    :width: 500
+.. _CyVerse_logo2: http://learning.cyverse.org/
