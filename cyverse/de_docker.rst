@@ -1,4 +1,4 @@
-|CyVerse logo|_
+|CyVerse_logo2|_
 
 **Deploying apps in CyVerse Discovery Environment**
 ---------------------------------------------------
@@ -167,9 +167,9 @@ Congrats!!! It works. The image classifier correctly predicts that the image is 
 - If your app works the way you expect it to you can share your app or make the app public
 - If your app doesn't work, then you may need to make changes to the app UI or you need to make changes to your Docker image. If you make changes to the Docker image, then you don't need to create a new app UI again as the Docker image updates will be propagated automatically.
 
-.. |CyVerse logo| image:: ../img/cyverse_rgb.png
+.. |CyVerse_logo2| image:: ../img/cyverse_learning.png
     :width: 500
-.. _CyVerse logo: http://learning.cyverse.org/
+.. _CyVerse_logo2: http://learning.cyverse.org/
 
 .. |f1000| image:: ../img/f1000.png
   :width: 700
