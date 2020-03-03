@@ -27,3 +27,7 @@ Workshop staff will be happy to help participants contact local law enforcement,
 We expect participants to follow these rules at conference and workshop venues and conference-related social events.
 
 See http://www.ashedryden.com/blog/codes-of-conduct-101-faq for more information on codes of conduct.
+
+.. |CyVerse_logo2| image:: ../img/cyverse_learning.png
+    :width: 500
+.. _CyVerse_logo2: http://learning.cyverse.org/
