@@ -55,10 +55,10 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - `Modifying a image recipe <../docker/dockeradvanced.html>`_: (Tyson Swetnam) 
       - Customizing images to fit your specific use
     * -
-      - `Advanced Docker
       - 5:00-5:30
-      - Instructor Debrief
-      - 
+      - Debriefing with instructors
+      -
+      
 .. list-table::
     :header-rows: 1
 
@@ -103,7 +103,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - Breakout sessions 
       - `Breakout sessions <../topics/breakout_session.html>`_
     * - 
-      - 5:00-6:00
+      - 5:00-5:30
       - Debriefing with instructors
       - 
       
@@ -147,7 +147,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - Project Time
       - BYOD & BYOA
     * - 
-      - 5:00-6:00
+      - 5:00-5:30
       - Debriefing with instructors
       - 
 
