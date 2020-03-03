@@ -190,3 +190,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - 12:00-1:00
       - Instructor Post Mortem
       - 
+
+.. |CyVerse_logo2| image:: ../img/cyverse_learning.png
+    :width: 500
+.. _CyVerse_logo2: http://learning.cyverse.org/
