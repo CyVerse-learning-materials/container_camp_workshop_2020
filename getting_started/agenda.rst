@@ -40,7 +40,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - Basics & why you might use a container image for research
     * - 
       - 2:10-2:30
-      - Coffee & Snack break
+      - Break
       - time to talk and network
     * - 
       - 2:30-3:00
@@ -84,7 +84,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - Tool integration in the DE (interactive, executable, & OpenScienceGrid)
     * - 
       - 10:10-10:30
-      - Coffee & Snack break
+      - Break
       - time to talk and network
     * -
       - 10:30-11:00
@@ -125,7 +125,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * -
       - 10:10-10:30
       - Coffee and snacks with networking
-      - Served in A127-29 across the hall (pls no food/bev in A116)
+      - Served in A127-29 across the hall (pls: NO food/bev in A116)
     * -
       - 10:30-12:00
       - Integration of Singularity with Docker (John Fonner)
@@ -140,7 +140,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - Bring Your Own Data (BYOD) & Bring your Own Analyses (BYOA)
     * - 
       - 3:10-3:30
-      - Coffee & Snack break
+      - Break
       - time to talk and network
     * - 
       - 3:30-5:0
@@ -172,7 +172,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - 
     * -
       - 10:10-10:30
-      - Coffee & Snack break
+      - Break
       - time to talk and network
     * -
       - 10:30-11:30
