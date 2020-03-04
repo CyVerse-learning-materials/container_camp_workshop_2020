@@ -8,7 +8,7 @@
 **Pre-Workshop Setup**
 ======================
 
-Please complete the minimum Setup Instructions to prepare for the Container Camp workshop at CyVerse, The University of Arizona, which will run from March 10-13, 2020.
+Please complete the minimum Setup Instructions to prepare for Container Camp at CyVerse, The University of Arizona, which will run from March 10-13, 2020.
 
 .. list-table::
     :header-rows: 1
