@@ -8,7 +8,7 @@
 **Location**
 ~~~~~~
 
-CyVerse Container Camp will be held in the `Roy P. Drachman Hall <https://goo.gl/maps/wu3rsFdftx46wp2R9>`_, located at 1295 N Martin Ave, Tucson, AZ 85719
+CyVerse Container Camp will be held in Room A116 of the `Roy P. Drachman Hall <https://goo.gl/maps/wu3rsFdftx46wp2R9>`_, located at 1295 N Martin Ave, Tucson, AZ 85719
 
 .. raw:: html
 
