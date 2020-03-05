@@ -11,9 +11,7 @@ There are no specific skills needed for this tutorial beyond a basic comfort wit
 2. Docker Installation
 ======================
 
-Getting all the tooling setup on your computer can be a daunting task, but not with Docker. Getting Docker up and running on your favorite OS (Mac/Windows/Linux) is very easy.
-
-The getting started guide on Docker has detailed instructions for setting up Docker on `Mac <https://docs.docker.com/docker-for-mac/install/>`_/`Windows <https://docs.docker.com/docker-for-windows/install/>`_/`Linux <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_.
+Getting all the tooling setup on your computer can be a daunting task, but not with Docker. Getting Docker up and running on your favorite OS (Mac/Windows/Linux) takes some time. Here are detailed instructions for setting up Docker on `Mac <https://docs.docker.com/docker-for-mac/install/>`_/`Windows <https://docs.docker.com/docker-for-windows/install/>`_/`Linux <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_.
 
 .. Note:: 
 
@@ -21,25 +19,7 @@ The getting started guide on Docker has detailed instructions for setting up Doc
 	
 	If you're using an older version of Windows or MacOS you may need to use `Docker Machine <https://docs.docker.com/machine/overview/>`_ instead. 
 	
-	All commands work in either Bash or Powershell on Windows.
-
-.. Note::
-
-
-	Depending on how you've installed Docker on your system, you might see a ``permission denied`` error after running the above command. If you're on Linux, you may need to prefix your Docker commands with sudo. Alternatively to run docker command without sudo, you need to add your user (who has root privileges) to docker group. 
-	For this run: 
-
-	Create the docker group::
-
-		$ sudo groupadd docker
-	
-	Add your user to the docker group::
-
-		$ sudo usermod -aG docker $USER
-
-	Log out and log back in so that your group membership is re-evaluated
-	
-	
+	All Docker commands work in Bash or Powershell on Windows.
 	
 2.1 Testing Docker installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,6 +55,25 @@ When run without ``--version`` you should see a whole bunch of lines showing the
 	    to your terminal.
 	.......
 
+.. Note::
+
+	Depending on how you've installed Docker on your system, you may see a ``permission denied`` error after running the ``$ docker run helo-world`` command. If you're on Linux, you may need to prefix your Docker commands with sudo. Alternatively to run docker command without ``sudo``, you need to add your user (who has root privileges) to docker group. 
+	For this run: 
+
+	Create the docker group::
+	
+	.. code-block:: bash
+
+		$ sudo groupadd docker
+	
+	Add your user to the docker group::
+	
+	.. code-block:: bash
+
+		$ sudo usermod -aG docker $USER
+
+	Log out and log back in so that your group membership is re-evaluated
+		
 3. Running Docker containers from prebuilt images
 =================================================
 
