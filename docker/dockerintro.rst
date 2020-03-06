@@ -29,7 +29,7 @@ Once you are done installing Docker, test your Docker installation by running th
 .. code-block:: bash
 
 	$ docker --version
-	Docker version 18.09.3, build 774a1f4
+	Docker version 19.03.6, build 369ce74a3c
 
 When run without ``--version`` you should see a whole bunch of lines showing the different options available with ``docker``. Alternatively you can test your installation by running the following:
 
@@ -58,17 +58,16 @@ When run without ``--version`` you should see a whole bunch of lines showing the
 .. Note::
 
 	Depending on how you've installed Docker on your system, you may see a ``permission denied`` error after running the ``$ docker run helo-world`` command. If you're on Linux, you may need to prefix your Docker commands with sudo. Alternatively to run docker command without ``sudo``, you need to add your user (who has root privileges) to docker group. 
-	For this run: 
 
 	Create the docker group::
 	
-	.. code-block:: bash
-
+	.. code-block:: 
+	
 		$ sudo groupadd docker
 	
 	Add your user to the docker group::
 	
-	.. code-block:: bash
+	.. code-block:: 
 
 		$ sudo usermod -aG docker $USER
 
