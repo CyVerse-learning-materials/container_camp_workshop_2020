@@ -272,8 +272,8 @@ We want to create a Docker image with this app. As mentioned above, all user ima
 Create a file called Dockerfile in the ``simple-script`` directory, and add content to it as described below. 
 
 
-4.2 Deploying a Jupyter Notebook
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.2 Deploying a JupyterLab or RStudio-Server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this section, let's build a Docker image which can run a Jupyter Notebook
 
@@ -294,8 +294,8 @@ In this section, let's build a Docker image which can run a Jupyter Notebook
 	  pyspark-notebook -> all-spark-notebook;
 	}
 
-4.2.1 Suitable Docker images for a base
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+4.2.1 Suitable Docker images 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Search for images on Docker Hub which contain the string 'jupyter'
 
@@ -355,42 +355,80 @@ Since we want to use a Jupyter notebook to call our function, we will build an i
 	
 	https://jupyter-docker-stacks.readthedocs.io/en/latest/
 
-
 Create a file called Dockerfile in the ``mynotebook`` directory, and add content to it as described below. 
 
 .. code-block:: bash
 
-	# our base image
-	FROM jupyter/minimal-notebook
+	# base image
+	FROM jupyter/scipy-notebook:latest
+	
+	# reset user to root for installing additional packages
+	USER root
 
-	# copy files required for the model to work
-	COPY model.py /home/jovyan/work/
-
-	# tell the port number the container should expose
+	# Install a few dependencies for iCommands, text editing, and monitoring instances
+	RUN apt-get update && apt-get install -y \
+	    apt-transport-https \
+	    gcc \
+	    gnupg \
+	    htop \
+	    less \
+	    libfuse2 \
+	    libpq-dev \
+	    libssl1.0 \
+	    lsb \
+	    nano \
+	    nodejs \
+	    python-requests \
+	    software-properties-common \
+	    vim
+	    
+	# Install iCommands
+	RUN wget https://files.renci.org/pub/irods/releases/4.1.12/ubuntu14/irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
+    	dpkg -i irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
+    	rm irods-icommands-4.1.12-ubuntu14-x86_64.deb
+    
+	# reset container user to jovyan
+	USER jovyan
+	
+	# set the work directory
+	WORKDIR /home/jovyan
+	
+	# expose the public port we want to run on
 	EXPOSE 8888
 
+	# copy a file into the container
+	COPY entry.sh /bin
+	RUN mkdir -p /home/jovyan/.irods
 
-Now let's see what each of those lines mean..
+	ENTRYPOINT ["bash", "/bin/entry.sh"]
 
-1.2.1 We'll start by specifying our base image, using the FROM keyword:
+.. Note::
+
+   We use a code line escape character ``\`` to allow single line scripts to be written on multiple lines in the Dockerfile.
+   
+   We also use the double characters ``&&`` which essentially mean "if true, then do this" while executing the code. The ``&&`` can come at the beginning of a line or the end when used with ``\``
+
+Now let's talk about what each of those lines in the Dockerfile mean.
+
+4.2.2.1 We'll start by specifying our base image, using the FROM keyword:
 
 .. code-block:: bash
 
-	FROM jupyter/minimal-notebook
+	FROM jupyter/scipy-notebook:latest
 
-1.2.2. Copy the file you have created earlier into our image by using ``COPY`` command.
+4.2.2.2. Copy the file you have created earlier into our image by using ``COPY`` command.
 
 .. code-block:: bash
 
-	COPY model.py /home/jovyan/work/
+	COPY entry.sh /bin
 
-1.2.3. Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
+4.2.2.3. Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
 
 .. code-block:: bash
 
 	EXPOSE 8888
 
-1.2.4. What about ``CMD``?
+4.2.2.4. What about ``CMD``?
 
 Notice that unlike our previous Dockerfile this one does not end with a ``CMD`` command. This is on purpose.
 
@@ -398,10 +436,20 @@ Remember: The primary purpose of ``CMD`` is to tell the container which command 
 
 Can you guess what will happen if we don't specify our own 'entrypoint' using ``CMD``?
 
+4.2.2.5. Setting a new entrypoint 
+
+When this container is run, it will use a different default ``ENTRYPOINT`` than the original container
+
+.. code-block:: bash
+
+	ENTRYPOINT ["bash", "/bin/entry.sh"]
+	
+This entrypoint runs the shell script ``entry.sh``	
 
 .. _Build the image:
 
-2. Build the image
+4.2.3. Build the image
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. Note::
 
@@ -415,13 +463,13 @@ For example this is how I assign my dockerhub username
 
 .. code-block:: bash
 
-	YOUR_DOCKERHUB_USERNAME=jpistorius
+	YOUR_DOCKERHUB_USERNAME=tswetnam
 
 Now build the image using the following command:
 
 .. code-block:: bash
 
-	$ docker build -t $YOUR_DOCKERHUB_USERNAME/mynotebook .
+	$ docker build -t $YOUR_DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse .
 	Sending build context to Docker daemon  3.072kB
 	Step 1/3 : FROM jupyter/minimal-notebook
 	 ---> 36c8dd0e1d8f
@@ -432,9 +480,9 @@ Now build the image using the following command:
 	Removing intermediate container 519dcabe4eb3
 	 ---> 7983fe164dc6
 	Successfully built 7983fe164dc6
-	Successfully tagged jpistorius/mynotebook:latest
+	Successfully tagged tswetnam/jupyterlab-scipy:cyverse
 
-If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$YOUR_DOCKERHUB_USERNAME/mynotebook`` shows.
+If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$YOUR_DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse`` shows.
 
 .. _Run your image:
 
@@ -444,7 +492,7 @@ When Docker can successfully build your Dockerfile, test it by starting a new co
 
 .. code-block:: bash
 
-	$ docker run -p 8888:8888 $YOUR_DOCKERHUB_USERNAME/mynotebook
+	$ docker run -p 8888:8888 $YOUR_DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
 
 You should see something like this:
 
