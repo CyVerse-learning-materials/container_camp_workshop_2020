@@ -3,63 +3,253 @@
 
 Now that we are *relatively* comfortable with Docker, lets look at some advanced Docker topics, such as: 
 
-- Registry
-- Porting a Docker image to a Registry & Repository (public and private) 
-- Managing data within containers 
-- Deploying containers on cloud services
+- Modifying a Dockerfile and creating a new container
+- Push a Docker image to the Docker Hub Registry 
 
-1. Docker Registries
-====================
-
-To demonstrate the portability of what we just created, let’s upload our built Docker image to a Docker Registry and then run it somewhere else (i.e. `CyVerse Atmosphere <https://atmo.cyverse.org>`_). 
-
-In this exercise, you'll learn how to push built containers to registries, pull those containers from registries, and run those containers on remote hosts (virtual machines). 
-
-This will benefit you when you want to deploy new containers to production environments where testing is not possible.
-
-.. important::
-
-	So what *EXACTLY* is a **Registry**?
-
-	A registry is a collection of Repositories, and a Repository is a collection of Images. A Docker Registry is sort of like a GitHub Repository, except the code is already compiled, in this case, into a container. You must have an account on a registry. You can create many repositories. The Docker CLI uses Docker’s public registry by default. You can even set up your own private registry using Docker Trusted Registry
-
-There are several things you can do with Docker registries:
-
-- Push images 
-- Find images
-- Pull images
-- Share images
-
-1.1 Popular Registries
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Some examples of public/private registries to consider for your research needs:
-
-- `Docker Cloud <https://cloud.docker.com/>`_
-- `Docker Hub <https://hub.docker.com/>`_ 
-- `Docker Trusted Registry <https://docs.docker.com/ee/dtr/>`_
-- `Amazon Elastic Container Registry <https://aws.amazon.com/ecr/>`_
-- `Google Container Registry <https://aws.amazon.com/ecr/>`_
-- `Azure Container Registry <https://azure.microsoft.com/en-us/services/container-registry/>`_
-- `NVIDIA GPU Cloud <https://ngc.nvidia.com/catalog/containers>`_
-- `Private Docker Registry <https://private-docker-registry.com/>`_ - not official Docker
-- `Gitlab Container Registry <https://docs.gitlab.com/ce/administration/container_registry.html>`_
-- `CoreOS Quay <https://quay.io/>`_
-- `TreeScale <https://treescale.com/>`_
-- `Canister <https://www.canister.io/>`_
-
-1.1.1 Log into a Registry with your Docker ID
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Now that you've created and tested your image, you can push it to Docker cloud or Docker hub.
+1.0 The Dockerfile
+^^^^^^^^^^^^^^^^^^
 
 .. Note::
 
-	If you don’t have an account, sign up for one at `Docker Cloud <https://cloud.docker.com/>`_ or `Docker Hub <https://hub.docker.com/>`_. Make note of your username. There are several advantages of registering to DockerHub which we will see later on in the session
+	This is one of the official Docker images provided by the Jupyter project for you to build your own data science notebooks on:  
+	
+	https://jupyter-docker-stacks.readthedocs.io/en/latest/
 
-First, you have to login to your Docker Hub account. 
+Create a file called Dockerfile, and add content to it as described below, e.g. ``nano Dockerfile``
 
-If you want to authenticate to a different Registry, type the name of the registry after ``login``:
+.. Important::
+
+	``Dockerfile`` needs to be capitalized.
+
+.. code-block:: bash
+
+	# base image
+	FROM jupyter/scipy-notebook:latest
+	
+	# reset user to root for installing additional packages
+	USER root
+
+	# Install a few dependencies for iCommands, text editing, and monitoring instances
+	RUN apt-get update && apt-get install -y \
+	    apt-transport-https \
+	    gcc \
+	    gnupg \
+	    htop \
+	    less \
+	    libfuse2 \
+	    libpq-dev \
+	    libssl1.0 \
+	    lsb \
+	    nano \
+	    nodejs \
+	    python-requests \
+	    software-properties-common \
+	    vim
+	    
+	# Install iCommands
+	RUN wget https://files.renci.org/pub/irods/releases/4.1.12/ubuntu14/irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
+    	dpkg -i irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
+    	rm irods-icommands-4.1.12-ubuntu14-x86_64.deb
+    
+	# reset container user to jovyan
+	USER jovyan
+	
+	# set the work directory
+	WORKDIR /home/jovyan
+	
+	# expose the public port we want to run on
+	EXPOSE 8888
+
+	# copy a file into the container
+	COPY entry.sh /bin
+	RUN mkdir -p /home/jovyan/.irods
+
+	ENTRYPOINT ["bash", "/bin/entry.sh"]
+
+.. Note::
+
+   We use a code line escape character ``\`` to allow single line scripts to be written on multiple lines in the Dockerfile.
+   
+   We also use the double characters ``&&`` which essentially mean "if true, then do this" while executing the code. The ``&&`` can come at the beginning of a line or the end when used with ``\``
+
+Now let's talk about what each of those lines in the Dockerfile mean.
+
+**1** We'll start by specifying our base image, using the FROM keyword:
+
+.. code-block:: bash
+
+	FROM jupyter/scipy-notebook:latest
+
+**2** Create and copy a file into the image by using ``COPY`` command.
+
+create a new file called ``entry.sh`` -- use your preferred text editor, e.g. ``nano entry.sh`` 
+
+.. code-block:: bash
+
+	#!/bin/bash
+	
+	echo '{"irods_host": "data.cyverse.org", "irods_port": 1247, "irods_user_name": "$IPLANT_USER", "irods_zone_name": "iplant"}' | envsubst > $HOME/.irods/irods_environment.json
+
+	exec jupyter lab --no-browser 
+
+The ``entry.sh`` file creates an iRODS environment ``.json`` which has CyVerse Data Store configurations pre-written. It also tells Docker to start Jupter Lab and to not pop open a browser tab when doing so.
+
+.. code-block:: bash
+
+	COPY entry.sh /bin
+
+**3** Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
+
+.. code-block:: bash
+
+	EXPOSE 8888
+
+**4** What about ``CMD``?
+
+Notice that unlike our previous Dockerfile this one does not end with a ``CMD`` command. This is on purpose.
+
+Remember: The primary purpose of ``CMD`` is to tell the container which command it should run by default when it is started.
+
+Can you guess what will happen if we don't specify our own 'entrypoint' using ``CMD``?
+
+**5** Setting a new entrypoint 
+
+When this container is run, it will use a different default ``ENTRYPOINT`` than the original container
+
+.. code-block:: bash
+
+	ENTRYPOINT ["bash", "/bin/entry.sh"]
+	
+This entrypoint runs the shell script ``entry.sh``	
+
+.. _Build the image:
+
+2.0 Build the image
+^^^^^^^^^^^^^^^^^^^
+
+.. Note::
+
+	Remember to replace ``<DOCKERHUB_USERNAME>`` with your username. This username should be the same one you created when registering on Docker hub.
+
+.. code-block:: bash
+
+	DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
+
+For example this is how I assign my dockerhub username
+
+.. code-block:: bash
+
+	DOCKERHUB_USERNAME=tswetnam
+
+Now build the image using the following command:
+
+.. code-block:: bash
+
+	$ docker build -t $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse .
+	Sending build context to Docker daemon  3.072kB
+	Step 1/3 : FROM jupyter/minimal-notebook
+	 ---> 36c8dd0e1d8f
+	Step 2/3 : COPY model.py /home/jovyan/work/
+	 ---> b61aefd7a735
+	Step 3/3 : EXPOSE 8888
+	 ---> Running in 519dcabe4eb3
+	Removing intermediate container 519dcabe4eb3
+	 ---> 7983fe164dc6
+	Successfully built 7983fe164dc6
+	Successfully tagged tswetnam/jupyterlab-scipy:cyverse
+
+If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse`` shows.
+
+.. _Run your image:
+
+3.0 Run your image
+==================
+
+When Docker can successfully build your Dockerfile, test it by starting a new container from your new image using the docker run command. Don’t forget to include the port forwarding options you learned about before.
+
+.. code-block:: bash
+
+	$ docker run --rm -it -p 8888:8888 $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
+
+You should see something like this:
+
+.. code-block:: bash
+
+	Executing the command: jupyter notebook
+	[I 07:21:25.396 NotebookApp] Writing notebook server cookie secret to /home/jovyan/.local/share/jupyter/runtime/notebook_cookie_secret
+	[I 07:21:25.609 NotebookApp] JupyterLab extension loaded from /opt/conda/lib/python3.7/site-packages/jupyterlab
+	[I 07:21:25.609 NotebookApp] JupyterLab application directory is /opt/conda/share/jupyter/lab
+	[I 07:21:25.611 NotebookApp] Serving notebooks from local directory: /home/jovyan
+	[I 07:21:25.611 NotebookApp] The Jupyter Notebook is running at:
+	[I 07:21:25.611 NotebookApp] http://(29a022bb5807 or 127.0.0.1):8888/?token=copy-your-own-token-not-this-one
+	[I 07:21:25.611 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+	[C 07:21:25.612 NotebookApp] 
+	    
+	    Copy/paste this URL into your browser when you connect for the first time,
+	    to login with a token:
+	        http://(29a022bb5807 or 127.0.0.1):8888/?token=copy-your-own-token-not-this-one
+
+Head over to http://localhost:8888 and your Jupyter notebook server should be running.
+
+Note: Copy the token from your own ``docker run`` output and paste it into the 'Password or token' input box.
+
+3.1 Dockerfile commands summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here's a quick summary of the few basic commands we used in our Dockerfiles.
+
+- **FROM** starts the Dockerfile. It is a requirement that the Dockerfile must start with the FROM command. Images are created in layers, which means you can use another image as the base image for your own. The FROM command defines your base layer. As arguments, it takes the name of the image. Optionally, you can add the Dockerhub username of the maintainer and image version, in the format username/imagename:version.
+
+- **RUN** is used to build up the Image you're creating. For each RUN command, Docker will run the command then create a new layer of the image. This way you can roll back your image to previous states easily. The syntax for a RUN instruction is to place the full text of the shell command after the RUN (e.g., RUN mkdir /user/local/foo). This will automatically run in a /bin/sh shell. You can define a different shell like this: RUN /bin/bash -c 'mkdir /user/local/foo'
+
+- **COPY** copies local files into the container.
+
+- **CMD** defines the commands that will run on the Image at start-up. Unlike a RUN, this does not create a new layer for the Image, but simply runs the command. There can only be one CMD per a Dockerfile/Image. If you need to run multiple commands, the best way to do that is to have the CMD run a script. CMD requires that you tell it where to run the command, unlike RUN. So example CMD commands would be:
+
+.. code-block:: bash
+
+	CMD ["python", "./app.py"]
+
+	CMD ["/bin/bash", "echo", "Hello World"]
+
+- **EXPOSE** creates a hint for users of an image which ports provide services. It is included in the information which can be retrieved via ``$ docker inspect <container-id>``.
+
+.. Note::
+
+	The ``EXPOSE`` command does not actually make any ports accessible to the host! Instead, this requires publishing ports by means of the ``-p`` flag when using ``docker run``.
+
+- **PUSH** pushes your image to Docker Cloud, or alternately to a private registry
+
+.. Note::
+
+	If you want to learn more about Dockerfiles, check out `Best practices for writing Dockerfiles <https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/>`_.
+
+3.2 Tagging images
+~~~~~~~~~~~~~~~~~~
+
+The notation for associating a local image with a repository on a registry is ``username/repository:tag``. The tag is optional, but recommended, since it is the mechanism that registries use to give Docker images a version. Give the repository and tag meaningful names for the context, such as ``get-started:part2``. This will put the image in the ``get-started`` repository and tag it as ``part2``.
+
+.. Note::
+
+	By default the docker image gets a ``latest`` tag if you don't provide one. Thought convenient, it is not recommended for reproducibility purposes.
+
+Now, put it all together to tag the image. Run docker tag image with your username, repository, and tag names so that the image will upload to your desired destination. For our docker image since we already have our Dockerhub username we will just add tag which in this case is ``1.0``
+
+.. code-block:: bash
+
+	$ docker tag jupyterlab-scipy:cyverse $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
+
+4.0 Publishing your image
+=========================
+
+4.1 Log into the Docker Hub Registry 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. Note::
+
+	If you don’t have an account, sign up for one at `Docker Cloud <https://cloud.docker.com/>`_ or `Docker Hub <https://hub.docker.com/>`_. Make note of your username -- it may or may not be the same as your email, GitHub, or CyVerse username. There are several advantages to registering with registries like DockerHub which we will see later on in the session.
+
+	If you want to authenticate to a different Registry, type the name of the registry after ``login``:
 
 .. code-block:: bash
 
@@ -75,31 +265,12 @@ If it is your first time logging in you will be queried for your ``username`` an
 
 Login with your Docker ID to push and pull images from Docker Hub or private registry. 
 
-If you don't have a Docker ID, head over to https://hub.docker.com to create one.                
-
-1.1.2 Tagging images
-^^^^^^^^^^^^^^^^^^^^
-
-The notation for associating a local image with a repository on a registry is ``username/repository:tag``. The tag is optional, but recommended, since it is the mechanism that registries use to give Docker images a version. Give the repository and tag meaningful names for the context, such as ``get-started:part2``. This will put the image in the ``get-started`` repository and tag it as ``part2``.
-
-.. Note::
-
-	By default the docker image gets a ``latest`` tag if you don't provide one. Thought convenient, it is not recommended for reproducibility purposes.
-
-Now, put it all together to tag the image. Run docker tag image with your username, repository, and tag names so that the image will upload to your desired destination. For our docker image since we already have our Dockerhub username we will just add tag which in this case is ``1.0``
-
-.. code-block:: bash
-
-	$ docker tag $YOUR_DOCKERHUB_USERNAME/mynotebook:latest $YOUR_DOCKERHUB_USERNAME/mynotebook:1.0
-
-1.1.3 Publish the image
-^^^^^^^^^^^^^^^^^^^^^^^
-
+If you don't have a Docker ID, head over to https://hub.docker.com to create one.   
 Upload your tagged image to the Dockerhub repository
 
 .. code-block:: bash
 
-	$ docker push $YOUR_DOCKERHUB_USERNAME/mynotebook:1.0	
+	$ docker push $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
 
 Once complete, the results of this upload are publicly available. If you log in to Docker Hub, you will see the new image there, with its pull command.
 
@@ -107,22 +278,14 @@ Once complete, the results of this upload are publicly available. If you log in 
 
 Congrats! You just made your first Docker image and shared it with the world!
 
-1.1.4 Pull and run the image from the remote repository
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Let's try to run the image from the remote repository on Cloud server by logging into CyVerse Atmosphere, `launching an instance <../atmosphere/boot.html>`_
-
-First install Docker on Atmosphere using from here https://docs.docker.com/install/linux/docker-ce/ubuntu or alternatively you can use ``ezd`` command which is a short-cut command for installing Docker on Atmosphere
-
-.. code-block:: bash
-
-	$ ezd
+4.2 Pull and run the image from the remote repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now run the following command to run the docker image from Dockerhub
 
 .. code-block:: bash
 
-	$ docker run -p 8888:8888 --name notebooktest $YOUR_DOCKERHUB_USERNAME/mynotebook:1.0
+	$ docker run -p 8888:8888 --name notebooktest $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
 
 .. Note::
 
@@ -167,7 +330,7 @@ Next step is to tag your image under the registry namespace and push it there
 
 	$ REGISTRY=localhost:5000
 
-	$ docker tag $YOUR_DOCKERHUB_USERNAME/mynotebook:1.0 $REGISTRY/$(whoami)/mynotebook:1.0
+	$ docker tag $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse $REGISTRY/$(whoami)/mynotebook:1.0
 
 1.2.2 Publish the image into the local registry
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -193,7 +356,7 @@ You can also pull the image from the local repository similar to how you pull it
 
 .. code-block:: bash
 
-	$ docker run -P --name=mynotebooklocal $REGISTRY/$(whoami)/mynotebook:1.0
+	$ docker run -P --name=mynotebooklocal $REGISTRY/$(whoami)/jupyterlab-scipy:cyverse
 
 2. Automated Docker image building from GitHub
 ==============================================
@@ -384,62 +547,6 @@ Exercise 1 (5-10 mins): Updating and automated building
 - Pull your Docker image from Docker Hub to a new location.
 - Run the instance to make sure it works
 
-3. Managing Data in Docker
-==========================
-
-It is possible to store data within the writable layer of a container, but there are some limitations:
-
-- The data doesn’t persist when that container is no longer running, and it can be difficult to get the data out of the container if another process needs it.
-
-- A container’s writable layer is tightly coupled to the host machine where the container is running. You can’t easily move the data somewhere else.
-
-- Its better to put your data into the container **AFTER** it is build - this keeps the container size smaller and easier to move across networks. 
-
-Docker offers three different ways to mount data into a container from the Docker host: 
-
-  * **volumes**, 
-
-  * **bind mounts**, 
-
-  * **tmpfs volumes**. 
-  
-When in doubt, volumes are almost always the right choice.
-
-3.1 Volumes 
-~~~~~~~~~~~
-
-**Volumes** are created and managed by Docker. You can create a new volume explicitly using the ``docker volume create`` command, or Docker can create a volume in the container when the container is built. 
-
-|volumes|
-
-Volumes are often a better choice than persisting data in a container’s writable layer, because using a volume does not increase the size of containers using it, and the volume’s contents exist outside the lifecycle of a given container. While bind mounts (which we will see later) are dependent on the directory structure of the host machine, volumes are completely managed by Docker. Volumes have several advantages over bind mounts:
-
-- Volumes are easier to back up or migrate than bind mounts.
-- You can manage volumes using Docker CLI commands or the Docker API.
-- Volumes work on both Linux and Windows containers.
-- Volumes can be more safely shared among multiple containers.
-- A new volume’s contents can be pre-populated by a container.
-
-.. Note::
-   If your container generates non-persistent state data, consider using a ``tmpfs`` mount to avoid storing the data anywhere permanently, and to increase the container’s performance by avoiding writing into the container’s writable layer.
-
-3.1.1 Choose the -v or –mount flag for mounting volumes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Originally, the ``-v`` or ``--volume`` flag was used for standalone containers and the ``--mount`` flag was used for swarm services. However, starting with Docker 17.06, you can also use ``--mount`` with standalone containers. In general, ``--mount`` is more explicit and verbose. The biggest difference is that the ``-v`` syntax combines all the options together in one field, while the ``--mount`` syntax separates them. Here is a comparison of the syntax for each flag.
-
-.. Tip::
-
- 	New users should use the ``--mount`` syntax. Experienced users may be more familiar with the ``-v`` or ``--volume`` syntax, but are encouraged to use ``--mount``, because research has shown it to be easier to use.
-
-``-v`` or ``--volume``: Consists of three fields, separated by colon characters (:). The fields must be in the correct order, and the meaning of each field is not immediately obvious.
-
-- In the case of named volumes, the first field is the name of the volume, and is unique on a given host machine.
-- The second field is the path where the file or directory are mounted in the container.
-- The third field is optional, and is a comma-separated list of options, such as ``ro``.
-
-.. code-block:: bash
-   -v /home/username/your_data_folder:/data:ro
 
 3.2 Bind mounts
 ^^^^^^^^^^^^^^^
