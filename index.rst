@@ -61,7 +61,6 @@ Expected outcomes:
    :caption: Breakout Sessions
 
    breakout/biocontainers
-   breakout/nvidia-docker
    breakout/workflows
    breakout/datascience
 
