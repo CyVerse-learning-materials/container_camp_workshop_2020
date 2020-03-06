@@ -34,7 +34,7 @@ See http://www.ashedryden.com/blog/codes-of-conduct-101-faq for more information
 
 .. _CyVerse_logo: https://cyverse.org
 
-.. |Home_Icon| image:: ./img/homeicon.png
+.. |Home_Icon| image:: ../img/homeicon.png
     :width: 25
     :height: 25
 
