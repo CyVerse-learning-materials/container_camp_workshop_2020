@@ -84,9 +84,9 @@ Okay -- at this point you should have completed the pre-installation and are rea
 
 Chances are an *image* already exists for the application you use in your research. Rather than starting from scratch and creating your own *image*, you need to know where to look for existing images. 
 
-But wait, what are the differences in a *container* and an *image*?
+.. Important::
 
-.. Terminology::
+	But wait, what are the differences in a *container* and an *image*? An important distinction must be made with regard to *base images*, *child images*, *official images* and *user images* 
 
 	**container** - Running instance of an *image* — the *container* runs the actual processes. A container includes an application and all of its dependencies. It shares its kernel with other containers, and runs as an isolated process in the space on the host OS. 
 
@@ -103,8 +103,6 @@ But wait, what are the differences in a *container* and an *image*?
 	**Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
 	
 	**tag** is an identifier of the exact version of the image. By default if a tag is not given, the ``:latest`` tag will be used.
-
-An important distinction with regard to *images* is between *base images*, *child images*, *official images* and *user images* 
 
 1.1 Docker Registries
 ~~~~~~~~~~~~~~~~~~~~~
@@ -126,7 +124,7 @@ So what *EXACTLY* is a **Registry**? There are several things you can do with Do
 
 * You can even set up your own private registry using a *Docker Trusted Registry*
 
-.. Terminology::
+.. Important::
 
 	**Registry**  Organized collection of "Repositories" with compiled images. 
 
