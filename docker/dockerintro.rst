@@ -11,7 +11,7 @@ There are no specific skills needed for this tutorial beyond a basic comfort wit
 You will need to set up a `Docker Hub <https://hub.docker.com>`_ account. 
 
 0.1 Docker Installation
-=======================
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Getting all the tooling setup on your computer can be a daunting task, but not with Docker. Getting Docker up and running on your favorite OS (Mac/Windows/Linux) takes some time. Here are detailed instructions for setting up Docker on `Mac <https://docs.docker.com/docker-for-mac/install/>`_/`Windows <https://docs.docker.com/docker-for-windows/install/>`_/`Linux <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_.
 
@@ -401,13 +401,56 @@ Search for images on Docker Hub which contain the string 'rstudio'
 2.3.1 Docker Run
 ^^^^^^^^^^^^^^^^
 
-```
-docker run --rm -p 8787:8787 -e PASSWORD=cc2020 rocker/rstudio 
-```
+Go ahead and run a basic image from a trusted registry. Here we run basic RStudio and Jupyter Lab:
 
-```
-docker run --rm -p 8888:888 jupyter/base-notebook
-```
+.. code-block:: bash
+
+	$docker run --rm -p 8787:8787 -e PASSWORD=cc2020 rocker/rstudio 
+
+.. code-block:: bash
+
+	$docker run --rm -p 8888:888 jupyter/base-notebook
+
+2.3.2 Additional Docker Run Commands
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+A couple of other important commands to use when running a container:
+
+``-d`` - the *detached* flag will run the container as a background process, rather than in the foreground. When you run a container with this flag, it will start, run, telling you the container ID: 
+
+.. code-block:: bash
+	
+	$ docker run --rm -d -p 8888:888 jupyter/base-notebook
+
+	Unable to find image 'jupyter/base-notebook:latest' locally
+	latest: Pulling from jupyter/base-notebook
+	5c939e3a4d10: Pull complete 
+	c63719cdbe7a: Pull complete 
+	19a861ea6baf: Pull complete 
+	651c9d2d6c4f: Pull complete 
+	21b673dc817c: Pull complete 
+	1594017be8ef: Pull complete 
+	b392f2c5ed42: Pull complete 
+	8e4f6538155b: Pull complete 
+	7952536f4b86: Pull complete 
+	61032726be98: Pull complete 
+	3fc223ec0a58: Pull complete 
+	23a29aed8d6e: Pull complete 
+	25ed667252a0: Pull complete 
+	434b2237517c: Pull complete 
+	d33fb9062f74: Pull complete 
+	fdc8c4d68c3d: Pull complete 
+	Digest: sha256:3b8ec8c8e8be8023f3eeb293bbcb1d80a71d2323ae40680d698e2620e14fdcbc
+	Status: Downloaded newer image for jupyter/base-notebook:latest
+	561016e4e69e22cf2f3b5ff8cbaa229779c2bdf3bdece89b66957f3f3bc5b734
+	$
+	
+Note, that your terminal is still active and you can use it to launch more containers. To view the running container, use the ``docker ps`` command 
+
+.. code-block:: bash
+	
+	$ docker ps
+	CONTAINER ID        IMAGE                   COMMAND                  CREATED              STATUS              PORTS                             NAMES
+	561016e4e69e        jupyter/base-notebook   "tini -g -- start-no…"   About a minute ago   Up About a minute   8888/tcp, 0.0.0.0:8888->888/tcp   affectionate_banzai
 
 
 3. Managing Data in Docker
@@ -423,11 +466,11 @@ It is possible to store data within the writable layer of a container, but there
 
 Docker offers three different ways to mount data into a container from the Docker host: 
 
-  * **volumes**, 
+  * **volumes** 
 
-  * **bind mounts**, 
+  * **bind mounts** 
 
-  * **tmpfs volumes**. 
+  * **tmpfs volumes**
   
 When in doubt, volumes are almost always the right choice.
 
@@ -458,12 +501,26 @@ Volumes are often a better choice than persisting data in a container’s writab
 - The third field is optional, and is a comma-separated list of options, such as ``ro``.
 
 .. code-block:: bash
+
    -v /home/username/your_data_folder:/data
 
 .. Note::
 
 	Originally, the ``-v`` or ``--volume`` flag was used for standalone containers and the ``--mount`` flag was used for swarm services. However, starting with Docker 17.06, you can also use ``--mount`` with standalone containers. In general, ``--mount`` is more explicit and verbose. The biggest difference is that the ``-v`` syntax combines all the options together in one field, while the ``--mount`` syntax separates them. Here is a comparison of the syntax for each flag.
 
+.. code-block:: bash
+	
+	$docker run --rm -v $(pwd):/work -p 8787:8787 -e PASSWORD=cc2020 rocker/rstudio 
+
+In the Jupyter Lab example, we use the ``-e`` environmental flag to re-direct the URL of the container at the localhost
+
+.. code-block:: bash
+	
+	$docker run --rm -v $(pwd):/work -p 8888:8888 -e REDIRECT_URL=http://localhost:8888 jupyter/base-notebook
+
+Once you're in the container, you will see that the ``/work`` directory is mounted in the working directory.
+
+Any data that you add to that folder outside the container will appear INSIDE the container. And any work you do inside the container saved in that folder will be saved OUTSIDE the container as well. 
 
 4. Extra Demos
 ==============
@@ -497,7 +554,7 @@ Use the following Docker commands to deploy Portainer. Now the second line of co
 
 .. Note:: 
 	
-	The `-v /var/run/docker.sock:/var/run/docker.sock` option can be used in Mac/Linux environments only.
+	The ``-v /var/run/docker.sock:/var/run/docker.sock`` option can be used in Mac/Linux environments only.
 
 |portainer_demo|
 
