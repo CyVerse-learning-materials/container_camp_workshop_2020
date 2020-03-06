@@ -19,8 +19,3 @@ epub_title = 'CyVerse Learning Institute - Container Camp 2020'
 epub_author = 'Amanda Cooksey, Upendra Devisetty, Sateesh Peri, Julian Pistorius, Tyson L. Swetnam, Reetu Tujeeta, Jason Williams'
 epub_publisher = 'CyVerse'
 epub_copyright = 'CC0 - Open Source'
-
-extensions = ['sphinxcontrib.blockdiag']
-
-# Fontpath for blockdiag (truetype font)
-blockdiag_fontpath = '/usr/share/fonts/truetype/ipafont/ipagp.ttf'
