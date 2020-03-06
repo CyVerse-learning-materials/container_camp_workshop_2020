@@ -73,7 +73,7 @@ Listed below are some extra downloads that are not required for the workshop, bu
 
 .. _CyVerse_logo: https://cyverse.org
 
-.. |Home_Icon| image:: ./img/homeicon.png
+.. |Home_Icon| image:: ../img/homeicon.png
     :width: 25
     :height: 25
 
