@@ -11,9 +11,7 @@ There are no specific skills needed for this tutorial beyond a basic comfort wit
 2. Docker Installation
 ======================
 
-Getting all the tooling setup on your computer can be a daunting task, but not with Docker. Getting Docker up and running on your favorite OS (Mac/Windows/Linux) is very easy.
-
-The getting started guide on Docker has detailed instructions for setting up Docker on `Mac <https://docs.docker.com/docker-for-mac/install/>`_/`Windows <https://docs.docker.com/docker-for-windows/install/>`_/`Linux <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_.
+Getting all the tooling setup on your computer can be a daunting task, but not with Docker. Getting Docker up and running on your favorite OS (Mac/Windows/Linux) takes some time. Here are detailed instructions for setting up Docker on `Mac <https://docs.docker.com/docker-for-mac/install/>`_/`Windows <https://docs.docker.com/docker-for-windows/install/>`_/`Linux <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_.
 
 .. Note:: 
 
@@ -21,25 +19,7 @@ The getting started guide on Docker has detailed instructions for setting up Doc
 	
 	If you're using an older version of Windows or MacOS you may need to use `Docker Machine <https://docs.docker.com/machine/overview/>`_ instead. 
 	
-	All commands work in either Bash or Powershell on Windows.
-
-.. Note::
-
-
-	Depending on how you've installed Docker on your system, you might see a ``permission denied`` error after running the above command. If you're on Linux, you may need to prefix your Docker commands with sudo. Alternatively to run docker command without sudo, you need to add your user (who has root privileges) to docker group. 
-	For this run: 
-
-	Create the docker group::
-
-		$ sudo groupadd docker
-	
-	Add your user to the docker group::
-
-		$ sudo usermod -aG docker $USER
-
-	Log out and log back in so that your group membership is re-evaluated
-	
-	
+	All Docker commands work in Bash or Powershell on Windows.
 	
 2.1 Testing Docker installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,7 +29,7 @@ Once you are done installing Docker, test your Docker installation by running th
 .. code-block:: bash
 
 	$ docker --version
-	Docker version 18.09.3, build 774a1f4
+	Docker version 19.03.6, build 369ce74a3c
 
 When run without ``--version`` you should see a whole bunch of lines showing the different options available with ``docker``. Alternatively you can test your installation by running the following:
 
@@ -75,16 +55,28 @@ When run without ``--version`` you should see a whole bunch of lines showing the
 	    to your terminal.
 	.......
 
+.. Note::
+
+	Depending on how and where you've installed Docker, you may see a ``permission denied`` error after running the ``$ docker run helo-world`` command. If you're on Linux, you may need to prefix your Docker commands with ``sudo``. Alternatively to run docker command without ``sudo``, you need to add your user name (who has root privileges) to the docker "group". 
+
+	Create the docker group::
+	
+	$ sudo groupadd docker
+	
+	Add your user to the docker group::
+	
+	$ sudo usermod -aG docker $USER
+
+	Log out or close terminal and log back in and your group membership will be initiated
+		
 3. Running Docker containers from prebuilt images
 =================================================
 
-Now that you have everything setup, it's time to get our hands dirty. In this section, you are going to run a container from `Alpine Linux <https://www.alpinelinux.org/>`_ (a lightweight linux distribution) image on your system and get a taste of the ``docker run`` command.
+But wait, what is the difference in a container and an image?
 
-But wait, what exactly is a container and image?
+**Container** - Running instance of an image — containers run the actual applications. A container includes an application and all of its dependencies. It shares its kernel with other containers, and runs as an isolated process in the space on the host OS. 
 
-**Containers** - Running instances of Docker images — containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. 
-
-**Images** - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run ``docker inspect hello-world``. In the demo above, you could have used the ``docker pull`` command to download the ``hello-world`` image. However when you executed the command ``docker run hello-world``, it also did a ``docker pull`` behind the scenes to download the ``hello-world`` image with ``latest`` tag (we will learn more about tags little later).
+**Image** - The file system and configuration of our application which are used to create the container. To find out more about Docker images, run ``docker inspect hello-world``. In the demo above, you could have used the ``docker pull`` command to download the ``hello-world`` image. However when you executed the command ``docker run hello-world``, it also did a ``docker pull`` behind the scenes to download the ``hello-world`` image with ``latest`` tag (we will learn more about tags little later).
 
 Now that we know what a container and image is, let's run the following command in our terminal:
 
@@ -186,22 +178,43 @@ Exit out of the container by giving the ``exit`` command.
 
 		$ docker attach 0db38ea51a48
 
+3.1 House Keeping and Cleaning Up
+
+Docker images are cached on your machine in the location where Docker was installed. These image files are not visible in the same directory where you might have used ``docker pull <imagename>``.
+
+Some Docker images can be large. Especially Data Science images with many libraries and packages pre-installed. 
+
+.. Important::
+
+	Pulling many images from the Docker Registries may fill up your hard disk!
+
+To inspect your system and disk use:
+
+.. code-block:: bash
+
+	$ docker system info
+	
+	$ docker system df
+
+To find out how many images are on your machine, type:
+
+.. code-block:: bash
+
+	$ docker images --help
+
+To remove images that you no longer need, type:
+
+.. code-block:: bash
+
+	$ docker system prune --help
+
 4. Build Docker images which contain your own code
 ==================================================
 
 Great! so you have now looked at ``docker run``, played with a Docker containers and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff — deploying your own applications with Docker.
 
-4.1 Deploying a command-line app
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. Note::
-	
-	Code for this section is in this repo in the `examples/ <https://github.com/CyVerse-learning-materials/container_camp_workshop_2019/tree/master/examples>`_ directory
-
-In this section, let's dive deeper into what Docker images are. Later on we will build our own image and use that image to run an application locally.
-
-4.1.1 Docker images
-^^^^^^^^^^^^^^^^^^^
+4.1  Docker images
+~~~~~~~~~~~~~~~~~~
 
 Docker images are the basis of containers. In the previous example, you pulled the ``alpine`` image from the registry and asked the Docker client to run a container based on that image. To see the list of images that are available locally on your system, run the ``docker images`` command.
 
@@ -222,7 +235,7 @@ For example you could pull a specific version of Ubuntu image as follows:
 
 .. code-block:: bash
 
-	$ docker pull ubuntu:16.04
+	$ docker pull ubuntu:18.04
 
 If you do not specify the version number of the image, as mentioned, the Docker client will default to a version named ``latest``.
 
@@ -267,242 +280,97 @@ To get a new Docker image you can either get it from a registry (such as the Doc
 An important distinction with regard to images is between base images and child images and official images and user images (Both of which can be base images or child images.).
 
 .. important::
-	**Base images** are images that have no parent images, usually images with an OS like ubuntu, alpine or debian.
+	**Base image** are images that have no parent images, usually images with an OS like ubuntu, alpine or debian.
 
-	**Child images** are images that build on base images and add additional functionality.
+	**Child image** are images that build on base images and add additional functionality.
 
-	**Official images** are Docker sanctioned images. Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are not prefixed by an organization or user name. In the list of images above, the python, node, alpine and nginx images are official (base) images. To find out more about them, check out the Official Images Documentation.
+	**Official image** are Docker sanctioned images. Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are not prefixed by an organization or user name. In the list of images above, the python, node, alpine and nginx images are official (base) images. To find out more about them, check out the Official Images Documentation.
 
-	**User images** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
+	**User image** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
 
-4.1.2 Meet our Python app
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Now that you have a better understanding of images, it's time to create an image that sandboxes a small Python application. We'll do this by creating a small Python script which prints a welcome message, then dockerizing it by writing a Dockerfile, and finally we'll build the image and run it. 
-
-- Create a Python script
-- Build the image
-- Run your image
-
-.. _Create a Python script:
-
-1. Create a Python script which prints a welcome message
-
-Start by creating a directory called ``simple-script`` in your home directory where we'll create the following files:
-
-- ``app.py``
-- ``Dockerfile``
-
-.. code-block:: bash
-
-	$ cd ~ && mkdir simple-script && cd simple-script
-
-.. _app.py:
-
-1.1 **app.py**
-
-Create the ``app.py`` file with the following content. You can use any of favorite text editor to create this file.
-
-.. code-block:: bash
-
-	print('hello world!')
-	print('this is my first attempt')
-
-
-.. Note::
-
-	If you want, you can run this app through your laptop’s native Python installation first just to see what it looks like. Run ``python app.py``.
-
-	You should see the message:
-
-		:code:`hello world!`  
-		:code:`this is my first attempt`  
-
-	This is totally optional - but some people like to see what the app’s supposed to do before they try to Dockerize it.
-
-.. _Dockerfile:
-
-1.2. **Dockerfile**
-
-A **Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
+	A **Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
 
 We want to create a Docker image with this app. As mentioned above, all user images are based on a base image. Since our application is written in Python, we will build our own Python image based on ``Alpine``. We'll do that using a Dockerfile.
 
 Create a file called Dockerfile in the ``simple-script`` directory, and add content to it as described below. 
 
-.. code-block:: bash
 
-	# our base image# our base image
-	FROM alpine:3.9
+4.2 Deploying a JupyterLab or RStudio-Server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	# install python and pip
-	RUN apk add --update py3-pip
+In this section, let's find a Docker image which can run a Jupyter Notebook
 
-	# copy files required for the app to run
-	COPY app.py /usr/src/app/
+.. blockdiag::
 
-	# run the application
-	CMD python3 /usr/src/app/app.py
+	blockdiag {
+	  orientation = portrait;
+	  default_fontsize = 8;
+	  A [label="ubuntu@SHA"];
 
+	  A -> base-notebook;
+	  base-notebook -> minimal-notebook;
+	  minimal-notebook -> scipy-notebook;
+	  scipy-notebook -> tensorflow-notebook;
+	  scipy-notebook -> datascience-notebook;
+	  minimal-notebook -> r-notebook;
+	  scipy-notebook -> pyspark-notebook;
+	  pyspark-notebook -> all-spark-notebook;
+	}
 
-Now let's see what each of those lines mean..
-
-1.2.1 We'll start by specifying our base image, using the FROM keyword:
-
-.. code-block:: bash
-
-	FROM alpine:3.9
-
-1.2.2. The next step usually is to write the commands of copying the files and installing the dependencies. But first we will install the Python pip package to the alpine linux distribution. This will not just install the pip package but any other dependencies too, which includes the python interpreter. Add the following ``RUN`` command next:
-
-.. code-block:: bash
-
-	RUN apk add --update py3-pip
-
-1.2.3. Copy the file you have created earlier into our image by using ``COPY`` command.
-
-.. code-block:: bash
-
-	COPY app.py /usr/src/app/
-
-1.2.4. The last step is the command for running the application. Use the ``CMD`` command to do that:
-
-.. code-block:: bash
-
-	CMD python3 /usr/src/app/app.py
-
-The primary purpose of ``CMD`` is to tell the container which command it should run by default when it is started.
-
-.. _Build the image:
-
-2. Build the image
-
-Now that you have your Dockerfile, you can build your image. The ``docker build`` command does the heavy-lifting of creating a docker image from a Dockerfile.
-
-The ``docker build command`` is quite simple - it takes an optional tag name with the ``-t`` flag, and the location of the directory containing the Dockerfile - the ``.`` indicates the current directory:
-
-.. Note::
-
-	When you run the ``docker build`` command given below, make sure to replace ``<YOUR_DOCKERHUB_USERNAME>`` with your username. This username should be the same one you created when registering on Docker hub. If you haven't done that yet, please go ahead and create an account in `Dockerhub <https://hub.docker.com>`_.
-
-.. code-block:: bash
-
-	YOUR_DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
-
-For example this is how I assign my dockerhub username
-
-.. code-block:: bash
-
-	YOUR_DOCKERHUB_USERNAME=jpistorius
-
-Now build the image using the following command:
-
-.. code-block:: bash
-
-	$ docker build -t $YOUR_DOCKERHUB_USERNAME/simple-script .
-	Sending build context to Docker daemon  10.24kB
-	Step 1/4 : FROM alpine:3.9
-	 ---> caf27325b298
-	Step 2/4 : RUN apk add --update py3-pip
-	 ---> Using cache
-	 ---> dad2a197fcad
-	Step 3/4 : COPY app.py /usr/src/app/
-	 ---> Using cache
-	 ---> a8ebf6cd2735
-	Step 4/4 : CMD python3 /usr/src/app/app.py
-	 ---> Using cache
-	 ---> a1fb2906a937
-	Successfully built a1fb2906a937
-	Successfully tagged jpistorius/simple-script:latest
-
-If you don't have the ``alpine:3.9 image``, the client will first pull the image and then create your image. Therefore, your output on running the command will look different from mine. If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$YOUR_DOCKERHUB_USERNAME/simple-script`` shows.
-
-.. _Run your image:
-
-3. Run your image
-
-When Docker can successfully build your Dockerfile, test it by starting a new container from your new image using the docker run command.
-
-.. code-block:: bash
-
-	$ docker run $YOUR_DOCKERHUB_USERNAME/simple-script
-
-You should see something like this:
-
-.. code-block:: bash
-	
-	hello world!
-	this is my first attempt
-
-
-4.2 Deploying a Jupyter Notebook
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In this section, let's build a Docker image which can run a Jupyter Notebook
-
-4.2.1 Suitable Docker images for a base
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+4.2.1 Suitable Docker images 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Search for images on Docker Hub which contain the string 'jupyter'
 
 .. code-block:: bash
 
 	$ docker search jupyter
-	NAME                                   DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
-	jupyter/datascience-notebook           Jupyter Notebook Data Science Stack from htt…   446                                     
-	jupyter/all-spark-notebook             Jupyter Notebook Python, Scala, R, Spark, Me…   223                                     
-	jupyterhub/jupyterhub                  JupyterHub: multi-user Jupyter notebook serv…   195                                     [OK]
-	jupyter/scipy-notebook                 Jupyter Notebook Scientific Python Stack fro…   155                                     
-	jupyter/tensorflow-notebook            Jupyter Notebook Scientific Python Stack w/ …   116                                     
-	jupyter/pyspark-notebook               Jupyter Notebook Python, Spark, Mesos Stack …   95                                      
-	jupyter/minimal-notebook               Minimal Jupyter Notebook Stack from https://…   73                                      
-	ermaker/keras-jupyter                  Jupyter with Keras (with Theano backend and …   66                                      [OK]
-	jupyter/base-notebook                  Small base image for Jupyter Notebook stacks…   60                                      
-	xblaster/tensorflow-jupyter            Dockerized Jupyter with tensorflow              52                                      [OK]
-	jupyter/r-notebook                     Jupyter Notebook R Stack from https://github…   22                                      
-	jupyterhub/singleuser                  single-user docker images for use with Jupyt…   21                                      [OK]
+	NAME                                    DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+	jupyter/datascience-notebook            Jupyter Notebook Data Science Stack from htt…   611                                     
+	jupyter/all-spark-notebook              Jupyter Notebook Python, Scala, R, Spark, Me…   276                                     
+	jupyterhub/jupyterhub                   JupyterHub: multi-user Jupyter notebook serv…   237                                     [OK]
+	jupyter/scipy-notebook                  Jupyter Notebook Scientific Python Stack fro…   227                                     
+	jupyter/tensorflow-notebook             Jupyter Notebook Scientific Python Stack w/ …   201                                     
+	jupyter/pyspark-notebook                Jupyter Notebook Python, Spark, Mesos Stack …   142                                     
+	jupyter/minimal-notebook                Minimal Jupyter Notebook Stack from https://…   96                                      
+	jupyter/base-notebook                   Small base image for Jupyter Notebook stacks…   95                                      
+	jupyterhub/singleuser                   single-user docker images for use with Jupyt…   30                                      [OK]
+	jupyter/r-notebook                      Jupyter Notebook R Stack from https://github…   30                                      
+	jupyter/nbviewer                        Jupyter Notebook Viewer                         22                                      [OK]
+	mikebirdgeneau/jupyterlab               Jupyterlab based on python / alpine linux wi…   21                                      [OK]
+	jupyter/demo                            (DEPRECATED) Demo of the IPython/Jupyter Not…   14                                      
+	eboraas/jupyter                         Jupyter Notebook (aka IPython Notebook) with…   12                                      [OK]
+	jupyterhub/k8s-hub                                                                      11                                      
+	nbgallery/jupyter-alpine                Alpine Jupyter server with nbgallery integra…   9                                       
+	jupyter/repo2docker                     Turn git repositories into Jupyter enabled D…   7                                       
+	jupyterhub/configurable-http-proxy      node-http-proxy + REST API                      5                                       [OK]
 	...
 
-
-4.2.2 Meet our model
-^^^^^^^^^^^^^^^^^^^^
-
-Let's deploy a Python function inside a Docker image along with Jupyter.
-
-- `Create a Python file containing a function`_
-- `Build the image`_
-- `Run your image`_
-
-.. _Create a Python file containing a function:
-
-1. Create a Python file containing a function
-
-Start by creating a directory called ``mynotebook`` in your home directory where we'll create the following files:
-
-- model.py
-- Dockerfile
+Search for images on Docker Hub which contain the string 'rstudio'
 
 .. code-block:: bash
 
-	$ cd ~ && mkdir mynotebook && cd mynotebook
+	$ docker search rstudio
 
-.. _model.py:
+	NAME                                      DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+	rocker/rstudio                            RStudio Server image                            289                                     [OK]
+	opencpu/rstudio                           OpenCPU stable release with rstudio-server (…   29                                      [OK]
+	rocker/rstudio-stable                     Build RStudio based on a debian:stable (debi…   16                                      [OK]
+	dceoy/rstudio-server                      RStudio Server                                  8                                       [OK]
+	rocker/rstudio-daily                                                                      6                                       [OK]
+	rstudio/r-base                            Docker Images for R                             6                                       
+	rstudio/r-session-complete                Images for sessions and jobs in RStudio Serv…   4                                       
+	rstudio/rstudio-server-pro                Default Docker image for RStudio Server Pro     1                                       
+	aghorbani/rstudio-h2o                     An easy way to start rstudio and H2O to run …   1                                       [OK]
+	centerx/rstudio-pro                       NA                                              1                                       [OK]
+	mobilizingcs/rstudio                      RStudio container with mz packages pre-insta…   1                                       [OK]
+	calpolydatascience/rstudio-notebook       RStudio notebook                                1                                       [OK]	
+	...
 
-1.1 **model.py**
+4.2.2. **Dockerfile**
+^^^^^^^^^^^^^^^^^^^^^^
 
-Create the ``model.py`` file with the following content. You can use any of favorite text editor to create this file.
-
-.. code-block:: bash
-
-	def introduce(name):
-	    return 'Hello ' + name
-
-
-.. _Dockerfile:
-
-1.2. **Dockerfile**
-
-Since we want to use a Jupyter notebook to call our function, we will build an image based on ``jupyter/minimal-notebook``.
+Since we want to use a Jupyter notebook to call our function, we will build an image based on ``jupyter/scipy-notebook:latest``.
 
 .. Note::
 
@@ -510,42 +378,92 @@ Since we want to use a Jupyter notebook to call our function, we will build an i
 	
 	https://jupyter-docker-stacks.readthedocs.io/en/latest/
 
-
 Create a file called Dockerfile in the ``mynotebook`` directory, and add content to it as described below. 
 
 .. code-block:: bash
 
-	# our base image
-	FROM jupyter/minimal-notebook
+	# base image
+	FROM jupyter/scipy-notebook:latest
+	
+	# reset user to root for installing additional packages
+	USER root
 
-	# copy files required for the model to work
-	COPY model.py /home/jovyan/work/
-
-	# tell the port number the container should expose
+	# Install a few dependencies for iCommands, text editing, and monitoring instances
+	RUN apt-get update && apt-get install -y \
+	    apt-transport-https \
+	    gcc \
+	    gnupg \
+	    htop \
+	    less \
+	    libfuse2 \
+	    libpq-dev \
+	    libssl1.0 \
+	    lsb \
+	    nano \
+	    nodejs \
+	    python-requests \
+	    software-properties-common \
+	    vim
+	    
+	# Install iCommands
+	RUN wget https://files.renci.org/pub/irods/releases/4.1.12/ubuntu14/irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
+    	dpkg -i irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
+    	rm irods-icommands-4.1.12-ubuntu14-x86_64.deb
+    
+	# reset container user to jovyan
+	USER jovyan
+	
+	# set the work directory
+	WORKDIR /home/jovyan
+	
+	# expose the public port we want to run on
 	EXPOSE 8888
 
+	# copy a file into the container
+	COPY entry.sh /bin
+	RUN mkdir -p /home/jovyan/.irods
 
-Now let's see what each of those lines mean..
+	ENTRYPOINT ["bash", "/bin/entry.sh"]
 
-1.2.1 We'll start by specifying our base image, using the FROM keyword:
+.. Note::
+
+   We use a code line escape character ``\`` to allow single line scripts to be written on multiple lines in the Dockerfile.
+   
+   We also use the double characters ``&&`` which essentially mean "if true, then do this" while executing the code. The ``&&`` can come at the beginning of a line or the end when used with ``\``
+
+Now let's talk about what each of those lines in the Dockerfile mean.
+
+**4.2.2.1** We'll start by specifying our base image, using the FROM keyword:
 
 .. code-block:: bash
 
-	FROM jupyter/minimal-notebook
+	FROM jupyter/scipy-notebook:latest
 
-1.2.2. Copy the file you have created earlier into our image by using ``COPY`` command.
+**4.2.2.2** Create and copy a file into the image by using ``COPY`` command.
+
+create a new file called ``entry.sh`` -- use your preferred text editor, e.g. ``nano entry.sh`` 
 
 .. code-block:: bash
 
-	COPY model.py /home/jovyan/work/
+	#!/bin/bash
+	
+	echo '{"irods_host": "data.cyverse.org", "irods_port": 1247, "irods_user_name": "$IPLANT_USER", "irods_zone_name": "iplant"}' | envsubst > $HOME/.irods/irods_environment.json
 
-1.2.3. Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
+	exec jupyter lab --no-browser 
+
+The ``entry.sh`` file creates an iRODS environment ``.json`` which has CyVerse Data Store configurations pre-written. It also tells Docker to start Jupter Lab and to not pop open a browser tab when doing so.
+
+.. code-block:: bash
+
+	COPY entry.sh /bin
+
+**4.2.2.3** Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
 
 .. code-block:: bash
 
 	EXPOSE 8888
 
-1.2.4. What about ``CMD``?
+**4.2.2.4** What about ``CMD``?
 
 Notice that unlike our previous Dockerfile this one does not end with a ``CMD`` command. This is on purpose.
 
@@ -553,10 +471,20 @@ Remember: The primary purpose of ``CMD`` is to tell the container which command 
 
 Can you guess what will happen if we don't specify our own 'entrypoint' using ``CMD``?
 
+**4.2.2.5** Setting a new entrypoint 
+
+When this container is run, it will use a different default ``ENTRYPOINT`` than the original container
+
+.. code-block:: bash
+
+	ENTRYPOINT ["bash", "/bin/entry.sh"]
+	
+This entrypoint runs the shell script ``entry.sh``	
 
 .. _Build the image:
 
-2. Build the image
+4.2.3. Build the image
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. Note::
 
@@ -564,19 +492,19 @@ Can you guess what will happen if we don't specify our own 'entrypoint' using ``
 
 .. code-block:: bash
 
-	YOUR_DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
+	DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
 
 For example this is how I assign my dockerhub username
 
 .. code-block:: bash
 
-	YOUR_DOCKERHUB_USERNAME=jpistorius
+	DOCKERHUB_USERNAME=tswetnam
 
 Now build the image using the following command:
 
 .. code-block:: bash
 
-	$ docker build -t $YOUR_DOCKERHUB_USERNAME/mynotebook .
+	$ docker build -t $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse .
 	Sending build context to Docker daemon  3.072kB
 	Step 1/3 : FROM jupyter/minimal-notebook
 	 ---> 36c8dd0e1d8f
@@ -587,9 +515,9 @@ Now build the image using the following command:
 	Removing intermediate container 519dcabe4eb3
 	 ---> 7983fe164dc6
 	Successfully built 7983fe164dc6
-	Successfully tagged jpistorius/mynotebook:latest
+	Successfully tagged tswetnam/jupyterlab-scipy:cyverse
 
-If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$YOUR_DOCKERHUB_USERNAME/mynotebook`` shows.
+If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse`` shows.
 
 .. _Run your image:
 
@@ -599,7 +527,7 @@ When Docker can successfully build your Dockerfile, test it by starting a new co
 
 .. code-block:: bash
 
-	$ docker run -p 8888:8888 $YOUR_DOCKERHUB_USERNAME/mynotebook
+	$ docker run -p 8888:8888 $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
 
 You should see something like this:
 
@@ -642,20 +570,20 @@ Here's a quick summary of the few basic commands we used in our Dockerfiles.
 
 	CMD ["/bin/bash", "echo", "Hello World"]
 
-- EXPOSE creates a hint for users of an image which ports provide services. It is included in the information which can be retrieved via ``$ docker inspect <container-id>``.
+- **EXPOSE** creates a hint for users of an image which ports provide services. It is included in the information which can be retrieved via ``$ docker inspect <container-id>``.
 
 .. Note::
 
-	The EXPOSE command does not actually make any ports accessible to the host! Instead, this requires publishing ports by means of the ``-p`` flag when using ``docker run``.
+	The ``EXPOSE`` command does not actually make any ports accessible to the host! Instead, this requires publishing ports by means of the ``-p`` flag when using ``docker run``.
 
-- PUSH pushes your image to Docker Cloud, or alternately to a private registry
+- **PUSH** pushes your image to Docker Cloud, or alternately to a private registry
 
 .. Note::
 
 	If you want to learn more about Dockerfiles, check out `Best practices for writing Dockerfiles <https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/>`_.
 
-6. Demos
-=========
+6. Extra Demos
+==============
 
 6.1 Portainer
 ~~~~~~~~~~~~~
@@ -673,6 +601,9 @@ Use the following Docker commands to deploy Portainer. Now the second line of co
 
 .. code-block:: bash
 
+	# on CyVerse Atmosphere:
+	$ ezd -p
+	
 	$ docker volume create portainer_data
 
 	$ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer

@@ -194,3 +194,10 @@ Below are the schedule and classroom materials for Container Camp at The Univers
 .. |CyVerse_logo2| image:: ../img/cyverse_learning.png
     :width: 500
 .. _CyVerse_logo2: http://learning.cyverse.org/
+
+.. |Home_Icon| image:: ../img/homeicon.png
+    :width: 25
+    :height: 25
+
+.. _Home_Icon: http://learning.cyverse.org/
+
