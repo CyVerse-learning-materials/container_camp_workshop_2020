@@ -70,6 +70,7 @@ Expected outcomes:
    :caption: CyVerse Topics
 
    cyverse/boot
+   cyverse/tool_integration_app_building_DE
    cyverse/de_docker
    cyverse/vice_docker
 
