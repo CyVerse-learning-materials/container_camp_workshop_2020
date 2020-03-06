@@ -3,26 +3,32 @@
 
 |docker|
 
-1. Prerequisites
+0.0 Prerequisites
 ================
 
-There are no specific skills needed for this tutorial beyond a basic comfort with the command line and using a text editor. Prior experience in developing web applications will be helpful but is not required.
+There are no specific skills needed for this tutorial beyond a basic comfort with the command line and using a text editor.
 
-2. Docker Installation
-======================
+You will need to set up a `Docker Hub <https://hub.docker.com>`_ account. 
+
+0.1 Docker Installation
+=======================
 
 Getting all the tooling setup on your computer can be a daunting task, but not with Docker. Getting Docker up and running on your favorite OS (Mac/Windows/Linux) takes some time. Here are detailed instructions for setting up Docker on `Mac <https://docs.docker.com/docker-for-mac/install/>`_/`Windows <https://docs.docker.com/docker-for-windows/install/>`_/`Linux <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_.
 
+If you're using CyVerse Atmosphere you can use the ``ezd`` command in the `ssh`` terminal or web shell. `See Quick Start Manual <https://cyverse-ez-quickstart.readthedocs-hosted.com/en/latest/>`_ for other CyVerse ``ez`` commands.
+
+.. code-block:: bash
+
+	$ ezd
+
 .. Note:: 
 
-	If you're using Docker for Windows make sure you have `shared your drive <https://docs.docker.com/docker-for-windows/#shared-drives>`_. 
+	If you're using Windows follow their `Docker Installation <https://docs.docker.com/docker-for-windows/install/>`_ instructions. All Docker commands work in Bash or Powershell on Windows.
 	
-	If you're using an older version of Windows or MacOS you may need to use `Docker Machine <https://docs.docker.com/machine/overview/>`_ instead. 
-	
-	All Docker commands work in Bash or Powershell on Windows.
-	
-2.1 Testing Docker installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	If you're using a MacOS you can follow their `Docker Installation <https://docs.docker.com/docker-for-mac/install/>`_  instructions. 
+		
+0.2 Test installation 
+~~~~~~~~~~~~~~~~~~~~~
 
 Once you are done installing Docker, test your Docker installation by running the following command to make sure you are using version 1.13 or higher:
 
@@ -31,7 +37,9 @@ Once you are done installing Docker, test your Docker installation by running th
 	$ docker --version
 	Docker version 19.03.6, build 369ce74a3c
 
-When run without ``--version`` you should see a whole bunch of lines showing the different options available with ``docker``. Alternatively you can test your installation by running the following:
+When run without ``--version`` you should see the help menu showing the different options available with ``docker``.
+
+Alternatively you can test your installation by running the following:
 
 .. code-block:: bash
 
@@ -69,14 +77,117 @@ When run without ``--version`` you should see a whole bunch of lines showing the
 
 	Log out or close terminal and log back in and your group membership will be initiated
 		
-3. Running Docker containers from prebuilt images
-=================================================
+1.0 Finding Docker Containers 
+=============================
 
-But wait, what is the difference in a container and an image?
+Okay -- at this point you should have completed the pre-installation and are ready to begin using Docker. 
 
-**Container** - Running instance of an image — containers run the actual applications. A container includes an application and all of its dependencies. It shares its kernel with other containers, and runs as an isolated process in the space on the host OS. 
+Chances are an *image* already exists for the application you use in your research. Rather than starting from scratch and creating your own *image*, you need to know where to look for existing images. 
 
-**Image** - The file system and configuration of our application which are used to create the container. To find out more about Docker images, run ``docker inspect hello-world``. In the demo above, you could have used the ``docker pull`` command to download the ``hello-world`` image. However when you executed the command ``docker run hello-world``, it also did a ``docker pull`` behind the scenes to download the ``hello-world`` image with ``latest`` tag (we will learn more about tags little later).
+But wait, what are the differences in a *container* and an *image*?
+
+.. Terminology::
+
+	**container** - Running instance of an *image* — the *container* runs the actual processes. A container includes an application and all of its dependencies. It shares its kernel with other containers, and runs as an isolated process in the space on the host OS. 
+
+	**image** - The file system and configuration of an application which is used to create the container. 
+	
+	**base image** are images that have no parent images, usually images with an OS like ubuntu, alpine or debian.
+
+	**child image** are images that build on base images and add additional functionality.
+
+	**official image** are Docker sanctioned images. Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are not prefixed by an organization or user name. In the list of images above, the python, node, alpine and nginx images are official (base) images. To find out more about them, check out the Official Images Documentation.
+
+	**user image** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
+
+	**Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
+	
+	**tag** is an identifier of the exact version of the image. By default if a tag is not given, the ``:latest`` tag will be used.
+
+An important distinction with regard to *images* is between *base images*, *child images*, *official images* and *user images* 
+
+1.1 Docker Registries
+~~~~~~~~~~~~~~~~~~~~~
+
+Docker uses the concept of "Registries" where images are hosted for consumption. 
+
+So what *EXACTLY* is a **Registry**? There are several things you can do with Docker registries:
+
+	- Search for images
+	- Pull images
+	- Share images
+	- Push images 
+
+* You must have an account on a registry.
+
+* You can create many repositories. 
+
+* You can create many tagged images in a repository
+
+* You can even set up your own private registry using a *Docker Trusted Registry*
+
+.. Terminology::
+
+	**Registry**  Organized collection of "Repositories" with compiled images. 
+
+	**Repository** collection of "images" with individual "tags".
+
+1.2 Popular Docker Registries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Docker command line interface uses the `Docker Hub <https://hub.docker.com/>`_ public registry by default. 
+
+Some examples of public/private registries to consider for your research needs:
+
+	- `Docker Cloud <https://cloud.docker.com/>`_
+	- `Docker Hub <https://hub.docker.com/>`_ 
+	- `Docker Trusted Registry <https://docs.docker.com/ee/dtr/>`_
+	- `Amazon Elastic Container Registry <https://aws.amazon.com/ecr/>`_
+	- `Google Container Registry <https://aws.amazon.com/ecr/>`_
+	- `Azure Container Registry <https://azure.microsoft.com/en-us/services/container-registry/>`_
+	- `NVIDIA GPU Cloud <https://ngc.nvidia.com/catalog/containers>`_
+	- `Private Docker Registry <https://private-docker-registry.com/>`_ - not official Docker
+	- `Gitlab Container Registry <https://docs.gitlab.com/ce/administration/container_registry.html>`_
+	- `RedHat Quay <https://quay.io/>`_
+	- `TreeScale <https://treescale.com/>`_
+	- `Canister <https://www.canister.io/>`_             
+
+To get a new Docker image you can either get it from a registry (such as the Docker hub). There are hundreds of thousands of images available on the many public Docker Registries. 
+
+You can also search for images within a registry directly from the command line using ``docker search`` (after you've logged into that registry).
+
+.. code-block:: bash
+
+	$ docker search ubuntu
+	  NAME                                                   DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+	  ubuntu                                                 Ubuntu is a Debian-based Linux operating sys…   7310                [OK]                
+	  dorowu/ubuntu-desktop-lxde-vnc                         Ubuntu with openssh-server and NoVNC            163                                     [OK]
+	  rastasheep/ubuntu-sshd                                 Dockerized SSH service, built on top of offi…   131                                     [OK]
+	  ansible/ubuntu14.04-ansible                            Ubuntu 14.04 LTS with ansible                   90                                      [OK]
+	  ubuntu-upstart                                         Upstart is an event-based replacement for th…   81                  [OK]                
+	  neurodebian                                            NeuroDebian provides neuroscience research s…   43                  [OK]                
+	  ubuntu-debootstrap                                     debootstrap --variant=minbase --components=m…   35                  [OK]                
+	  1and1internet/ubuntu-16-nginx-php-phpmyadmin-mysql-5   ubuntu-16-nginx-php-phpmyadmin-mysql-5          26                                      [OK]
+	  nuagebec/ubuntu                                        Simple always updated Ubuntu docker images w…   22                                      [OK]
+	  tutum/ubuntu                                           Simple Ubuntu docker images with SSH access     18                                      
+	  ppc64le/ubuntu                                         Ubuntu is a Debian-based Linux operating sys…   11                                      
+	  i386/ubuntu                                            Ubuntu is a Debian-based Linux operating sys…   9                                       
+	  1and1internet/ubuntu-16-apache-php-7.0                 ubuntu-16-apache-php-7.0                        7                                       [OK]
+	  eclipse/ubuntu_jdk8                                    Ubuntu, JDK8, Maven 3, git, curl, nmap, mc, …   5                                       [OK]
+	  darksheer/ubuntu                                       Base Ubuntu Image -- Updated hourly             3                                       [OK]
+	  codenvy/ubuntu_jdk8                                    Ubuntu, JDK8, Maven 3, git, curl, nmap, mc, …   3                                       [OK]
+	  1and1internet/ubuntu-16-nginx-php-5.6-wordpress-4      ubuntu-16-nginx-php-5.6-wordpress-4             2                                       [OK]
+	  1and1internet/ubuntu-16-nginx                          ubuntu-16-nginx                                 2                                       [OK]
+	  pivotaldata/ubuntu                                     A quick freshening-up of the base Ubuntu doc…   1                                       
+	  smartentry/ubuntu                                      ubuntu with smartentry                          0                                       [OK]
+	  pivotaldata/ubuntu-gpdb-dev                            Ubuntu images for GPDB development              0                                       
+	  1and1internet/ubuntu-16-healthcheck                    ubuntu-16-healthcheck                           0                                       [OK]
+	  thatsamguy/ubuntu-build-image                          Docker webapp build images based on Ubuntu      0                                       
+	  ossobv/ubuntu                                          Custom ubuntu image from scratch (based on o…   0                                       
+	  1and1internet/ubuntu-16-sshd                           ubuntu-16-sshd                                  0                                       [OK]
+
+2.0 Docker Run
+==============
 
 Now that we know what a container and image is, let's run the following command in our terminal:
 
@@ -91,6 +202,8 @@ Now that we know what a container and image is, let's run the following command 
 	drwxr-xr-x    5 root     root          4096 Dec 26  2016 lib
 	drwxr-xr-x    5 root     root          4096 Dec 26  2016 media
 	........
+
+To find out more about Docker images, run ``docker inspect hello-world``. In the demo above, you could have used the ``docker pull`` command to download the ``hello-world`` image. However when you executed the command ``docker run hello-world``, it also did a ``docker pull`` behind the scenes to download the ``hello-world`` image with ``latest`` tag (we will learn more about tags little later).
 
 Similar to ``docker run hello-world`` command in the demo above, ``docker run alpine ls -l`` command fetches the ``alpine:latest`` image from the Docker registry first, saves it in our system and then runs a container from that saved image. 
 
@@ -178,7 +291,8 @@ Exit out of the container by giving the ``exit`` command.
 
 		$ docker attach 0db38ea51a48
 
-3.1 House Keeping and Cleaning Up
+2.1 House Keeping and Cleaning Up
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Docker images are cached on your machine in the location where Docker was installed. These image files are not visible in the same directory where you might have used ``docker pull <imagename>``.
 
@@ -208,15 +322,12 @@ To remove images that you no longer need, type:
 
 	$ docker system prune --help
 
-4. Build Docker images which contain your own code
-==================================================
-
 Great! so you have now looked at ``docker run``, played with a Docker containers and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff — deploying your own applications with Docker.
 
-4.1  Docker images
-~~~~~~~~~~~~~~~~~~
+2.2  Managing Docker images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Docker images are the basis of containers. In the previous example, you pulled the ``alpine`` image from the registry and asked the Docker client to run a container based on that image. To see the list of images that are available locally on your system, run the ``docker images`` command.
+In the previous example, you pulled the ``alpine`` image from the registry and asked the Docker client to run a container based on that image. To see the list of images that are available locally on your system, run the ``docker images`` command.
 
 .. code-block:: bash
 
@@ -231,96 +342,15 @@ Above is a list of images that I've pulled from the registry and those I've crea
 
 For simplicity, you can think of an image akin to a Git repository - images can be committed with changes and have multiple versions. When you do not provide a specific version number, the client defaults to latest.
 
-For example you could pull a specific version of Ubuntu image as follows:
-
-.. code-block:: bash
-
-	$ docker pull ubuntu:18.04
-
-If you do not specify the version number of the image, as mentioned, the Docker client will default to a version named ``latest``.
-
-So for example, the ``docker pull`` command given below will pull an image named ``ubuntu:latest``
-
-.. code-block:: bash
-
-	$ docker pull ubuntu
-
-To get a new Docker image you can either get it from a registry (such as the Docker hub) or create your own. There are hundreds of thousands of images available on Docker hub. You can also search for images directly from the command line using ``docker search``.
-
-.. code-block:: bash
-
-	$ docker search ubuntu
-	  NAME                                                   DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
-	  ubuntu                                                 Ubuntu is a Debian-based Linux operating sys…   7310                [OK]                
-	  dorowu/ubuntu-desktop-lxde-vnc                         Ubuntu with openssh-server and NoVNC            163                                     [OK]
-	  rastasheep/ubuntu-sshd                                 Dockerized SSH service, built on top of offi…   131                                     [OK]
-	  ansible/ubuntu14.04-ansible                            Ubuntu 14.04 LTS with ansible                   90                                      [OK]
-	  ubuntu-upstart                                         Upstart is an event-based replacement for th…   81                  [OK]                
-	  neurodebian                                            NeuroDebian provides neuroscience research s…   43                  [OK]                
-	  ubuntu-debootstrap                                     debootstrap --variant=minbase --components=m…   35                  [OK]                
-	  1and1internet/ubuntu-16-nginx-php-phpmyadmin-mysql-5   ubuntu-16-nginx-php-phpmyadmin-mysql-5          26                                      [OK]
-	  nuagebec/ubuntu                                        Simple always updated Ubuntu docker images w…   22                                      [OK]
-	  tutum/ubuntu                                           Simple Ubuntu docker images with SSH access     18                                      
-	  ppc64le/ubuntu                                         Ubuntu is a Debian-based Linux operating sys…   11                                      
-	  i386/ubuntu                                            Ubuntu is a Debian-based Linux operating sys…   9                                       
-	  1and1internet/ubuntu-16-apache-php-7.0                 ubuntu-16-apache-php-7.0                        7                                       [OK]
-	  eclipse/ubuntu_jdk8                                    Ubuntu, JDK8, Maven 3, git, curl, nmap, mc, …   5                                       [OK]
-	  darksheer/ubuntu                                       Base Ubuntu Image -- Updated hourly             3                                       [OK]
-	  codenvy/ubuntu_jdk8                                    Ubuntu, JDK8, Maven 3, git, curl, nmap, mc, …   3                                       [OK]
-	  1and1internet/ubuntu-16-nginx-php-5.6-wordpress-4      ubuntu-16-nginx-php-5.6-wordpress-4             2                                       [OK]
-	  1and1internet/ubuntu-16-nginx                          ubuntu-16-nginx                                 2                                       [OK]
-	  pivotaldata/ubuntu                                     A quick freshening-up of the base Ubuntu doc…   1                                       
-	  smartentry/ubuntu                                      ubuntu with smartentry                          0                                       [OK]
-	  pivotaldata/ubuntu-gpdb-dev                            Ubuntu images for GPDB development              0                                       
-	  1and1internet/ubuntu-16-healthcheck                    ubuntu-16-healthcheck                           0                                       [OK]
-	  thatsamguy/ubuntu-build-image                          Docker webapp build images based on Ubuntu      0                                       
-	  ossobv/ubuntu                                          Custom ubuntu image from scratch (based on o…   0                                       
-	  1and1internet/ubuntu-16-sshd                           ubuntu-16-sshd                                  0                                       [OK]
-
-An important distinction with regard to images is between base images and child images and official images and user images (Both of which can be base images or child images.).
-
-.. important::
-	**Base image** are images that have no parent images, usually images with an OS like ubuntu, alpine or debian.
-
-	**Child image** are images that build on base images and add additional functionality.
-
-	**Official image** are Docker sanctioned images. Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are not prefixed by an organization or user name. In the list of images above, the python, node, alpine and nginx images are official (base) images. To find out more about them, check out the Official Images Documentation.
-
-	**User image** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
-
-	A **Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
-
-We want to create a Docker image with this app. As mentioned above, all user images are based on a base image. Since our application is written in Python, we will build our own Python image based on ``Alpine``. We'll do that using a Dockerfile.
-
-Create a file called Dockerfile in the ``simple-script`` directory, and add content to it as described below. 
-
-
-4.2 Deploying a JupyterLab or RStudio-Server
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2.3 Pulling and Running a JupyterLab or RStudio-Server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this section, let's find a Docker image which can run a Jupyter Notebook
 
-.. blockdiag::
+2.3.1 Docker Search
+^^^^^^^^^^^^^^^^^^^
 
-	blockdiag {
-	  orientation = portrait;
-	  default_fontsize = 8;
-	  A [label="ubuntu@SHA"];
-
-	  A -> base-notebook;
-	  base-notebook -> minimal-notebook;
-	  minimal-notebook -> scipy-notebook;
-	  scipy-notebook -> tensorflow-notebook;
-	  scipy-notebook -> datascience-notebook;
-	  minimal-notebook -> r-notebook;
-	  scipy-notebook -> pyspark-notebook;
-	  pyspark-notebook -> all-spark-notebook;
-	}
-
-4.2.1 Suitable Docker images 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Search for images on Docker Hub which contain the string 'jupyter'
+Search for official images on Docker Hub which contain the string 'jupyter'
 
 .. code-block:: bash
 
@@ -367,225 +397,78 @@ Search for images on Docker Hub which contain the string 'rstudio'
 	calpolydatascience/rstudio-notebook       RStudio notebook                                1                                       [OK]	
 	...
 
-4.2.2. **Dockerfile**
-^^^^^^^^^^^^^^^^^^^^^^
 
-Since we want to use a Jupyter notebook to call our function, we will build an image based on ``jupyter/scipy-notebook:latest``.
+2.3.1 Docker Run
+^^^^^^^^^^^^^^^^
+
+```
+docker run --rm -p 8787:8787 -e PASSWORD=cc2020 rocker/rstudio 
+```
+
+```
+docker run --rm -p 8888:888 jupyter/base-notebook
+```
+
+
+3. Managing Data in Docker
+==========================
+
+It is possible to store data within the writable layer of a container, but there are some limitations:
+
+- The data doesn’t persist when that container is no longer running, and it can be difficult to get the data out of the container if another process needs it.
+
+- A container’s writable layer is tightly coupled to the host machine where the container is running. You can’t easily move the data somewhere else.
+
+- Its better to put your data into the container **AFTER** it is build - this keeps the container size smaller and easier to move across networks. 
+
+Docker offers three different ways to mount data into a container from the Docker host: 
+
+  * **volumes**, 
+
+  * **bind mounts**, 
+
+  * **tmpfs volumes**. 
+  
+When in doubt, volumes are almost always the right choice.
+
+3.1 Volumes 
+~~~~~~~~~~~
+
+|volumes|
+
+Volumes are often a better choice than persisting data in a container’s writable layer, because using a volume does not increase the size of containers using it, and the volume’s contents exist outside the lifecycle of a given container. While bind mounts (which we will see later) are dependent on the directory structure of the host machine, volumes are completely managed by Docker. Volumes have several advantages over bind mounts:
+
+- Volumes are easier to back up or migrate than bind mounts.
+- You can manage volumes using Docker CLI commands or the Docker API.
+- Volumes work on both Linux and Windows containers.
+- Volumes can be more safely shared among multiple containers.
+- A new volume’s contents can be pre-populated by a container.
+
+.. Note::
+  
+	If your container generates non-persistent state data, consider using a ``tmpfs`` mount to avoid storing the data anywhere permanently, and to increase the container’s performance by avoiding writing into the container’s writable layer.
+
+3.1.1 Choose the -v or –mount flag for mounting volumes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``-v`` or ``--volume``: Consists of three fields, separated by colon characters (:). The fields must be in the correct order, and the meaning of each field is not immediately obvious.
+
+- In the case of named volumes, the first field is the name of the volume, and is unique on a given host machine.
+- The second field is the path where the file or directory are mounted in the container.
+- The third field is optional, and is a comma-separated list of options, such as ``ro``.
+
+.. code-block:: bash
+   -v /home/username/your_data_folder:/data
 
 .. Note::
 
-	This is one of the official Docker images provided by the Jupyter project for you to build your own data science notebooks on:  
-	
-	https://jupyter-docker-stacks.readthedocs.io/en/latest/
+	Originally, the ``-v`` or ``--volume`` flag was used for standalone containers and the ``--mount`` flag was used for swarm services. However, starting with Docker 17.06, you can also use ``--mount`` with standalone containers. In general, ``--mount`` is more explicit and verbose. The biggest difference is that the ``-v`` syntax combines all the options together in one field, while the ``--mount`` syntax separates them. Here is a comparison of the syntax for each flag.
 
-Create a file called Dockerfile in the ``mynotebook`` directory, and add content to it as described below. 
 
-.. code-block:: bash
-
-	# base image
-	FROM jupyter/scipy-notebook:latest
-	
-	# reset user to root for installing additional packages
-	USER root
-
-	# Install a few dependencies for iCommands, text editing, and monitoring instances
-	RUN apt-get update && apt-get install -y \
-	    apt-transport-https \
-	    gcc \
-	    gnupg \
-	    htop \
-	    less \
-	    libfuse2 \
-	    libpq-dev \
-	    libssl1.0 \
-	    lsb \
-	    nano \
-	    nodejs \
-	    python-requests \
-	    software-properties-common \
-	    vim
-	    
-	# Install iCommands
-	RUN wget https://files.renci.org/pub/irods/releases/4.1.12/ubuntu14/irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
-    	dpkg -i irods-icommands-4.1.12-ubuntu14-x86_64.deb && \
-    	rm irods-icommands-4.1.12-ubuntu14-x86_64.deb
-    
-	# reset container user to jovyan
-	USER jovyan
-	
-	# set the work directory
-	WORKDIR /home/jovyan
-	
-	# expose the public port we want to run on
-	EXPOSE 8888
-
-	# copy a file into the container
-	COPY entry.sh /bin
-	RUN mkdir -p /home/jovyan/.irods
-
-	ENTRYPOINT ["bash", "/bin/entry.sh"]
-
-.. Note::
-
-   We use a code line escape character ``\`` to allow single line scripts to be written on multiple lines in the Dockerfile.
-   
-   We also use the double characters ``&&`` which essentially mean "if true, then do this" while executing the code. The ``&&`` can come at the beginning of a line or the end when used with ``\``
-
-Now let's talk about what each of those lines in the Dockerfile mean.
-
-**4.2.2.1** We'll start by specifying our base image, using the FROM keyword:
-
-.. code-block:: bash
-
-	FROM jupyter/scipy-notebook:latest
-
-**4.2.2.2** Create and copy a file into the image by using ``COPY`` command.
-
-create a new file called ``entry.sh`` -- use your preferred text editor, e.g. ``nano entry.sh`` 
-
-.. code-block:: bash
-
-	#!/bin/bash
-	
-	echo '{"irods_host": "data.cyverse.org", "irods_port": 1247, "irods_user_name": "$IPLANT_USER", "irods_zone_name": "iplant"}' | envsubst > $HOME/.irods/irods_environment.json
-
-	exec jupyter lab --no-browser 
-
-The ``entry.sh`` file creates an iRODS environment ``.json`` which has CyVerse Data Store configurations pre-written. It also tells Docker to start Jupter Lab and to not pop open a browser tab when doing so.
-
-.. code-block:: bash
-
-	COPY entry.sh /bin
-
-**4.2.2.3** Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
-
-.. code-block:: bash
-
-	EXPOSE 8888
-
-**4.2.2.4** What about ``CMD``?
-
-Notice that unlike our previous Dockerfile this one does not end with a ``CMD`` command. This is on purpose.
-
-Remember: The primary purpose of ``CMD`` is to tell the container which command it should run by default when it is started.
-
-Can you guess what will happen if we don't specify our own 'entrypoint' using ``CMD``?
-
-**4.2.2.5** Setting a new entrypoint 
-
-When this container is run, it will use a different default ``ENTRYPOINT`` than the original container
-
-.. code-block:: bash
-
-	ENTRYPOINT ["bash", "/bin/entry.sh"]
-	
-This entrypoint runs the shell script ``entry.sh``	
-
-.. _Build the image:
-
-4.2.3. Build the image
-^^^^^^^^^^^^^^^^^^^^^^
-
-.. Note::
-
-	Remember to replace ``<YOUR_DOCKERHUB_USERNAME>`` with your username. This username should be the same one you created when registering on Docker hub.
-
-.. code-block:: bash
-
-	DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
-
-For example this is how I assign my dockerhub username
-
-.. code-block:: bash
-
-	DOCKERHUB_USERNAME=tswetnam
-
-Now build the image using the following command:
-
-.. code-block:: bash
-
-	$ docker build -t $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse .
-	Sending build context to Docker daemon  3.072kB
-	Step 1/3 : FROM jupyter/minimal-notebook
-	 ---> 36c8dd0e1d8f
-	Step 2/3 : COPY model.py /home/jovyan/work/
-	 ---> b61aefd7a735
-	Step 3/3 : EXPOSE 8888
-	 ---> Running in 519dcabe4eb3
-	Removing intermediate container 519dcabe4eb3
-	 ---> 7983fe164dc6
-	Successfully built 7983fe164dc6
-	Successfully tagged tswetnam/jupyterlab-scipy:cyverse
-
-If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse`` shows.
-
-.. _Run your image:
-
-3. Run your image
-
-When Docker can successfully build your Dockerfile, test it by starting a new container from your new image using the docker run command. Don’t forget to include the port forwarding options you learned about before.
-
-.. code-block:: bash
-
-	$ docker run -p 8888:8888 $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
-
-You should see something like this:
-
-.. code-block:: bash
-
-	Executing the command: jupyter notebook
-	[I 07:21:25.396 NotebookApp] Writing notebook server cookie secret to /home/jovyan/.local/share/jupyter/runtime/notebook_cookie_secret
-	[I 07:21:25.609 NotebookApp] JupyterLab extension loaded from /opt/conda/lib/python3.7/site-packages/jupyterlab
-	[I 07:21:25.609 NotebookApp] JupyterLab application directory is /opt/conda/share/jupyter/lab
-	[I 07:21:25.611 NotebookApp] Serving notebooks from local directory: /home/jovyan
-	[I 07:21:25.611 NotebookApp] The Jupyter Notebook is running at:
-	[I 07:21:25.611 NotebookApp] http://(29a022bb5807 or 127.0.0.1):8888/?token=copy-your-own-token-not-this-one
-	[I 07:21:25.611 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-	[C 07:21:25.612 NotebookApp] 
-	    
-	    Copy/paste this URL into your browser when you connect for the first time,
-	    to login with a token:
-	        http://(29a022bb5807 or 127.0.0.1):8888/?token=copy-your-own-token-not-this-one
-
-Head over to http://localhost:8888 and your Jupyter notebook server should be running.
-
-Note: Copy the token from your own ``docker run`` output and paste it into the 'Password or token' input box.
-
-5. Dockerfile commands summary
-==============================
-
-Here's a quick summary of the few basic commands we used in our Dockerfiles.
-
-- **FROM** starts the Dockerfile. It is a requirement that the Dockerfile must start with the FROM command. Images are created in layers, which means you can use another image as the base image for your own. The FROM command defines your base layer. As arguments, it takes the name of the image. Optionally, you can add the Dockerhub username of the maintainer and image version, in the format username/imagename:version.
-
-- **RUN** is used to build up the Image you're creating. For each RUN command, Docker will run the command then create a new layer of the image. This way you can roll back your image to previous states easily. The syntax for a RUN instruction is to place the full text of the shell command after the RUN (e.g., RUN mkdir /user/local/foo). This will automatically run in a /bin/sh shell. You can define a different shell like this: RUN /bin/bash -c 'mkdir /user/local/foo'
-
-- **COPY** copies local files into the container.
-
-- **CMD** defines the commands that will run on the Image at start-up. Unlike a RUN, this does not create a new layer for the Image, but simply runs the command. There can only be one CMD per a Dockerfile/Image. If you need to run multiple commands, the best way to do that is to have the CMD run a script. CMD requires that you tell it where to run the command, unlike RUN. So example CMD commands would be:
-
-.. code-block:: bash
-
-	CMD ["python", "./app.py"]
-
-	CMD ["/bin/bash", "echo", "Hello World"]
-
-- **EXPOSE** creates a hint for users of an image which ports provide services. It is included in the information which can be retrieved via ``$ docker inspect <container-id>``.
-
-.. Note::
-
-	The ``EXPOSE`` command does not actually make any ports accessible to the host! Instead, this requires publishing ports by means of the ``-p`` flag when using ``docker run``.
-
-- **PUSH** pushes your image to Docker Cloud, or alternately to a private registry
-
-.. Note::
-
-	If you want to learn more about Dockerfiles, check out `Best practices for writing Dockerfiles <https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/>`_.
-
-6. Extra Demos
+4. Extra Demos
 ==============
 
-6.1 Portainer
+4.1 Portainer
 ~~~~~~~~~~~~~
 
 `Portainer <https://portainer.io/>`_ is an open-source lightweight managment UI which allows you to easily manage your Docker hosts or Swarm cluster.
@@ -594,7 +477,7 @@ Here's a quick summary of the few basic commands we used in our Dockerfiles.
 
 - Made for Docker: Portainer is meant to be plugged on top of the Docker API. It has support for the latest versions of Docker, Docker Swarm and Swarm mode.
 
-6.1.1 Installation
+4.1.1 Installation
 ^^^^^^^^^^^^^^^^^^
 
 Use the following Docker commands to deploy Portainer. Now the second line of command should be familiar to you by now. We will talk about first line of command in the Advanced Docker session.
@@ -618,12 +501,12 @@ Use the following Docker commands to deploy Portainer. Now the second line of co
 
 |portainer_demo|
 
-6.2 Play-with-docker (PWD)
+4.2 Play-with-docker (PWD)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `PWD <https://labs.play-with-docker.com/>`_ is a Docker playground which allows users to run Docker commands in a matter of seconds. It gives the experience of having a free Alpine Linux Virtual Machine in browser, where you can build and run Docker containers and even create clusters in `Docker Swarm Mode <https://docs.docker.com/engine/swarm/>`_. Under the hood, Docker-in-Docker (DinD) is used to give the effect of multiple VMs/PCs. In addition to the playground, PWD also includes a training site composed of a large set of Docker labs and quizzes from beginner to advanced level available at `training.play-with-docker.com <https://training.play-with-docker.com/>`_.
 
-6.2.1 Installation
+4.2.1 Installation
 ^^^^^^^^^^^^^^^^^^
 
 You don't have to install anything to use PWD. Just open ``https://labs.play-with-docker.com/`` <https://labs.play-with-docker.com/>`_ and start using PWD

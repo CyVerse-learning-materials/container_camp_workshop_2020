@@ -5,7 +5,7 @@
 |Home_Icon2|_
 `Learning Center Home <http://learning.cyverse.org/>`_
 
-**Introduction to BioContainers**
+**BioContainers**
 =================================
 
 `BioContainers <https://biocontainers.pro/#/>`_ is a community-driven project that provides the infrastructure and basic guidelines to create, manage and distribute bioinformatics containers with **special focus in proteomics, genomics, transcriptomics and metabolomics**. BioContainers is based on the popular frameworks of Docker. 
