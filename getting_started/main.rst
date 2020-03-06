@@ -47,7 +47,7 @@ Couldn't find what you were looking for?
 
 .. _CyVerse_logo: https://cyverse.org
 
-.. |Home_Icon| image:: ./img/homeicon.png
+.. |Home_Icon| image:: ../img/homeicon.png
     :width: 25
     :height: 25
 
