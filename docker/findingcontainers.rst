@@ -5,7 +5,7 @@
 |Home_Icon2|_
 `Learning Center Home <http://learning.cyverse.org/>`_
 
-**Finding pre-built images**
+**Searching image registries**
 ============================
 
 **Image registry:** a storage and content delivery system, such as that used by Docker
