@@ -6,7 +6,7 @@
 `Learning Center Home <http://learning.cyverse.org/>`_
 
 **Searching image registries**
-============================
+================================
 
 **Image registry:** a storage and content delivery system, such as that used by Docker
 
@@ -16,20 +16,22 @@
 
 There many public and private image registries available. Private registries tend to cost money. Public registries tend to be free.
 
+
 Some examples of public/private registries to consider for your research needs:
 
-Docker Hub
-Docker Trusted Registry
-Amazon Elastic Container Registry
-Google Container Registry
-Azure Container Registry
-NVIDIA GPU Cloud
-Private Docker Registry - not official Docker
-Gitlab Container Registry
-Quay
-TreeScale
-Canister
-BioContainers Registry
+- `Docker Hub <https://hub.docker.com/>`_ 
+- `Docker Trusted Registry <https://docs.docker.com/ee/dtr/>`_
+- `Amazon Elastic Container Registry <https://aws.amazon.com/ecr/>`_
+- `Google Container Registry <https://cloud.google.com/container-registry/docs>`_
+- `Azure Container Registry <https://azure.microsoft.com/en-us/services/container-registry/>`_
+- `NVIDIA GPU Cloud <https://ngc.nvidia.com/catalog/containers>`_
+- `Private Docker Registry <https://private-docker-registry.com/>`_ - not official Docker
+- `Gitlab Container Registry <https://docs.gitlab.com/ce/administration/container_registry.html>`_
+- `Quay <https://quay.io/>`_
+- `TreeScale <https://treescale.com/>`_
+- `Canister <https://www.canister.io/>`_
+- `BioContainers Registry <https://biocontainers.pro/#/registry>`_
+
 
 |dockerhub|
 -------------
@@ -141,21 +143,6 @@ Use 'docker images' to see all the images on your computer:
 .. code-block:: bash
 
    $ sudo docker images
-
-Some examples of public/private registries to consider for your research needs:
-
-- `Docker Hub <https://hub.docker.com/>`_ 
-- `Docker Trusted Registry <https://docs.docker.com/ee/dtr/>`_
-- `Amazon Elastic Container Registry <https://aws.amazon.com/ecr/>`_
-- `Google Container Registry <https://cloud.google.com/container-registry/docs>`_
-- `Azure Container Registry <https://azure.microsoft.com/en-us/services/container-registry/>`_
-- `NVIDIA GPU Cloud <https://ngc.nvidia.com/catalog/containers>`_
-- `Private Docker Registry <https://private-docker-registry.com/>`_ - not official Docker
-- `Gitlab Container Registry <https://docs.gitlab.com/ce/administration/container_registry.html>`_
-- `Quay <https://quay.io/>`_
-- `TreeScale <https://treescale.com/>`_
-- `Canister <https://www.canister.io/>`_
-- `BioContainers Registry <https://biocontainers.pro/#/registry>`_
 
 ----
 
