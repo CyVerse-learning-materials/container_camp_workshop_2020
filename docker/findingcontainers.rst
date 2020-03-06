@@ -32,7 +32,7 @@ Canister
 BioContainers Registry
 
 |dockerhub|
-^^^^^^^^^^^
+-------------
 
 Docker Hub is a service provided by Docker for finding and sharing container images with your team. It provides the following major features:
 
@@ -48,24 +48,24 @@ Docker Hub is the most well-known and popular image registry for Docker containe
 |biocontainerlogo|
 
 |biocontainerreg|
-^^^^^^^^^^^^^^^^^^
+------------------
 
 BioContainers is a community-driven project that provides the infrastructure and basic guidelines to create, manage and distribute bioinformatics containers with **special focus in proteomics, genomics, transcriptomics and metabolomics**. BioContainers is based on the popular frameworks of Docker.
 
 Although anyone can create a BioContainer, the majority of BioContainers are created by the Bioconda project. Every Bioconda package has a corresponding BioContainer available at Quay.io.
 
 |quayio|
-^^^^^^^^^
+---------
 Quay is another general image registry. It works the same way as Docker Hub. However, Quay is home to all BioContainers made by the Bioconda project. Now we will find a BioContainer image at Quay, pull that image and run it on cloud virtual machine.
 
-**Hands-on**
-------------
+**Pull an image from a registry**
+----------------------------------
 
 To run your BioContainer you will need a computer with Docker installed. 
 We will use an Atmosphere cloud instance today but this can be done on any computer.
 
 Open an Atmosphere instance
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Go to `Atmosphere <https://atmo.cyverse.org/>`_ and log in with your CyVerse credentials.
  
