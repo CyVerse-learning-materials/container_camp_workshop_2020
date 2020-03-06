@@ -1,12 +1,12 @@
 **Training session in Docker**
 ==============================
 
-In this session we will explain the various aspects of the Docker. Starting with the basics of Docker which focus on the installation and configuration of Docker, the session will gradually move to advanced topics such as managing data using volumes and pushing and pull containers from registries. Overall this session covers the development aspects of Docker and how you can get up and running on the development environments using Docker containers.
+In these sessions we will cover various aspects of Docker containers for data science applications. Starting with the basics of pulling images from Docker Registries, running Docker containers locally and on cloud, and managing your data in a container using volumes. In the advanced session, you will modify an existing container by installing your own science libraries or packages.
 
 - `Docker Introduction <../docker/dockerintro.html>`_
 
-This is the introductory session for the concept of Docker. The topics include Docker installation, running prebuilt Docker containers, deploying web applications with Docker, building and running your own Docker containers, etc.
+Topics include Docker installation, pulling and running pre-built Docker containers, and deploying browser-based applications (like Jupyter and RStudio) with Docker.
 
 - `Advanced Docker <../docker/dockeradvanced.html>`_
 
-This is the advanced session for the concept of Docker. The topics include pushing and pulling Docker containers to public and private registries, automated Docker image building from github/bitbucket repositories, managing data in Docker containers, Docker compose for building multiple Docker containers, improving your data science workflows using Docker containers, etc.
+Topics include pulling Docker containers from public and private registries, automated Docker image building from GitHub repositories, managing data in Docker containers, Docker Compose for building multiple Docker containers, amd improving your data science workflows using Docker containers.
