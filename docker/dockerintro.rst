@@ -57,17 +57,17 @@ When run without ``--version`` you should see a whole bunch of lines showing the
 
 .. Note::
 
-	Depending on how you've installed Docker on your system, you may see a ``permission denied`` error after running the ``$ docker run helo-world`` command. If you're on Linux, you may need to prefix your Docker commands with sudo. Alternatively to run docker command without ``sudo``, you need to add your user (who has root privileges) to docker group. 
+	Depending on how and where you've installed Docker, you may see a ``permission denied`` error after running the ``$ docker run helo-world`` command. If you're on Linux, you may need to prefix your Docker commands with ``sudo``. Alternatively to run docker command without ``sudo``, you need to add your user name (who has root privileges) to the docker "group". 
 
 	Create the docker group::
 	
-	``$ sudo groupadd docker```
+	$ sudo groupadd docker
 	
 	Add your user to the docker group::
 	
-	``$ sudo usermod -aG docker $USER``
+	$ sudo usermod -aG docker $USER
 
-	Log out and log back in so that your group membership is re-evaluated
+	Log out or close terminal and log back in and your group membership will be initiated
 		
 3. Running Docker containers from prebuilt images
 =================================================
@@ -177,6 +177,36 @@ Exit out of the container by giving the ``exit`` command.
 	Now if you want to get back into that container, then you can type ``docker attach <container id>``. This way you can save your container::
 
 		$ docker attach 0db38ea51a48
+
+3.1 House Keeping and Cleaning Up
+
+Docker images are cached on your machine in the location where Docker was installed. These image files are not visible in the same directory where you might have used ``docker pull <imagename>``.
+
+Some Docker images can be large. Especially Data Science images with many libraries and packages pre-installed. 
+
+.. Important::
+
+	Pulling many images from the Docker Registries may fill up your hard disk!
+
+To inspect your system and disk use:
+
+.. code-block:: bash
+
+	$ docker system info
+	
+	$ docker system df
+
+To find out how many images are on your machine, type:
+
+.. code-block:: bash
+
+	$ docker images --help
+
+To remove images that you no longer need, type:
+
+.. code-block:: bash
+
+	$ docker system prune --help
 
 4. Build Docker images which contain your own code
 ==================================================
@@ -347,7 +377,7 @@ Search for images on Docker Hub which contain the string 'rstudio'
 4.2.2. **Dockerfile**
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Since we want to use a Jupyter notebook to call our function, we will build an image based on ``jupyter/minimal-notebook``.
+Since we want to use a Jupyter notebook to call our function, we will build an image based on ``jupyter/scipy-notebook:latest``.
 
 .. Note::
 
@@ -416,7 +446,19 @@ Now let's talk about what each of those lines in the Dockerfile mean.
 
 	FROM jupyter/scipy-notebook:latest
 
-4.2.2.2. Copy the file you have created earlier into our image by using ``COPY`` command.
+4.2.2.2. Create and copy a file into the image by using ``COPY`` command.
+
+create a new file called ``entry.sh`` -- use your preferred text editor, e.g. ``nano entry.sh`` 
+
+.. code-block:: bash
+
+	#!/bin/bash
+	
+	echo '{"irods_host": "data.cyverse.org", "irods_port": 1247, "irods_user_name": "$IPLANT_USER", "irods_zone_name": "iplant"}' | envsubst > $HOME/.irods/irods_environment.json
+
+	exec jupyter lab --no-browser 
+
+The ``entry.sh file creates an iRODS environment ``.json`` which has CyVerse Data Store configurations pre-written. It also tells Docker to start Jupter Lab and to not pop open a browser tab when doing so.
 
 .. code-block:: bash
 
