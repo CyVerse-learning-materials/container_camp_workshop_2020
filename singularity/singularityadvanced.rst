@@ -8,8 +8,8 @@
 
 In this section we'll go over the creation of Singularity containers from a recipe file, called ``Singularity`` (equivalent to ``Dockerfile``).
 
-5.1 Keeping track of downloaded containers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+5.1 Keep track of downloaded containers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, Singularity uses a temporary cache to hold Docker tarballs:
 
@@ -73,7 +73,7 @@ In order to make these changes permanant, I need to rebuild the sandbox as a ``.
 5.2.1: Exercise (~30 minutes): Create a Singularity file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`SyLabs User Guide <https://www.sylabs.io/guides/3.0/user-guide/>`_ 
+`SyLabs User-Guide <https://sylabs.io/guides/3.5/user-guide/>`_ 
 
 A ``Singularity`` file can be hosted on Github and will be auto-detected by `Singularity-Hub <https://www.singularity-hub.org/>`_ when you set up your container Collection.
 
@@ -359,8 +359,10 @@ The University of Arizona HPS `Singularity examples <https://docs.hpc.arizona.ed
 7.0 Cryptographic Security
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Documentation <https://www.sylabs.io/guides/3.0/user-guide/signNverify.html>`_
+`Documentation <https://www.sylabs.io/guides/3.5/user-guide/signNverify.html>`_
 
 .. |singularity| image:: ../img/singularity.png
   :height: 200
   :width: 200
+  
+  <a href="https://sylabs.io/" target="blank">singularity</a>
