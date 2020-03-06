@@ -20,4 +20,7 @@ epub_author = 'Amanda Cooksey, Upendra Devisetty, Sateesh Peri, Julian Pistorius
 epub_publisher = 'CyVerse'
 epub_copyright = 'CC0 - Open Source'
 
-extensions = ['sphinxcontrib.blockdiag', ]
+extensions = ['sphinxcontrib.blockdiag']
+
+# Fontpath for blockdiag (truetype font)
+blockdiag_fontpath = '/usr/share/fonts/truetype/ipafont/ipagp.ttf'
