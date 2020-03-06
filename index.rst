@@ -29,6 +29,7 @@ Expected outcomes:
    getting_started/location
    getting_started/agenda
    getting_started/about_cyverse
+   getting_started/glossary
 
 .. toctree::
    :maxdepth: 1
@@ -42,9 +43,11 @@ Expected outcomes:
    :maxdepth: 1
    :caption: Docker
 
+   docker/findingcontainers
    docker/dockerintro
    docker/dockeradvanced
    docker/dockerhandson
+   
 
 .. toctree::
    :maxdepth: 1
