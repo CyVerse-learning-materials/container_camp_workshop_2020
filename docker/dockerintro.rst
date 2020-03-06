@@ -213,13 +213,8 @@ To remove images that you no longer need, type:
 
 Great! so you have now looked at ``docker run``, played with a Docker containers and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff — deploying your own applications with Docker.
 
-4.1 Deploying a command-line app
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
-In this section, let's dive deeper into what Docker images are. Later on we will build our own image and use that image to run an application locally.
-
-4.1.1 Docker images
-^^^^^^^^^^^^^^^^^^^
+4.1  Docker images
+~~~~~~~~~~~~~~~~~~
 
 Docker images are the basis of containers. In the previous example, you pulled the ``alpine`` image from the registry and asked the Docker client to run a container based on that image. To see the list of images that are available locally on your system, run the ``docker images`` command.
 
@@ -293,9 +288,7 @@ An important distinction with regard to images is between base images and child 
 
 	**User image** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
 
-4.1.2 **Dockerfile**
-
-A **Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
+	A **Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
 
 We want to create a Docker image with this app. As mentioned above, all user images are based on a base image. Since our application is written in Python, we will build our own Python image based on ``Alpine``. We'll do that using a Dockerfile.
 
@@ -305,7 +298,7 @@ Create a file called Dockerfile in the ``simple-script`` directory, and add cont
 4.2 Deploying a JupyterLab or RStudio-Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In this section, let's build a Docker image which can run a Jupyter Notebook
+In this section, let's find a Docker image which can run a Jupyter Notebook
 
 .. blockdiag::
 
@@ -440,13 +433,13 @@ Create a file called Dockerfile in the ``mynotebook`` directory, and add content
 
 Now let's talk about what each of those lines in the Dockerfile mean.
 
-4.2.2.1 We'll start by specifying our base image, using the FROM keyword:
+**4.2.2.1** We'll start by specifying our base image, using the FROM keyword:
 
 .. code-block:: bash
 
 	FROM jupyter/scipy-notebook:latest
 
-4.2.2.2. Create and copy a file into the image by using ``COPY`` command.
+**4.2.2.2** Create and copy a file into the image by using ``COPY`` command.
 
 create a new file called ``entry.sh`` -- use your preferred text editor, e.g. ``nano entry.sh`` 
 
@@ -458,19 +451,19 @@ create a new file called ``entry.sh`` -- use your preferred text editor, e.g. ``
 
 	exec jupyter lab --no-browser 
 
-The ``entry.sh file creates an iRODS environment ``.json`` which has CyVerse Data Store configurations pre-written. It also tells Docker to start Jupter Lab and to not pop open a browser tab when doing so.
+The ``entry.sh`` file creates an iRODS environment ``.json`` which has CyVerse Data Store configurations pre-written. It also tells Docker to start Jupter Lab and to not pop open a browser tab when doing so.
 
 .. code-block:: bash
 
 	COPY entry.sh /bin
 
-4.2.2.3. Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
+**4.2.2.3** Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
 
 .. code-block:: bash
 
 	EXPOSE 8888
 
-4.2.2.4. What about ``CMD``?
+**4.2.2.4** What about ``CMD``?
 
 Notice that unlike our previous Dockerfile this one does not end with a ``CMD`` command. This is on purpose.
 
@@ -478,7 +471,7 @@ Remember: The primary purpose of ``CMD`` is to tell the container which command 
 
 Can you guess what will happen if we don't specify our own 'entrypoint' using ``CMD``?
 
-4.2.2.5. Setting a new entrypoint 
+**4.2.2.5** Setting a new entrypoint 
 
 When this container is run, it will use a different default ``ENTRYPOINT`` than the original container
 
@@ -499,19 +492,19 @@ This entrypoint runs the shell script ``entry.sh``
 
 .. code-block:: bash
 
-	YOUR_DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
+	DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
 
 For example this is how I assign my dockerhub username
 
 .. code-block:: bash
 
-	YOUR_DOCKERHUB_USERNAME=tswetnam
+	DOCKERHUB_USERNAME=tswetnam
 
 Now build the image using the following command:
 
 .. code-block:: bash
 
-	$ docker build -t $YOUR_DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse .
+	$ docker build -t $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse .
 	Sending build context to Docker daemon  3.072kB
 	Step 1/3 : FROM jupyter/minimal-notebook
 	 ---> 36c8dd0e1d8f
@@ -524,7 +517,7 @@ Now build the image using the following command:
 	Successfully built 7983fe164dc6
 	Successfully tagged tswetnam/jupyterlab-scipy:cyverse
 
-If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$YOUR_DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse`` shows.
+If everything went well, your image should be ready! Run ``docker images`` and see if your image ``$DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse`` shows.
 
 .. _Run your image:
 
@@ -534,7 +527,7 @@ When Docker can successfully build your Dockerfile, test it by starting a new co
 
 .. code-block:: bash
 
-	$ docker run -p 8888:8888 $YOUR_DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
+	$ docker run -p 8888:8888 $DOCKERHUB_USERNAME/jupyterlab-scipy:cyverse
 
 You should see something like this:
 
@@ -577,20 +570,20 @@ Here's a quick summary of the few basic commands we used in our Dockerfiles.
 
 	CMD ["/bin/bash", "echo", "Hello World"]
 
-- EXPOSE creates a hint for users of an image which ports provide services. It is included in the information which can be retrieved via ``$ docker inspect <container-id>``.
+- **EXPOSE** creates a hint for users of an image which ports provide services. It is included in the information which can be retrieved via ``$ docker inspect <container-id>``.
 
 .. Note::
 
-	The EXPOSE command does not actually make any ports accessible to the host! Instead, this requires publishing ports by means of the ``-p`` flag when using ``docker run``.
+	The ``EXPOSE`` command does not actually make any ports accessible to the host! Instead, this requires publishing ports by means of the ``-p`` flag when using ``docker run``.
 
-- PUSH pushes your image to Docker Cloud, or alternately to a private registry
+- **PUSH** pushes your image to Docker Cloud, or alternately to a private registry
 
 .. Note::
 
 	If you want to learn more about Dockerfiles, check out `Best practices for writing Dockerfiles <https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/>`_.
 
-6. Demos
-=========
+6. Extra Demos
+==============
 
 6.1 Portainer
 ~~~~~~~~~~~~~
@@ -608,6 +601,9 @@ Use the following Docker commands to deploy Portainer. Now the second line of co
 
 .. code-block:: bash
 
+	# on CyVerse Atmosphere:
+	$ ezd -p
+	
 	$ docker volume create portainer_data
 
 	$ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
