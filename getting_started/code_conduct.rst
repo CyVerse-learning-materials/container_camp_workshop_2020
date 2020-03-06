@@ -31,3 +31,11 @@ See http://www.ashedryden.com/blog/codes-of-conduct-101-faq for more information
 .. |CyVerse_logo2| image:: ../img/cyverse_learning.png
     :width: 500
 .. _CyVerse_logo2: http://learning.cyverse.org/
+
+.. _CyVerse_logo: https://cyverse.org
+
+.. |Home_Icon| image:: ./img/homeicon.png
+    :width: 25
+    :height: 25
+
+.. _Home_Icon: http://learning.cyverse.org/
