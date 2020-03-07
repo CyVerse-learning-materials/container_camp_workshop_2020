@@ -16,7 +16,8 @@ Chances are a Docker *image* already exists for the application you use in your 
 
 	**container** - Running instance of an *image* — the *container* runs the actual processes. A container includes an application and all of its dependencies. It shares its kernel with other containers, and runs as an isolated process in the space on the host OS. 
 
-	**layer** - an intermediate image, the result of a single set of build commands. A from Docker image is built from layers
+	**layer** - an intermediate image, the result of a single set of build commands. A Docker image is built from layers.
+	
 	**image** - The file system and configuration of an application which is used to create the container. 
 	
 	**base image** - images that have no parent image, usually images with an OS like ubuntu, alpine or debian.
