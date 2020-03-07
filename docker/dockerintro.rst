@@ -116,6 +116,10 @@ You can also search for images within a registry directly from the command line 
 	  ossobv/ubuntu                                          Custom ubuntu image from scratch (based on o…   0                                       
 	  1and1internet/ubuntu-16-sshd                           ubuntu-16-sshd                                  0                                       [OK]
 
+The single most common command that you'll use with Docker is ``docker run`` (`help manual <https://docs.docker.com/engine/reference/commandline/run/>`_). 
+
+``docker run`` starts a container and executes the default entrypoint, or any other command line statement that follows ``run``. 
+
 .. code-block:: bash
 
 	$ docker run alpine ls -l
@@ -128,13 +132,17 @@ You can also search for images within a registry directly from the command line 
 	drwxr-xr-x    5 root     root          4096 Dec 26  2016 media
 	........
 
-To find out more about Docker images, run ``docker inspect hello-world``. In the demo above, you could have used the ``docker pull`` command to download the ``hello-world`` image. However when you executed the command ``docker run hello-world``, it also did a ``docker pull`` behind the scenes to download the ``hello-world`` image with ``latest`` tag (we will learn more about tags little later).
+.. Note::
 
-Similar to ``docker run hello-world`` command in the demo above, ``docker run alpine ls -l`` command fetches the ``alpine:latest`` image from the Docker registry first, saves it in our system and then runs a container from that saved image. 
+	To find out more about a Docker images, run ``docker inspect hello-world``. 
+	
+In the demo above, you could have used the ``docker pull`` command to download the ``hello-world`` image first. 
 
-When you run ``docker run alpine``, you provided a command ``ls -l``, so Docker started the command specified and you saw the listing
+When you executed the command ``docker run alpine``, Docker looked for the image, did not find it, and then ran a ``docker pull`` behind the scenes to download the ``alpine`` image with the ``:latest`` tag.
 
-You can use the ``docker images`` command to see a list of all images on your system
+When you run ``docker run alpine``, you provided a command ``ls -l``, so Docker started the command specified and you saw the listing of the alpine file system.
+
+You can use the ``docker images`` command to see a list of all the cached images on your system:
 
 .. code-block:: bash
 
@@ -143,24 +151,18 @@ You can use the ``docker images`` command to see a list of all images on your sy
 	alpine                 	latest              c51f86c28340        4 weeks ago         1.109 MB
 	hello-world             latest              690ed74de00f        5 months ago        960 B
 
-Let's try something more exciting.
+Images need to have an ``ENTRYPOINT`` set in their Dockerfile recipe in order for them to return a result when they are run. The ``hello-world`` image echos out the statement that it is present when it executes.
+
+You can change the entrypoint of a container by making a statement after the ``repository/container_name:tag``:
 
 .. code-block:: bash
 
 	$ docker run alpine echo "Hello world"
 	Hello world
 
-OK, that's some actual output. In this case, the Docker client dutifully ran the ``echo`` command in our ``alpine`` container and then exited it. If you've noticed, all of that happened pretty quickly. Imagine booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
+In this case, the Docker client dutifully ran the ``echo`` command in our ``alpine`` container and then exited. If you've noticed, all of that happened pretty quickly. Imagine booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
 
-Try another command.
-
-.. code-block:: bash
-
-	$ docker run alpine sh
-
-Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands such as ``sh``, unless they are run in an interactive terminal - so for this example to not exit, you need to ``docker run -it alpine sh``. You are now inside the container shell and you can try out a few commands like ``ls -l``, ``uname -a`` and others. 
-
-Before doing that, now it's time to see the ``docker ps`` command which shows you all containers that are currently running.
+Now it's time to see the ``docker ps`` command which shows you all containers that are currently running.
 
 .. code-block:: bash
 
@@ -180,7 +182,16 @@ Since no containers are running, you see a blank line. Let's try a more useful v
 
 What you see above is a list of all containers that you ran. Notice that the STATUS column shows that these containers exited a few minutes ago. 
 
-If you want to run scripted commands such as ``sh``, they should be run in an interactive terminal. In addition, interactive terminal allows you to run more than one command in a container. Let's try that now:
+Try another command, this time to access the container as a shell:
+
+.. code-block:: bash
+
+	$ docker run alpine sh
+
+Wait, nothing happened! Is that a bug? Well, no. 
+
+The container will exit after running any scripted commands such as ``sh``, unless they are run in an "interactive" terminal (TTY) - so for this example to not exit, you need to add the ``-i`` for interactive and ``-t`` for TTY. You can run them both in a single flag as ``-it``, which is the more common way of adding the flag: 
+
 
 .. code-block:: bash
 
@@ -190,7 +201,7 @@ If you want to run scripted commands such as ``sh``, they should be run in an in
 	/ # uname -a
 	Linux de4bbc3eeaec 4.9.49-moby #1 SMP Wed Sep 27 23:17:17 UTC 2017 x86_64 Linux
 
-Running the ``run`` command with the ``-it`` flags attaches us to an interactive ``tty`` in the container. Now you can run as many commands in the container as you want. Take some time to run your favorite commands.
+The prompt should change to something more like ``/ # `` -- You are now running a shell inside the container. Try out a few commands like ``ls -l``, ``uname -a`` and others. 
 
 Exit out of the container by giving the ``exit`` command.
 
@@ -206,7 +217,7 @@ Exit out of the container by giving the ``exit`` command.
 		CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS                          PORTS                    NAMES
 		de4bbc3eeaec        alpine                "/bin/sh"                3 minutes ago       Exited (0) About a minute ago                            pensive_leavitt
 
-	If you want to keep the container active, then you can use keys ``ctrl +p, ctrl +q``. To make sure that it is not exited run the same ``docker ps --latest`` command again::
+	If you want to keep the container active, then you can use keys ``ctrl +p`` ``ctrl +q``. To make sure that it is not exited run the same ``docker ps --latest`` command again::
 
 		$ docker ps --latest
 		CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS                         PORTS                    NAMES
@@ -247,7 +258,20 @@ To remove images that you no longer need, type:
 
 	$ docker system prune --help
 
-Great! so you have now looked at ``docker run``, played with a Docker containers and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff — deploying your own applications with Docker.
+This is where it becomes important to differentiate between *images*, *containers*, and *volumes* (which we'll get to more in a bit). You can take care of all of the dangling images and containers on your system. Note, that ``prune`` will not removed your cached *images*
+
+.. code-block:: bash
+
+		$ docker system prune
+	WARNING! This will remove:
+	  - all stopped containers
+	  - all networks not used by at least one container
+	  - all dangling images
+	  - all dangling build cache
+
+	Are you sure you want to continue? [y/N]
+
+If you add the ``-af`` flag it will remove "all" ``-a`` dangling images, empty containers, AND ALL CACHED IMAGES with "force" ``-f``.
 
 2.0  Managing Docker images
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -319,10 +343,14 @@ Search for images on Docker Hub which contain the string 'rstudio'
 	calpolydatascience/rstudio-notebook       RStudio notebook                                1                                       [OK]	
 	...
 
-2.2 Docker Run
-^^^^^^^^^^^^^^^
+2.2 Interactive Containers
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Go ahead and run a basic image from a trusted registry. Here we run basic RStudio and Jupyter Lab:
+Let's go ahead and run some basic Integraded Development Environment images from "trusted" organizations on the Docker Hub registry. 
+
+When we want to run a container that runs on the open internet, we need to add a `TCP or UDP port number <https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers>`_ from which we can access the application in a browser using the machine's IP (Internet Protocol) address or DNS (Domain Name Service) location. 
+
+Here are some examples to run basic RStudio and Jupyter Lab:
 
 .. code-block:: bash
 
@@ -332,15 +360,17 @@ Go ahead and run a basic image from a trusted registry. Here we run basic RStudi
 
 	$docker run --rm -p 8888:888 jupyter/base-notebook
 
-2.3 Additional Docker Run Commands
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-A couple of other important commands to use when running a container:
+.. Note::
+	
+	We've added the ``--rm`` flag, which means the container will automatically removed from the cache when the container is exited. 
+	
+	When you start an IDE in a terminal, the terminal connection must stay active to keep the container alive. 
 
-``-d`` - the *detached* flag will run the container as a background process, rather than in the foreground. When you run a container with this flag, it will start, run, telling you the container ID: 
+If we want to keep our window in the foreground  we can use the ``-d`` - the *detached* flag will run the container as a background process, rather than in the foreground. When you run a container with this flag, it will start, run, telling you the container ID: 
 
 .. code-block:: bash
 	
-	$ docker run --rm -d -p 8888:888 jupyter/base-notebook
+	$ docker run --rm -d -p 8888:8888 jupyter/base-notebook
 
 	Unable to find image 'jupyter/base-notebook:latest' locally
 	latest: Pulling from jupyter/base-notebook
@@ -373,6 +403,11 @@ Note, that your terminal is still active and you can use it to launch more conta
 	CONTAINER ID        IMAGE                   COMMAND                  CREATED              STATUS              PORTS                             NAMES
 	561016e4e69e        jupyter/base-notebook   "tini -g -- start-no…"   About a minute ago   Up About a minute   8888/tcp, 0.0.0.0:8888->888/tcp   affectionate_banzai
 
+What if we want a Docker container to `always (re)start <https://docs.docker.com/config/containers/start-containers-automatically/>`_, even after we reboot our machine?
+
+.. code-block:: bash
+	
+	$ docker run --restart always 
 
 3. Managing Data in Docker
 ==========================
