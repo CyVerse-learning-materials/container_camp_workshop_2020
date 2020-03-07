@@ -58,7 +58,7 @@ Before we go further, it's actually important to ask what is reproducibility?
         - **Inferential reproducibility**: draw the same conclusions from either an
           independent replication of a study or a reanalysis of the original study.
 
-  .. admonition:: Discussion Question
+.. admonition:: Discussion Question
     :class: admonition-question
 
     How do these definitions apply to your research/teaching?
@@ -75,7 +75,6 @@ Reproducibility comes from our obligations and desires to work ethically,
 honestly, and with confidence that the data and knowledge we produce is done
 has integrity. Reproducibility is also a "spectrum of practices", not a
 single step. (See figure below from |Peng 2011|).
-
 
     |spectrum|
 
