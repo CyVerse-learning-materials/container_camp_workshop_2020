@@ -3,88 +3,17 @@
 
 |docker|
 
-0.0 Prerequisites
-================
+Prerequisites
+=============
 
 There are no specific skills needed for this tutorial beyond a basic comfort with the command line and using a text editor.
-
-You will need to set up a `Docker Hub <https://hub.docker.com>`_ account. 
-
-0.1 Docker Installation
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Getting all the tooling setup on your computer can be a daunting task, but not with Docker. Getting Docker up and running on your favorite OS (Mac/Windows/Linux) takes some time. Here are detailed instructions for setting up Docker on `Mac <https://docs.docker.com/docker-for-mac/install/>`_/`Windows <https://docs.docker.com/docker-for-windows/install/>`_/`Linux <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_.
-
-If you're using CyVerse Atmosphere you can use the ``ezd`` command in the `ssh`` terminal or web shell. `See Quick Start Manual <https://cyverse-ez-quickstart.readthedocs-hosted.com/en/latest/>`_ for other CyVerse ``ez`` commands.
-
-.. code-block:: bash
-
-	$ ezd
-
-.. Note:: 
-
-	If you're using Windows follow their `Docker Installation <https://docs.docker.com/docker-for-windows/install/>`_ instructions. All Docker commands work in Bash or Powershell on Windows.
-	
-	If you're using a MacOS you can follow their `Docker Installation <https://docs.docker.com/docker-for-mac/install/>`_  instructions. 
-		
-0.2 Test installation 
-~~~~~~~~~~~~~~~~~~~~~
-
-Once you are done installing Docker, test your Docker installation by running the following command to make sure you are using version 1.13 or higher:
-
-.. code-block:: bash
-
-	$ docker --version
-	Docker version 19.03.6, build 369ce74a3c
-
-When run without ``--version`` you should see the help menu showing the different options available with ``docker``.
-
-Alternatively you can test your installation by running the following:
-
-.. code-block:: bash
-
-	$ docker run hello-world
-	Unable to find image 'hello-world:latest' locally
-	latest: Pulling from library/hello-world
-	03f4658f8b78: Pull complete
-	a3ed95caeb02: Pull complete
-	Digest: sha256:8be990ef2aeb16dbcb9271ddfe2610fa6658d13f6dfb8bc72074cc1ca36966a7
-	Status: Downloaded newer image for hello-world:latest
-
-	Hello from Docker.
-	This message shows that your installation appears to be working correctly.
-
-	To generate this message, Docker took the following steps:
-	 1. The Docker client contacted the Docker daemon.
-	 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
-	 3. The Docker daemon created a new container from that image which runs the
-	    executable that produces the output you are currently reading.
-	 4. The Docker daemon streamed that output to the Docker client, which sent it
-	    to your terminal.
-	.......
-
-.. Note::
-
-	Depending on how and where you've installed Docker, you may see a ``permission denied`` error after running the ``$ docker run helo-world`` command. If you're on Linux, you may need to prefix your Docker commands with ``sudo``. Alternatively to run docker command without ``sudo``, you need to add your user name (who has root privileges) to the docker "group". 
-
-	Create the docker group::
-	
-	$ sudo groupadd docker
-	
-	Add your user to the docker group::
-	
-	$ sudo usermod -aG docker $USER
-
-	Log out or close terminal and log back in and your group membership will be initiated
 
 1.0 Docker Run
 ==============
 
-To get a new Docker image you can either get it from a registry (such as the Docker hub) or you can build your own (See `Advanced Section <../dockeradvanced.rst>`_. 
+As we just covered in the previous section, containers can be found in registries (such as the Docker hub), or they can build your own (See `Advanced Section <../dockeradvanced.rst>`_. 
 
-There are hundreds of thousands of images available on the many public Docker Registries. 
-
-You can also search for images within a registry directly from the command line using ``docker search`` (after you've logged into that registry).
+When you're looking for the right container, you can search for images within a registry directly from the command line using ``docker search`` (after you've logged into that registry).
 
 .. code-block:: bash
 
@@ -115,6 +44,20 @@ You can also search for images within a registry directly from the command line 
 	  thatsamguy/ubuntu-build-image                          Docker webapp build images based on Ubuntu      0                                       
 	  ossobv/ubuntu                                          Custom ubuntu image from scratch (based on o…   0                                       
 	  1and1internet/ubuntu-16-sshd                           ubuntu-16-sshd                                  0                                       [OK]
+
+.. Note::
+
+	Depending on how and where you've installed Docker, you may see a ``permission denied`` error after running the ``$ docker run helo-world`` command. If you're on Linux, you may need to prefix your Docker commands with ``sudo``. Alternatively to run docker command without ``sudo``, you need to add your user name (who has root privileges) to the docker "group". 
+
+	Create the docker group::
+	
+	$ sudo groupadd docker
+	
+	Add your user to the docker group::
+	
+	$ sudo usermod -aG docker $USER
+
+	Log out or close terminal and log back in and your group membership will be initiated
 
 The single most common command that you'll use with Docker is ``docker run`` (`help manual <https://docs.docker.com/engine/reference/commandline/run/>`_). 
 
