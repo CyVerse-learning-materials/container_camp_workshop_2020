@@ -34,7 +34,8 @@ Expected outcomes:
 .. toctree::
    :maxdepth: 1
    :caption: Workshop Topics
-
+   
+   topics/reproducibility
    topics/train_docker
    topics/train_singularity
    topics/breakout_session
