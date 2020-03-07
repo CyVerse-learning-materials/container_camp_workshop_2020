@@ -5,37 +5,38 @@
 |Home_Icon2|_
 `Learning Center Home <http://learning.cyverse.org/>`_
 
-Finding the perfect container 
+**Finding the perfect container** 
 ============================
 
 Chances are a Docker *image* already exists for the application you use in your research. Rather than starting from scratch and creating your own *image*, you need to know where to look for existing images. 
 
 .. Important::
 
-	But wait, what are the differences in a *container* and an *image*? An important distinction must be made with regard to *base images*, *child images*, *official images* and *user images* 
+	But wait, what are the differences in a *container* and an *image*? An important distinction must be made with regard to *base images* and *child images*, *official images* and *user images* 
 
 	**container** - Running instance of an *image* — the *container* runs the actual processes. A container includes an application and all of its dependencies. It shares its kernel with other containers, and runs as an isolated process in the space on the host OS. 
 
+	**layer** - an intermediate image, the result of a single set of build commands. A from Docker image is built from layers
 	**image** - The file system and configuration of an application which is used to create the container. 
 	
-	**base image** are images that have no parent images, usually images with an OS like ubuntu, alpine or debian.
+	**base image** - images that have no parent image, usually images with an OS like ubuntu, alpine or debian.
 
-	**child image** are images that build on base images and add additional functionality.
+	**child image** - are images that build on base images and add additional functionality.
 
-	**official image** are Docker sanctioned images. Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are not prefixed by an organization or user name. In the list of images above, the ``python``, ``node``, ``alpine``, and ``nginx`` images are official (base) images. To find out more about them, check out the `Official Images Documentation <https://docs.docker.com/docker-hub/official_images/>`_.
+	**official image** - are Docker sanctioned images. Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are not prefixed by an organization or user name. In the list of images above, the ``python``, ``node``, ``alpine``, and ``nginx`` images are official (base) images. To find out more about them, check out the `Official Images Documentation <https://docs.docker.com/docker-hub/official_images/>`_.
     
-    **publisher image:** Pull and use high- quality container images provided by external vendors. Certified images also include support and guarantee compatibility with Docker Enterprise.
+    	**publisher image:** - Pull and use high- quality container images provided by external vendors. Certified images also include support and guarantee compatibility with Docker Enterprise.
     
-	**user image** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
+	**user image** - are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
 
-	**Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
+	**Dockerfile** - is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
 	
-	**tag** is an identifier of the exact version of the image. By default if a tag is not given, the ``:latest`` tag will be used.
+	**tag** - is an identifier of the exact version of the image. By default if a tag is not given, the ``:latest`` tag will be used.
 
 Docker Registries
 ~~~~~~~~~~~~~~~~
 
-Docker uses the concept of "Registries" 
+Docker uses the concept of "*Registries*" 
 
 .. admonition:: Question
 
@@ -45,7 +46,7 @@ Docker uses the concept of "Registries"
             
             a storage and distribution system for named Docker images
             
-            Organized by owners into "repositories" with compiled "*images*" that users can download and user  
+            Organized by owners into "repositories" with compiled "*images*" that users can download and run 
             
 There are several things you can do with Docker registries:
 
@@ -56,7 +57,7 @@ There are several things you can do with Docker registries:
 
 **Requirements**
 
-    * You must have an account on a registry.
+    * You must have an account on a registry to create repositories and images.
 
     * You can create many repositories. 
 
