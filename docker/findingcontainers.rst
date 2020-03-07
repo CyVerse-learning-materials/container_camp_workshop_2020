@@ -5,12 +5,10 @@
 |Home_Icon2|_
 `Learning Center Home <http://learning.cyverse.org/>`_
 
-1.0 Finding Docker Containers 
-=============================
+Finding the perfect container 
+============================
 
-Okay -- at this point you should have completed the pre-installation and are ready to begin using Docker. 
-
-Chances are an *image* already exists for the application you use in your research. Rather than starting from scratch and creating your own *image*, you need to know where to look for existing images. 
+Chances are a Docker *image* already exists for the application you use in your research. Rather than starting from scratch and creating your own *image*, you need to know where to look for existing images. 
 
 .. Important::
 
@@ -34,8 +32,8 @@ Chances are an *image* already exists for the application you use in your resear
 	
 	**tag** is an identifier of the exact version of the image. By default if a tag is not given, the ``:latest`` tag will be used.
 
-1.1 Docker Registries
-~~~~~~~~~~~~~~~~~~~~~
+Docker Registries
+~~~~~~~~~~~~~~~~
 
 Docker uses the concept of "Registries" 
 
@@ -67,7 +65,7 @@ There are several things you can do with Docker registries:
     * You can even set up your own private registry using a *Docker Trusted Registry*
 
 **Searching image registries**
-================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. Warning:: 
 
