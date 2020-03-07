@@ -76,81 +76,13 @@ Alternatively you can test your installation by running the following:
 	$ sudo usermod -aG docker $USER
 
 	Log out or close terminal and log back in and your group membership will be initiated
-		
-1.0 Finding Docker Containers 
-=============================
 
-Okay -- at this point you should have completed the pre-installation and are ready to begin using Docker. 
+1.0 Docker Run
+==============
 
-Chances are an *image* already exists for the application you use in your research. Rather than starting from scratch and creating your own *image*, you need to know where to look for existing images. 
+To get a new Docker image you can either get it from a registry (such as the Docker hub) or you can build your own (See `Advanced Section <../dockeradvanced.rst>`_. 
 
-.. Important::
-
-	But wait, what are the differences in a *container* and an *image*? An important distinction must be made with regard to *base images*, *child images*, *official images* and *user images* 
-
-	**container** - Running instance of an *image* — the *container* runs the actual processes. A container includes an application and all of its dependencies. It shares its kernel with other containers, and runs as an isolated process in the space on the host OS. 
-
-	**image** - The file system and configuration of an application which is used to create the container. 
-	
-	**base image** are images that have no parent images, usually images with an OS like ubuntu, alpine or debian.
-
-	**child image** are images that build on base images and add additional functionality.
-
-	**official image** are Docker sanctioned images. Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are not prefixed by an organization or user name. In the list of images above, the python, node, alpine and nginx images are official (base) images. To find out more about them, check out the Official Images Documentation.
-
-	**user image** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
-
-	**Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
-	
-	**tag** is an identifier of the exact version of the image. By default if a tag is not given, the ``:latest`` tag will be used.
-
-1.1 Docker Registries
-~~~~~~~~~~~~~~~~~~~~~
-
-Docker uses the concept of "Registries" where images are hosted for consumption. 
-
-So what *EXACTLY* is a **Registry**? There are several things you can do with Docker registries:
-
-	- Search for images
-	- Pull images
-	- Share images
-	- Push images 
-
-* You must have an account on a registry.
-
-* You can create many repositories. 
-
-* You can create many tagged images in a repository
-
-* You can even set up your own private registry using a *Docker Trusted Registry*
-
-.. Important::
-
-	**Registry**  Organized collection of "Repositories" with compiled images. 
-
-	**Repository** collection of "images" with individual "tags".
-
-1.2 Popular Docker Registries
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The Docker command line interface uses the `Docker Hub <https://hub.docker.com/>`_ public registry by default. 
-
-Some examples of public/private registries to consider for your research needs:
-
-	- `Docker Cloud <https://cloud.docker.com/>`_
-	- `Docker Hub <https://hub.docker.com/>`_ 
-	- `Docker Trusted Registry <https://docs.docker.com/ee/dtr/>`_
-	- `Amazon Elastic Container Registry <https://aws.amazon.com/ecr/>`_
-	- `Google Container Registry <https://aws.amazon.com/ecr/>`_
-	- `Azure Container Registry <https://azure.microsoft.com/en-us/services/container-registry/>`_
-	- `NVIDIA GPU Cloud <https://ngc.nvidia.com/catalog/containers>`_
-	- `Private Docker Registry <https://private-docker-registry.com/>`_ - not official Docker
-	- `Gitlab Container Registry <https://docs.gitlab.com/ce/administration/container_registry.html>`_
-	- `RedHat Quay <https://quay.io/>`_
-	- `TreeScale <https://treescale.com/>`_
-	- `Canister <https://www.canister.io/>`_             
-
-To get a new Docker image you can either get it from a registry (such as the Docker hub). There are hundreds of thousands of images available on the many public Docker Registries. 
+There are hundreds of thousands of images available on the many public Docker Registries. 
 
 You can also search for images within a registry directly from the command line using ``docker search`` (after you've logged into that registry).
 
@@ -183,11 +115,6 @@ You can also search for images within a registry directly from the command line 
 	  thatsamguy/ubuntu-build-image                          Docker webapp build images based on Ubuntu      0                                       
 	  ossobv/ubuntu                                          Custom ubuntu image from scratch (based on o…   0                                       
 	  1and1internet/ubuntu-16-sshd                           ubuntu-16-sshd                                  0                                       [OK]
-
-2.0 Docker Run
-==============
-
-Now that we know what a container and image is, let's run the following command in our terminal:
 
 .. code-block:: bash
 
@@ -289,7 +216,7 @@ Exit out of the container by giving the ``exit`` command.
 
 		$ docker attach 0db38ea51a48
 
-2.1 House Keeping and Cleaning Up
+1.1 House Keeping and Cleaning Up
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Docker images are cached on your machine in the location where Docker was installed. These image files are not visible in the same directory where you might have used ``docker pull <imagename>``.
@@ -322,7 +249,7 @@ To remove images that you no longer need, type:
 
 Great! so you have now looked at ``docker run``, played with a Docker containers and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff — deploying your own applications with Docker.
 
-2.2  Managing Docker images
+2.0  Managing Docker images
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the previous example, you pulled the ``alpine`` image from the registry and asked the Docker client to run a container based on that image. To see the list of images that are available locally on your system, run the ``docker images`` command.
@@ -340,13 +267,10 @@ Above is a list of images that I've pulled from the registry and those I've crea
 
 For simplicity, you can think of an image akin to a Git repository - images can be committed with changes and have multiple versions. When you do not provide a specific version number, the client defaults to latest.
 
-2.3 Pulling and Running a JupyterLab or RStudio-Server
+2.1 Pulling and Running a JupyterLab or RStudio-Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this section, let's find a Docker image which can run a Jupyter Notebook
-
-2.3.1 Docker Search
-^^^^^^^^^^^^^^^^^^^
 
 Search for official images on Docker Hub which contain the string 'jupyter'
 
@@ -395,9 +319,8 @@ Search for images on Docker Hub which contain the string 'rstudio'
 	calpolydatascience/rstudio-notebook       RStudio notebook                                1                                       [OK]	
 	...
 
-
-2.3.1 Docker Run
-^^^^^^^^^^^^^^^^
+2.2 Docker Run
+^^^^^^^^^^^^^^^
 
 Go ahead and run a basic image from a trusted registry. Here we run basic RStudio and Jupyter Lab:
 
@@ -409,7 +332,7 @@ Go ahead and run a basic image from a trusted registry. Here we run basic RStudi
 
 	$docker run --rm -p 8888:888 jupyter/base-notebook
 
-2.3.2 Additional Docker Run Commands
+2.3 Additional Docker Run Commands
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 A couple of other important commands to use when running a container:
 
