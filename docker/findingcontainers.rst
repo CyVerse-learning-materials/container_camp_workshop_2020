@@ -123,7 +123,7 @@ Although anyone can create a BioContainer, the majority of BioContainers are cre
 Quay is another general image registry. It works the same way as Docker Hub. However, Quay is home to all BioContainers made by the Bioconda project. Now we will find a BioContainer image at Quay, pull that image and run it on cloud virtual machine.
 
 **NVIDIA-Docker**
-~~~~~~~~~~~~~~~~
+-----------------
 
 NVIDIA is one of the leading makers of graphic processing units (GPU). GPU were established as a means of handling graphics processing operations for video cards, but have been greatly expanded for use in generalized computing applications. GPU are used for various applications in Machine Learning, image processing, and matrix-based linear algebras.
 
@@ -136,7 +136,7 @@ NVIDIA have created their own set of Docker containers for running on CPU-GPU en
 `NVIDIA Docker Hub <https://hub.docker.com/u/nvidia>`_ hosts numerous NVIDIA Docker containers, from which you can build your own images.
 
 NVIDIA GPU Cloud
-^^^^^^^^^^^^^^^^
+----------------
 
 `NVIDIA GPU Cloud <https://ngc.nvidia.com>`_ hosts numerous containers for HPC and Cloud applications. You must register an account with them (free) to access these. 
 
@@ -145,9 +145,6 @@ NVIDIA GPU Cloud hosts three `registry spaces <https://docs.nvidia.com/ngc/ngc-u
   * `nvcr.io/nvidia` - catalog of fully integrated and optimized deep learning framework containers.
   * `nvcr.io/nvidia-hpcvis` - catalog of HPC visualization containers (beta).
   * `nvcr.io/hpc` -  popular third-party GPU ready HPC application containers.
-
-Running GPU accelarated GUI applications with NVIDIA-Docker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NVIDIA Docker can be used as a base-image to create containers running graphical applications remotely. High resolution 3D screens are piped to a remote desktop platform.
 
