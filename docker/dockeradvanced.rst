@@ -5,21 +5,26 @@ Now that we are *relatively* comfortable with Docker, lets look at some advanced
 
 - Modifying a Dockerfile and creating a new container
 - Push a Docker image to the Docker Hub Registry 
+- Establish a Docker Hub autobuild on GitHub with CI/CD
 
 1.0 The Dockerfile
 ^^^^^^^^^^^^^^^^^^
 
 .. Note::
 
-	This is one of the official Docker images provided by the Jupyter project for you to build your own data science notebooks on:  
+	This is one of the official Docker images provided by the `Jupyter Project <https://jupyter-docker-stacks.readthedocs.io/en/latest/>`_ for you to build your own data science notebooks on:  
 	
-	https://jupyter-docker-stacks.readthedocs.io/en/latest/
+Create a file called Dockerfile, and add content to it as described below, e.g. 
 
-Create a file called Dockerfile, and add content to it as described below, e.g. ``nano Dockerfile``
+.. code-block:: bash
+
+	$ nano Dockerfile
 
 .. Important::
 
 	``Dockerfile`` needs to be capitalized.
+
+Contents of our ``Dockerfile``:
 
 .. code-block:: bash
 
@@ -74,15 +79,19 @@ Create a file called Dockerfile, and add content to it as described below, e.g. 
 
 Now let's talk about what each of those lines in the Dockerfile mean.
 
-**1** We'll start by specifying our base image, using the FROM keyword:
+**1** We'll start by specifying our base image, using the ``FROM`` statement
 
 .. code-block:: bash
 
 	FROM jupyter/scipy-notebook:latest
 
-**2** Create and copy a file into the image by using ``COPY`` command.
+**2** Copy an existing file into the new image by using ``COPY``
 
-create a new file called ``entry.sh`` -- use your preferred text editor, e.g. ``nano entry.sh`` 
+.. code-block:: bash
+
+	COPY entry.sh /bin
+	
+Before we forget, create a new file called ``entry.sh`` -- use your preferred text editor to create the file, e.g. ``nano entry.sh`` and put it in the same directory as ``Dockerfile``
 
 .. code-block:: bash
 
@@ -94,33 +103,30 @@ create a new file called ``entry.sh`` -- use your preferred text editor, e.g. ``
 
 The ``entry.sh`` file creates an iRODS environment ``.json`` which has CyVerse Data Store configurations pre-written. It also tells Docker to start Jupter Lab and to not pop open a browser tab when doing so.
 
-.. code-block:: bash
-
-	COPY entry.sh /bin
-
 **3** Specify the port number which needs to be exposed. Since Jupyter runs on 8888 that's what we'll expose.
 
 .. code-block:: bash
 
 	EXPOSE 8888
 
-**4** What about ``CMD``?
+.. Note:: 
+	What about ``CMD``?
 
-Notice that unlike our previous Dockerfile this one does not end with a ``CMD`` command. This is on purpose.
+	Notice that unlike some other ``Dockerfile`` this one does not end with a ``CMD`` command statement. This is on purpose.
 
-Remember: The primary purpose of ``CMD`` is to tell the container which command it should run by default when it is started.
+	**Remember:** The primary purpose of ``CMD`` is to tell the container which command it should run by default when it is started.
 
-Can you guess what will happen if we don't specify our own 'entrypoint' using ``CMD``?
+	Can you guess what will happen if we don't specify an ``ENTRYPOINT`` or ``CMD``?
 
-**5** Setting a new entrypoint 
+**4** Setting a new entrypoint 
 
-When this container is run, it will use a different default ``ENTRYPOINT`` than the original container
+When this container is run, it will now use a different default ``ENTRYPOINT`` than the original container from ``jupyter/scipy-notebook:latest``
 
 .. code-block:: bash
 
 	ENTRYPOINT ["bash", "/bin/entry.sh"]
 	
-This entrypoint runs the shell script ``entry.sh``	
+This entrypoint runs the shell script ``entry.sh`` which we just copied into the image
 
 .. _Build the image:
 
