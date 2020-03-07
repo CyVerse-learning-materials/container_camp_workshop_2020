@@ -5,10 +5,69 @@
 |Home_Icon2|_
 `Learning Center Home <http://learning.cyverse.org/>`_
 
+1.0 Finding Docker Containers 
+=============================
+
+Okay -- at this point you should have completed the pre-installation and are ready to begin using Docker. 
+
+Chances are an *image* already exists for the application you use in your research. Rather than starting from scratch and creating your own *image*, you need to know where to look for existing images. 
+
+.. Important::
+
+	But wait, what are the differences in a *container* and an *image*? An important distinction must be made with regard to *base images*, *child images*, *official images* and *user images* 
+
+	**container** - Running instance of an *image* — the *container* runs the actual processes. A container includes an application and all of its dependencies. It shares its kernel with other containers, and runs as an isolated process in the space on the host OS. 
+
+	**image** - The file system and configuration of an application which is used to create the container. 
+	
+	**base image** are images that have no parent images, usually images with an OS like ubuntu, alpine or debian.
+
+	**child image** are images that build on base images and add additional functionality.
+
+	**official image** are Docker sanctioned images. Docker, Inc. sponsors a dedicated team that is responsible for reviewing and publishing all Official Repositories content. This team works in collaboration with upstream software maintainers, security experts, and the broader Docker community. These are not prefixed by an organization or user name. In the list of images above, the ``python``, ``node``, ``alpine``, and ``nginx`` images are official (base) images. To find out more about them, check out the `Official Images Documentation <https://docs.docker.com/docker-hub/official_images/>`_.
+    
+    **publisher image:** Pull and use high- quality container images provided by external vendors. Certified images also include support and guarantee compatibility with Docker Enterprise.
+    
+	**user image** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as ``user/image-name``. The user value in the image name is your Dockerhub user or organization name.
+
+	**Dockerfile** is a text file that contains a list of commands that the Docker daemon calls while creating an image. The Dockerfile contains all the information that Docker needs to know to run the app — a base Docker image to run from, location of your project code, any dependencies it has, and what commands to run at start-up. It is a simple way to automate the image creation process. The best part is that the commands you write in a Dockerfile are almost identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own Dockerfiles.
+	
+	**tag** is an identifier of the exact version of the image. By default if a tag is not given, the ``:latest`` tag will be used.
+
+1.1 Docker Registries
+~~~~~~~~~~~~~~~~~~~~~
+
+Docker uses the concept of "Registries" 
+
+.. admonition:: Question
+
+    So what *EXACTLY* is a **Registry**? 
+
+        .. admonition:: Answer
+            
+            a storage and distribution system for named Docker images
+            
+            Organized by owners into "repositories" with compiled "*images*" that users can download and user  
+            
+There are several things you can do with Docker registries:
+
+    - Search for public images
+    - Pull images
+    - Share private images
+    - Push images 
+
+**Requirements**
+
+    * You must have an account on a registry.
+
+    * You can create many repositories. 
+
+    * You can create many tagged images in a repository
+
+    * You can even set up your own private registry using a *Docker Trusted Registry*
+
 **Searching image registries**
 ================================
-
-**Image registry:** a storage and content delivery system, such as that used by Docker
 
 .. Warning:: 
 
@@ -16,6 +75,7 @@
 
 There many public and private image registries available. Private registries tend to cost money. Public registries tend to be free.
 
+The Docker command line interface uses the `Docker Hub <https://hub.docker.com/>`_ public registry by default. 
 
 Some examples of public/private registries to consider for your research needs:
 
@@ -32,18 +92,22 @@ Some examples of public/private registries to consider for your research needs:
 - `Canister <https://www.canister.io/>`_
 - `BioContainers Registry <https://biocontainers.pro/#/registry>`_
 
-
 |dockerhub|
 -------------
 
-Docker Hub is a service provided by Docker for finding and sharing container images with your team. It provides the following major features:
+Docker Hub is a service provided by Docker for finding and sharing container images with your team. 
 
-- **Repositories:** Push and pull container images.
-- **Teams & Organizations:** Manage access to private repositories of container images.
-- **Official Images:** Pull and use high-quality container images provided by Docker.
-- **Publisher Images:** Pull and use high- quality container images provided by external vendors. Certified images also include support and guarantee compatibility with Docker Enterprise.
-- **Builds:** Automatically build container images from GitHub and Bitbucket and push them to Docker Hub.
-- **Webhooks:** Trigger actions after a successful push to a repository to integrate Docker Hub with other services.
+.. Important::
+
+	**Registry**  a storage and distribution system for named Docker images
+
+	**Repository** collection of "images" with individual "tags".
+    
+    **Teams & Organizations:** Manage access to private repositories of container images.
+
+    **Builds:** Automatically build container images from GitHub and Bitbucket and push them to Docker Hub.
+    
+    **Webhooks:** Trigger actions after a successful push to a repository to integrate Docker Hub with other services.
 
 Docker Hub is the most well-known and popular image registry for Docker containers.
 
@@ -61,15 +125,9 @@ Although anyone can create a BioContainer, the majority of BioContainers are cre
 Quay is another general image registry. It works the same way as Docker Hub. However, Quay is home to all BioContainers made by the Bioconda project. Now we will find a BioContainer image at Quay, pull that image and run it on cloud virtual machine.
 
 **NVIDIA-Docker**
-=================
-
-Background
-~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 NVIDIA is one of the leading makers of graphic processing units (GPU). GPU were established as a means of handling graphics processing operations for video cards, but have been greatly expanded for use in generalized computing applications. GPU are used for various applications in Machine Learning, image processing, and matrix-based linear algebras.
-
-NVIDIA Docker
-~~~~~~~~~~~~~
 
 |NVIDIA-docker-diagram|
 
@@ -80,12 +138,9 @@ NVIDIA have created their own set of Docker containers for running on CPU-GPU en
 `NVIDIA Docker Hub <https://hub.docker.com/u/nvidia>`_ hosts numerous NVIDIA Docker containers, from which you can build your own images.
 
 NVIDIA GPU Cloud
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 `NVIDIA GPU Cloud <https://ngc.nvidia.com>`_ hosts numerous containers for HPC and Cloud applications. You must register an account with them (free) to access these. 
-
-Registry
-^^^^^^^^
 
 NVIDIA GPU Cloud hosts three `registry spaces <https://docs.nvidia.com/ngc/ngc-user-guide/ngc-spaces.html#ngc-spaces>`_
 
