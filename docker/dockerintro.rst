@@ -8,6 +8,18 @@ Prerequisites
 
 There are no specific skills needed for this tutorial beyond a basic comfort with the command line and using a text editor.
 
+* Install Docker on your laptop:
+
+  - `Mac <https://docs.docker.com/docker-for-mac/>`_
+  - `Windows <https://docs.docker.com/docker-for-windows/>`_
+  - `Ubuntu <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_
+
+* Install Docker on a featured Atmosphere image:
+
+.. code-block:: bash
+
+	$ ezd	
+
 1.0 Docker Run
 ==============
 
@@ -421,6 +433,68 @@ Once you're in the container, you will see that the ``/work`` directory is mount
 
 Any data that you add to that folder outside the container will appear INSIDE the container. And any work you do inside the container saved in that folder will be saved OUTSIDE the container as well. 
 
+Docker Commands
+===============
+
++----------------+------------------------------------------------+
+| Command        |          Usage                                 |
++================+================================================+
+| docker pull    |  Download an image from Docker Hub             |
++----------------+------------------------------------------------+
+| docker run     |  *Usage:* ``docker run -it user/image:tag``    |
+|                |  starts a container with an entrypoint         |
++----------------+------------------------------------------------+
+| docker build   | *Usage:* ``docker build -t user/image:tag .``  |
+|                |  Builds a docker image from a Dockerfile in    |
+|                |  current working directory. ``-t`` for tagname |
++----------------+------------------------------------------------+
+| docker images  |  List all images on the local machine          |
++----------------+------------------------------------------------+
+| docker tag     |  Add a new tag to an image                     |
++----------------+------------------------------------------------+
+| docker login   |  Authenticate to the Docker Hub                |
+|                |  requires username and password                |
++----------------+------------------------------------------------+
+| docker push    |  *Usage:* ``docker push user/image:tag``       |
+|                |  Upload an image to Docker Hub                 |
++----------------+------------------------------------------------+
+| docker inspect |  *Usage:* ``docker inspect containerID``       |
+|                |  Provide detailed information on constructs    |
+|                |  controlled by Docker                          |
++----------------+------------------------------------------------+
+| docker ps -a   |  List all containers on your system            |
++----------------+------------------------------------------------+
+| docker rm      |  *Usage:* ``docker rm -f <container>``         |
+|                |  Deletes a *container*                         |
+|                |  ``-f`` remove running container               |
++----------------+------------------------------------------------+
+| docker rmi     |  Deletes an *image*                            |
++----------------+------------------------------------------------+
+| docker stop    |  *Usage:* ``docker stop <container>``          |
+|                |  Stop a running container                      |
++----------------+------------------------------------------------+
+| docker system  |  *Usage:* ``docker system prune``		  |
+|                |  Remove old images and cached layers		  |
+|                |  *Usage:* ``docker system df``		  |          	  
+|                |  View system details (cache size)              |
++----------------+------------------------------------------------+
+
+Getting more help with Docker
+=============================
+
+- The command line tools are very well documented:
+
+.. code-block:: bash
+
+   $ docker --help
+   # shows all docker options and summaries
+
+.. code-block:: bash
+
+   $ docker COMMAND --help
+   # shows options and summaries for a particular command
+
+- Learn `more about docker <https://docs.docker.com/get-started/>`_
 4. Extra Demos
 ==============
 
