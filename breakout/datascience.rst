@@ -3,6 +3,10 @@
 
 For domain scientists (and budding data scientists), running a container already equipped with the libraries and tools needed for a particular analysis eliminates the need to spend hours debugging packages across different environments or configuring custom environments.
 
+.. raw:: html
+
+	<div style="width: 640px; height: 480px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://www.lucidchart.com/documents/embeddedchart/108d5703-5fc1-438b-bf7a-2be10662d1ab" id="wv5EGfbRDaCG"></iframe></div>
+
 .. admonition:: Discussion Question
 
 	Why Set Up a Data Science Software Environment in a Container?
