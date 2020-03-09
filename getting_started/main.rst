@@ -11,6 +11,10 @@ Participants will learn key containerization concepts for developing reproducibl
 
 The workshop will cover key concepts about containers such as defining the architecture of containers, building images and pushing them to public and private repositories as well as how to scale your analysis from laptop to cloud and to HPC systems using containers. 
 
+.. raw:: html
+
+    <div style="width: 640px; height: 480px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://www.lucidchart.com/documents/embeddedchart/804daeb6-7e77-489d-8958-d87e7ed44f8c" id="~c5EjACWeQ6f"></iframe></div>
+
 
 **FAIR Data principles**
 =======================
