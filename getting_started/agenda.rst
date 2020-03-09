@@ -124,8 +124,8 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - Using Docker on HPC 
     * -
       - 10:10-10:30
-      - Coffee and snacks with networking
-      - Served in A127-29 across the hall (pls: NO food/bev in A116)
+      - Break
+      - time to talk and network
     * -
       - 10:30-12:00
       - Integration of Singularity with Docker (John Fonner)
