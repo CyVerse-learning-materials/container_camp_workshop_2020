@@ -76,7 +76,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - time for questions, comments, suggestions 
     * - 
       - 8:45-9:45
-      - Containers in Distributed Computing (Mats Rynge)
+      - |Containers in Distributed Computing| (Mats Rynge)
       - Containers used at scale
     * - 
       - 9:45-10:10 
@@ -201,3 +201,6 @@ Below are the schedule and classroom materials for Container Camp at The Univers
 
 .. _Home_Icon: http://learning.cyverse.org/
 
+.. |Containers in Distributed Computing| raw:: html
+
+    <a href="https://docs.google.com/presentation/d/1qotXod2o_XEW2g7NN4eAlThlBjtdftv_efYJmuOHrVs/edit?usp=sharing" target="blank">Containers in Distributed Computing</a>
