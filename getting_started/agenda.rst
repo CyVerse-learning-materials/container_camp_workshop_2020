@@ -76,7 +76,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - time for questions, comments, suggestions 
     * - 
       - 8:45-9:45
-      - Case Study: Pegasus (Mats Rynge)
+      - Containers in Distributed Computing (Mats Rynge)
       - Containers used at scale
     * - 
       - 9:45-10:10 
