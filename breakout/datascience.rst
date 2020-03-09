@@ -1,4 +1,4 @@
-**Docker for Datascience**
+**Docker for Data Science**
 --------------------------
 
 For domain scientists (and budding data scientists), running a container already equipped with the libraries and tools needed for a particular analysis eliminates the need to spend hours debugging packages across different environments or configuring custom environments.
