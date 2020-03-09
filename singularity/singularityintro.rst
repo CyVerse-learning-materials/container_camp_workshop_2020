@@ -26,32 +26,24 @@ There are no specific skills needed beyond a basic comfort with the command line
 
   These key differences allow Singularity to be installed on most HPC centers. Because you can run virtually all Docker containers in Singularity, you can effectively run Docker on an HPC. 
 
-Singularity uses a 'flow' whereby you (1) create and modify images on your dev system, (2) build containers using recipes or pulling from repositories, and (3) execute containers on production systems. 
-
-|singularityflow|
-
 2. Singularity Installation
 ===========================
 
 Sylabs Singularity homepage: `https://www.sylabs.io/docs/ <https://www.sylabs.io/docs/>`_
 
-While Singularity is more likely to be used on a remote system, e.g. HPC or cloud, you may want to develop your own containers first on a local machine or dev system (See figure above).
-
-.. Note::
-
-	Singularity exits as two major versions - 2 and 3. In this workshop we will be using version 3
+Singularity is more likely to be used on a remote system that you don't have control of, e.g. a High Performance Com
 
 2.1 Install Singularity on Laptop
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To Install Singularity on your laptop or desktop PC follow the instructions from Singularity: https://www.sylabs.io/guides/3.0/user-guide/installation.html#installation
+To Install Singularity on your laptop or desktop PC follow the instructions from Singularity: https://www.sylabs.io/guides/3.5/user-guide/installation.html#installation
   
 2.2 HPC
 ~~~~~~~
 
 Load the Singularity module on a HPC
 
-If you are interested in working on HPC, you may need to contact your systems administrator and request they install `Singularity  <https://www.sylabs.io/guides/3.0/user-guide/installation.html#installation>`_. Because singularity ideally needs setuid, your admins may have some qualms about giving Singularity this privilege. If that is the case, you might consider forwarding `this letter <https://www.sylabs.io/guides/3.0/user-guide/installation.html#singularity-on-a-shared-resource>`_ to your admins.
+If you are interested in working on HPC, you may need to contact your systems administrator and request they install `Singularity  <https://www.sylabs.io/guides/3.5/user-guide/installation.html#installation>`_. Because singularity ideally needs setuid, your admins may have some qualms about giving Singularity this privilege. If that is the case, you might consider forwarding `this letter <https://www.sylabs.io/guides/3.5/user-guide/installation.html#singularity-on-a-shared-resource>`_ to your admins.
 
 Most HPC systems are running Environment Modules with the simple command `module`. You can check to see what is available:
 
@@ -63,7 +55,7 @@ If Singularity is installed:
 
 .. code-block:: bash
 
-	$ module load singularity/3/3.1
+	$ module load singularity/3/3.4
 
 2.3 Atmosphere Cloud
 ~~~~~~~~~~~~~~~~~~~~~
@@ -76,8 +68,8 @@ Type in the following:
 
 .. code-block:: bash
 
-    $ ezs -r 3.1.0
-	DEBUG: set version to 3.1.0
+    $ ezs -r 3.5.0
+	DEBUG: set version to 3.5.0
 
 	* Updating ez singularity and installing singularity (this may take a few minutes, coffee break!)
 	Cloning into '/opt/cyverse-ez-singularity'...
@@ -102,8 +94,10 @@ Singularity should now be installed on your laptop or VM, or loaded on the HPC, 
 .. code-block:: bash
 
     $ singularity pull shub://vsoch/hello-world
-	WARNING: Authentication token file not found : Only pulls of public images will succeed
-	 62.32 MiB / 62.32 MiB [===============================================================================================] 100.00% 30.61 MiB/s 2s
+	INFO:    Downloading shub image
+	 59.75 MiB / 59.75 MiB [=====================================================================================================] 100.00% 49.24 MiB/s 1s
+	tswetnam@tysons-box:~$ singularity run hello-world_latest.sif 
+	RaawwWWWWWRRRR!! Avocado!
 
 Singularity’s command line interface allows you to build and interact with containers transparently. You can run programs inside a container as if they were running on your host system. You can easily redirect IO, use pipes, pass arguments, and access files, sockets, and ports on the host system from within a container.
 
@@ -111,80 +105,80 @@ The help command gives an overview of Singularity options and subcommands as fol
 
 .. code-block:: bash
 
-	$ singularity --help
-	
-	USAGE: singularity [global options...] <command> [command options...] ...
+	$ singularity
+	Usage:
+	  singularity [global options...] <command>
 
-	GLOBAL OPTIONS:
-	    -d|--debug    Print debugging information
-	    -h|--help     Display usage summary
-	    -s|--silent   Only print errors
-	    -q|--quiet    Suppress all normal output
-	       --version  Show application version
-	    -v|--verbose  Increase verbosity +1
-	    -x|--sh-debug Print shell wrapper debugging information
+	Available Commands:
+	  build       Build a Singularity image
+	  cache       Manage the local cache
+	  capability  Manage Linux capabilities for users and groups
+	  config      Manage various singularity configuration (root user only)
+	  delete      Deletes requested image from the library
+	  exec        Run a command within a container
+	  inspect     Show metadata for an image
+	  instance    Manage containers running as services
+	  key         Manage OpenPGP keys
+	  oci         Manage OCI containers
+	  plugin      Manage Singularity plugins
+	  pull        Pull an image from a URI
+	  push        Upload image to the provided URI
+	  remote      Manage singularity remote endpoints
+	  run         Run the user-defined default command within a container
+	  run-help    Show the user-defined help for an image
+	  search      Search a Container Library for images
+	  shell       Run a shell within a container
+	  sif         siftool is a program for Singularity Image Format (SIF) file manipulation
+	  sign        Attach a cryptographic signature to an image
+	  test        Run the user-defined tests within a container
+	  verify      Verify cryptographic signatures attached to an image
+	  version     Show the version for Singularity
 
-	GENERAL COMMANDS:
-	    help       Show additional help for a command or container                  
-	    selftest   Run some self tests for singularity install                      
-
-	CONTAINER USAGE COMMANDS:
-	    exec       Execute a command within container                               
-	    run        Launch a runscript within container                              
-	    shell      Run a Bourne shell within container                              
-	    test       Launch a testscript within container                             
-
-	CONTAINER MANAGEMENT COMMANDS:
-	    apps       List available apps within a container                           
-	    bootstrap  *Deprecated* use build instead                                   
-	    build      Build a new Singularity container                                
-	    check      Perform container lint checks                                    
-	    inspect    Display container's metadata                                     
-	    mount      Mount a Singularity container image                              
-	    pull       Pull a Singularity/Docker container to $PWD                      
-
-	COMMAND GROUPS:
-	    image      Container image command group                                    
-	    instance   Persistent instance command group                                
-
-
-	CONTAINER USAGE OPTIONS:
-	    see singularity help <command>
-
-	For any additional help or support visit the Singularity
-	website: http://singularity.lbl.gov/
+	Run 'singularity --help' for more detailed usage information.
 
 Information about subcommand can also be viewed with the help command.
 
 .. code-block:: bash
 
 	$ singularity help pull
-	Pull a container from a URI
+	Pull an image from a URI
 
 	Usage:
 	  singularity pull [pull options...] [output file] <URI>
 
 	Description:
 	  The 'pull' command allows you to download or build a container from a given
-	  URI.  Supported URIs include:
+	  URI. Supported URIs include:
 
 	  library: Pull an image from the currently configured library
-	      library://[user[collection/[container[:tag]]]]
+	      library://user/collection/container[:tag]
 
 	  docker: Pull an image from Docker Hub
 	      docker://user/image:tag
-	    
-	  shub: Pull an image from Singularity Hub to CWD
+
+	  shub: Pull an image from Singularity Hub
 	      shub://user/image:tag
 
+	  oras: Pull a SIF image from a supporting OCI registry
+	      oras://registry/namespace/image:tag
+
+	  http, https: Pull an image using the http(s?) protocol
+	      https://library.sylabs.io/v1/imagefile/library/default/alpine:latest
+
 	Options:
-	      --docker-login     interactive prompt for docker authentication
+	      --arch string      architecture to pull from library (default "amd64")
+	      --dir string       download images to the specific directory
+	      --disable-cache    dont use cached images/blobs and dont create them
+	      --docker-login     login to a Docker Repository interactively
 	  -F, --force            overwrite an image file if it exists
 	  -h, --help             help for pull
-	      --library string   the library to pull from (default
-	                         "https://library.sylabs.io")
-	      --nohttps          do NOT use HTTPS, for communicating with local
-	                         docker registry
+	      --library string   download images from the provided library
+				 (default "https://library.sylabs.io")
+	      --no-cleanup       do NOT clean up bundle after failed build, can be
+				 helpul for debugging
+	      --nohttps          do NOT use HTTPS with the docker:// transport
+				 (useful for local docker registries without a
+				 certificate)
 
 
 	Examples:
@@ -196,6 +190,9 @@ Information about subcommand can also be viewed with the help command.
 
 	  From Shub
 	  $ singularity pull singularity-images.sif shub://vsoch/singularity-images
+
+	  From supporting OCI registry (e.g. Azure Container Registry)
+	  $ singularity pull image.sif oras://<username>.azurecr.io/namespace/image:tag
 
 
 	For additional help or support, please visit https://www.sylabs.io/docs/
@@ -247,24 +244,24 @@ This example pulls an ``ubuntu:16.04`` image from DockerHub and saves it to the 
 
 .. code-block:: bash
 
-	$ singularity pull docker://ubuntu:16.04
-	WARNING: Authentication token file not found : Only pulls of public images will succeed
+	$ singularity pull docker://ubuntu:20.04
+	INFO:    Converting OCI blobs to SIF format
 	INFO:    Starting build...
 	Getting image source signatures
-	Copying blob sha256:7b722c1070cdf5188f1f9e43b8413157f8dfb2b4fe84db3c03cb492379a42fcc
-	 41.51 MiB / 41.51 MiB [====================================================] 1s
-	Copying blob sha256:5fbf74db61f1459176d8647ba8f53f8e6cf933a2e56f73f0e8da81213117b7e9
-	 847 B / 847 B [============================================================] 0s
-	Copying blob sha256:ed41cb72e5c918bdbd78e68f02930a3f1cf1d6079402b0a5b19de8508e67b766
-	 526 B / 526 B [============================================================] 0s
-	Copying blob sha256:7ea47a67709ebea8efed59fbda703dbd00a0d2cae7e2808959744bfa30bfc0e9
-	 168 B / 168 B [============================================================] 0s
-	Copying config sha256:288b5aca25f70512e5874c289a8a216b60808ecc47f687fa502fd848e5c3f875
-	 2.42 KiB / 2.42 KiB [======================================================] 0s
+	Copying blob 8f6b7df711c8 done
+	Copying blob 0703c52b8763 done
+	Copying blob 07304348ce1b done
+	Copying blob 4795dceb8869 done
+	Copying config 05ac933964 done
 	Writing manifest to image destination
 	Storing signatures
+	2020/03/09 16:14:12  info unpack layer: sha256:8f6b7df711c8a4733138390ff2aba1bfeb755bf4736c39c6e4858076c40fb5eb
+	2020/03/09 16:14:13  info unpack layer: sha256:0703c52b8763604318dcbb1730c82ad276a487335ecabde2f43f69a6222e8090
+	2020/03/09 16:14:13  info unpack layer: sha256:07304348ce1b6d24f136a3c4ebaa800297b804937a6942ce9e9fe0dac0b0ca74
+	2020/03/09 16:14:13  info unpack layer: sha256:4795dceb8869bdfa64f3742e1df492e6f31baf9cfc36f1a042a8f981607e99a2
 	INFO:    Creating SIF file...
-	INFO:    Build complete: ubuntu_16.04.sif
+	INFO:    Build complete: ubuntu_20.04.sif
+
 
 .. warning::
 
@@ -284,19 +281,33 @@ Let’s use an easy example of ``alpine.sif`` image from the `container library 
 
 .. Tip::
 
-	You can use ``singularity search alpine`` command to locate groups, collections, and containers of interest on the Container Library
+	You can use ``singularity search <name>`` command to locate groups, collections, and containers of interest on the Container Library
 
 4 Interact with images
 ======================
 
 You can interact with images in several ways such as ``shell``, ``exec`` and ``run``. 
 
-For these examples we will use a ``lolcow_latest.sif`` image that can be pulled from the Container Library like so.
+For these examples we will use a ``cowsay_latest.sif`` image that can be pulled from the Container Library like so.
 
 .. code-block:: bash
 
-	$ singularity pull library://sylabsed/examples/lolcow
+	$ singularity pull library://tyson-swetnam/default/cowsay
+	INFO:    Downloading library image
+	 67.00 MiB / 67.00 MiB [=====================================================================================================] 100.00% 5.45 MiB/s 12s
+	WARNING: unable to verify container: cowsay_latest.sif
+	WARNING: Skipping container verification
 
+	tswetnam@tysons-box:~$ singularity run cowsay_latest.sif 
+	 ________________________________________
+	/ Expect a letter from a friend who will \
+	\ ask a favor of you.                    /
+	 ----------------------------------------
+		\   ^__^
+		 \  (oo)\_______
+		    (__)\       )\/\
+			||----w |
+			||     ||
 4.1 Shell
 ~~~~~~~~~
 
@@ -304,8 +315,8 @@ The ``shell`` command allows you to spawn a new shell within your container and 
 
 .. code-block:: bash
 
-	$ singularity shell lolcow_latest.sif 
-	  Singularity lolcow_latest.sif:~>
+	$ singularity shell cowsay_latest.sif
+	  Singularity cowsay_latest.sif:~>
 
 The change in prompt indicates that you have entered the container (though you should not rely on that to determine whether you are in container or not).
 
@@ -313,10 +324,8 @@ Once inside of a Singularity container, you are the same user as you are on the 
 
 .. code-block:: bash
 
-	$ Singularity lolcow_latest.sif:~> whoami
-	upendra_35
-	Singularity lolcow_latest.sif:~> id
-	uid=14135(upendra_35) gid=10013(iplant-everyone) groups=10013(iplant-everyone),100(users),119(docker),10000(staff),10007,10054,10064(atmo-user),10075(myplant-users),10083(tito-admins),10084(tito-qa-admins),10092(geco-admins),10100(sciteam)
+	$ Singularity cowsay_latest.sif:~> whoami
+	tswetnam
 
 .. Note::
 
@@ -325,11 +334,11 @@ Once inside of a Singularity container, you are the same user as you are on the 
 4.2 Executing commands
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The exec command allows you to execute a custom command within a container by specifying the image file. For instance, to execute the ``cowsay`` program within the lolcow_latest.sif container:
+The exec command allows you to execute a custom command within a container by specifying the image file. For instance, to execute the ``cowsay`` program within the cowsay_latest.sif container:
 
 .. code-block:: bash
 
-	$ singularity exec lolcow_latest.sif cowsay container camp rocks
+	$ singularity exec cowsay_latest.sif cowsay container camp rocks
  	______________________
 	< container camp rocks >
 	 ----------------------
