@@ -23,9 +23,9 @@ There are no specific skills needed for this tutorial beyond a basic comfort wit
 1.0 Docker Run
 ==============
 
-As we just covered in the `previous section <./findingcontainers.html>`_, containers can be found in registries (such as the Docker hub), or you can build your own (See `Advanced Section <./dockeradvanced.html>`_). 
+As we covered in the `previous section <./findingcontainers.html>`_, containers can be found in "registries" (such as the Docker Hub). You can also build your own container, but we'll cover that tomorrow (See `Advanced Section <./dockeradvanced.html>`_). 
 
-When you're looking for the right container, you can search for images within a registry directly from the command line using ``docker search`` (after you've logged into that registry).
+When you're looking for the right container, you can search for images within a given registry directly from the command line using ``docker search`` (after you've logged into that registry).
 
 .. code-block:: bash
 
