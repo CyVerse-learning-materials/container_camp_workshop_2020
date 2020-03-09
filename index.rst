@@ -47,8 +47,6 @@ Expected outcomes:
    docker/findingcontainers
    docker/dockerintro
    docker/dockeradvanced
-   docker/dockerhandson
-   
 
 .. toctree::
    :maxdepth: 1
