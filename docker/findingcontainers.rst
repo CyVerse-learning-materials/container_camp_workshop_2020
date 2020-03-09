@@ -149,7 +149,7 @@ An example application of a graphics-enabled remote desktop is the use of `Blend
 **Pull an image from a registry**
 ----------------------------------
 
-To run your BioContainer you will need a computer with Docker installed. 
+To run your container you will need a computer with Docker installed. 
 We will use an Atmosphere cloud instance today but this can be done on any computer.
 
 Open an Atmosphere instance
