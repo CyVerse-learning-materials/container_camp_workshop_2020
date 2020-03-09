@@ -38,6 +38,12 @@ Here are some Docker Images that may help you quickly configure your own data sc
 - `Flink <https://github.com/apache/flink/tree/master/flink-contrib/docker-flink>`_
 - `R <https://github.com/rocker-org/rocker>`_
 
+How does all this stuff fit together??
+
+.. raw:: html
+
+	<div style="width: 640px; height: 480px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://www.lucidchart.com/documents/embeddedchart/41c634cf-f619-4556-847b-6cb894776aae" id="Ww5EhIAJKdHs"></iframe></div>
+
 **Motivation:** Say you want to play around with some cool data science libraries in Python or R but what you don’t want to do is spend hours on installing Python or R, working out what libraries you need, installing each and every one and then messing around with the tedium of getting things to work just right on your version of Linux/Windows/OSX/OS9 — well this is where Docker comes to the rescue! With Docker we can get a Jupyter ‘Data Science’ notebook stack up and running in no time at all. Let’s get started! We will see few examples of these in the following sections...
 
 1. Launch a Jupyter notebook conatiner
