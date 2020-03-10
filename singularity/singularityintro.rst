@@ -31,7 +31,7 @@ There are no specific skills needed beyond a basic comfort with the command line
 
 Sylabs Singularity homepage: `https://www.sylabs.io/docs/ <https://www.sylabs.io/docs/>`_
 
-Singularity is more likely to be used on a remote system that you don't have control of, e.g. a High Performance Com
+Singularity is more likely to be used on a remote system that you don't have control of (e.g. HPC).
 
 2.1 Install Singularity on Laptop
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -45,46 +45,43 @@ Load the Singularity module on a HPC
 
 If you are interested in working on HPC, you may need to contact your systems administrator and request they install `Singularity  <https://www.sylabs.io/guides/3.5/user-guide/installation.html#installation>`_. Because singularity ideally needs setuid, your admins may have some qualms about giving Singularity this privilege. If that is the case, you might consider forwarding `this letter <https://www.sylabs.io/guides/3.5/user-guide/installation.html#singularity-on-a-shared-resource>`_ to your admins.
 
-Most HPC systems are running Environment Modules with the simple command `module`. You can check to see what is available:
+Most HPC systems are running Environment Modules with the simple command `module`. 
+
+You can check to see what is available:
 
 .. code-block:: bash
 
   $ module avail singularity
 
-If Singularity is installed:
+If Singularity is installed, load a specific version:
 
 .. code-block:: bash
 
-	$ module load singularity/3/3.4
+	$ module load singularity/3/3.5
 
 2.3 Atmosphere Cloud
 ~~~~~~~~~~~~~~~~~~~~~
 
-CyVerse staff have deployed an Ansible playbooks called ``ez`` installation which includes `Singularity <https://cyverse-ez-quickstart.readthedocs-hosted.com/en/latest/#>`_ that only requires you to type a short line of code.
+CyVerse staff have deployed an Ansible playbook called ``ez`` for software installation which includes `Singularity <https://cyverse-ez-quickstart.readthedocs-hosted.com/en/latest/#>`_. This command only requires you to type a short line of code to install an entire software stack with all of its dependencies.
 
-Start a featured instance on `Atmosphere <../cyverse/boot.html>_`.
+Start any *Featured* instance on `Atmosphere <../cyverse/boot.html>_`.
 
-Type in the following:
+Type in the following in a web shell or ``ssh`` terminal.
 
 .. code-block:: bash
 
-    $ ezs -r 3.5.0
-	DEBUG: set version to 3.5.0
+	$ ezs -r 3.5.1
+	DEBUG: set version to 3.5.1
 
 	* Updating ez singularity and installing singularity (this may take a few minutes, coffee break!)
 	Cloning into '/opt/cyverse-ez-singularity'...
-	remote: Enumerating objects: 6, done.
-	remote: Counting objects: 100% (6/6), done.
-	remote: Compressing objects: 100% (5/5), done.
-	remote: Total 24 (delta 1), reused 4 (delta 1), pack-reused 18
+	remote: Enumerating objects: 24, done.
+	remote: Total 24 (delta 0), reused 0 (delta 0), pack-reused 24
 	Unpacking objects: 100% (24/24), done.
-	* singularity was updated successfully
-
-	You shouldn't need to use ezs again on this system, unless you want to update singularity itself
+	* ez singularity or singularity itself may not have updated successfully, but you can probably try executing it
 
 	To test singularity, type: singularity run shub://vsoch/hello-world
 	Hint: it should output "RaawwWWWWWRRRR!!")
-
 
 2.4 Check Installation
 ~~~~~~~~~~~~~~~~~~~~~~
