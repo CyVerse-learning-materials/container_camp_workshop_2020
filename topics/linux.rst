@@ -1,7 +1,5 @@
 .. include:: ../cyverse_rst_defined_substitutions.txt
 
-|CyVerse_logo2|_
-
 |Home_Icon2|_
 `Learning Center Home <http://learning.cyverse.org/>`_
 
