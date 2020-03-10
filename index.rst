@@ -36,6 +36,7 @@ Expected outcomes:
    :caption: Workshop Topics
    
    topics/reproducibility
+   topics/linux
    topics/train_docker
    topics/train_singularity
    topics/breakout_session
