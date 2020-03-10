@@ -33,7 +33,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * - 
       - 12:15-1:00
       - General overview of container technology landscape (Nirav Merchant)
-      - `Container technology <https://arizona.box.com/s/iy0gop36ppi8ui9349dgbt8eug5b578y>`_
+      - |Container technology|
     * - 
       - 1:00-2:10
       - What is a container? (Tyson Swetnam)
@@ -204,3 +204,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
 .. |Containers in Distributed Computing| raw:: html
 
     <a href="https://docs.google.com/presentation/d/1qotXod2o_XEW2g7NN4eAlThlBjtdftv_efYJmuOHrVs/edit?usp=sharing" target="blank">Containers in Distributed Computing</a>
+
+.. |Container technology| raw:: html
+
+    <a href="https://arizona.box.com/s/iy0gop36ppi8ui9349dgbt8eug5b578y" target="blank">Container technology</a>
