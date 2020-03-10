@@ -33,7 +33,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * - 
       - 12:15-1:00
       - General overview of container technology landscape (Nirav Merchant)
-      - `Container technology <https://docs.google.com/presentation/d/1shHJKmmLO8VfBfhhhm7cjFhD-5F1b-2fHWtRtaW-pIA/edit#slide=id.g34b8be3335_0_86>`_
+      - `Container technology <https://arizona.box.com/s/iy0gop36ppi8ui9349dgbt8eug5b578y>`_
     * - 
       - 1:00-2:10
       - What is a container? (Tyson Swetnam)
