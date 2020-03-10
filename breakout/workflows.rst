@@ -12,7 +12,7 @@ Snakemake is designed specifically for computationally intensive and/or complex 
 
 .. Note:: 
 
-Right-Click the below button and open in a new tab for quick launch of Snakemake VICE app.
+Right-Click the button below and login to CyVerse Discovery Environemnt for a quick launch of Snakemake VICE app.
 	
 	|smake-vice|_
 
@@ -34,4 +34,4 @@ Click `here <https://nbis-reproducible-research.readthedocs.io/en/latest/snakema
   :width: 700
 
 .. |smake-vice| image:: https://de.cyverse.org/Powered-By-CyVerse-blue.svg
-.. _smake-vice: https://de.cyverse.org/de/?type=quick-launch&quick-launch-id=21524cbf-6d26-4a62-a8e6-bef731938255&app-id=ed43b8be-daf5-11e9-9393-008cfa5ae621
+.. _smake-vice: https://de.cyverse.org/de/?type=quick-launch&quick-launch-id=7a62a49e-7fee-4822-b128-a1b2485e2941&app-id=9e989f50-6109-11ea-ab9d-008cfa5ae621
