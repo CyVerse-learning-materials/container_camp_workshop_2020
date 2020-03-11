@@ -82,14 +82,14 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - 10:10-10:30
       - Break
       - time to talk and network
+    * -
+      - 10:30-11:15
+      - Continuous Integration with GitHub (TBA)
+      - Building your images with CI/CD for automation and scaling      
     * - 
-      - 10:30-11:15 
+      - 11:15-12:00 
       - Bringing your container image to CyVerse (Amanda Cooksey)
       - Tool integration in the DE (interactive, executable, & OpenScienceGrid)
-    * -
-      - 11:15-12:00
-      - Continuous Integration with GitHub (TBA)
-      - Building your images with CI/CD for automation and scaling
     * -
       - 12:00-1:00
       - Lunch Break (on your own)
