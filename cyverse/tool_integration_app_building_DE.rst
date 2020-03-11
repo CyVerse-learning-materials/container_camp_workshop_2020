@@ -110,9 +110,6 @@ Additional resources
 
 ----
 .. Comment: Place URLS Below This Line
-   # Use this example to ensure that links open in new tabs, avoiding
-   # forcing users to leave the document, and making it easy to update links
-   # In a single place in this document
 
    .. |Substitution| raw:: html # Place this anywhere in the text you want a hyperlink
 
