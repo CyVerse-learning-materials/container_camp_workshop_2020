@@ -26,7 +26,10 @@ SETUP
 .. code::
 
   docker run -it --entrypoint bash cyversevice/jupyterlab-snakemake
-  
+
+- Click `here <https://nbis-reproducible-research.readthedocs.io/en/devel/snakemake/>`_ for a Snakemake tutorial by `NBISweden <https://nbis-reproducible-research.readthedocs.io/en/devel/>`_.
+
+
 - Clone RNAseq Snakemake tutorial repository
 
 .. code::  
@@ -58,9 +61,8 @@ From where and how to get data for your analysis, to where and how to treat the 
 **Other Workflow Managers**
 ---------------------------
 
-- `CCTools <https://cctools.readthedocs.io/en/latest/>`_ offers `Makeflow <https://cctools.readthedocs.io/en/latest/makeflow/>`_ a workflow management system similar to Snakemake and also `WorkQueue <https://cctools.readthedocs.io/en/latest/work_queue/>`_ for scalin-up through Distributed Computing. Read more `here <http://ccl.cse.nd.edu/software/tutorials/acic19/>`_.
+- `CCTools <https://cctools.readthedocs.io/en/latest/>`_ offers `Makeflow <https://cctools.readthedocs.io/en/latest/makeflow/>`_ a workflow management system similar to Snakemake and also `WorkQueue <https://cctools.readthedocs.io/en/latest/work_queue/>`_ for scaling-up through Distributed Computing for customized and efficient utilization of resources. Read more `here <http://ccl.cse.nd.edu/software/tutorials/acic19/>`_.
 
-- Click `here <https://nbis-reproducible-research.readthedocs.io/en/devel/snakemake/>`_ for a Snakemake tutorial by `NBISweden <https://nbis-reproducible-research.readthedocs.io/en/devel/>`_.
 
 .. |snakemake| image:: ../img/snakemake.png
   :width: 700
