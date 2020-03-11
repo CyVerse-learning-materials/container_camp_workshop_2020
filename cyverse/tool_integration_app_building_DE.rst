@@ -4,11 +4,11 @@
 
 |Home_Icon2|_ `Learning Center Home <http://learning.cyverse.org/>`_
 
-**Tool integration in the DE**
-=====================================
+**Tool integration in the Discovery Environment (DE)**
+======================================================
 
 **Why use the DE?**
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 - Use hundreds of bioinformatics Apps without the command line (or with, if you prefer)
 - Batch and interactive modes
@@ -19,7 +19,8 @@
 
 
 **Types of apps**
-^^^^^^^^^^^^^^^^^^
+-----------------
+
 **CyVerse tool:** Software program that is integrated into the back end of the DE for use in DE apps
 
 **CyVerse app:** graphic interface of a tool made available for use in the DE
