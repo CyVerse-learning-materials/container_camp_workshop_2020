@@ -10,6 +10,7 @@ In this breakout session you'll learn about `snakemake <https://snakemake.readth
 
 Snakemake is designed specifically for computationally intensive and/or complex data analysis pipelines. The name is a reference to the programming language Python, which forms the basis for the Snakemake syntax. 
 
+See `Snakemake Slides <https://slides.com/johanneskoester/snakemake-tutorial#/>`_
 
 SETUP
 -----
@@ -26,7 +27,7 @@ SETUP
 
   docker run -it --entrypoint bash cyversevice/jupyterlab-snakemake
   
-- Clone tutorial repository
+- Clone RNAseq Snakemake tutorial repository
 
 .. code::  
   
@@ -38,11 +39,28 @@ SETUP
   
   ls
   
+- Dry-Run RNAseq Snakefile   
+.. code::  
+  
   snakemake -n
 
+- Run RNAseq Snakefile   
+.. code::  
+  
+  snakemake
 
 
-- Click `here <https://nbis-reproducible-research.readthedocs.io/en/latest/snakemake/>`_ for a Snakemake tutorial by `NBISweden <https://nbis-reproducible-research.readthedocs.io/en/latest/snakemake/>`_.
+**Why Snakemake**
+-----------------
+
+From where and how to get data for your analysis, to where and how to treat the outputs, workflow managers can help you achieve better scientific reproducibility and scalability. Once you learn to properly use Snakemake (or similar workflow management tools), keeping track of and sharing your work becomes second nature, not only saving you time whenever you need to re-run all or part of an analysis but helping you reduce errors that naturally get introduced whenever a non-automated activity is done (i.e., as part of the human condition of doing computational science and not being a bot!).
+
+**Other Workflow Managers**
+---------------------------
+
+- `CCTools <https://cctools.readthedocs.io/en/latest/>`_ offers `Makeflow <https://cctools.readthedocs.io/en/latest/makeflow/>`_ a workflow management system similar to Snakemake and also `WorkQueue <https://cctools.readthedocs.io/en/latest/work_queue/>`_ for scalin-up through Distributed Computing. Read more `here <http://ccl.cse.nd.edu/software/tutorials/acic19/>`_.
+
+- Click `here <https://nbis-reproducible-research.readthedocs.io/en/devel/snakemake/>`_ for a Snakemake tutorial by `NBISweden <https://nbis-reproducible-research.readthedocs.io/en/devel/>`_.
 
 .. |snakemake| image:: ../img/snakemake.png
   :width: 700
