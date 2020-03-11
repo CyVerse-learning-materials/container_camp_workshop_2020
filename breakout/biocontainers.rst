@@ -179,9 +179,8 @@ Get Data to Use with Your Container
 
 .. code-block:: bash
 
-   $ iget /iplant/home/shared/iplantcollaborative/example_data/porechop/SRR6059710.fastq
-   $ mv SRR6059710.fastq Desktop
    $ cd Desktop
+   $ iget /iplant/home/shared/iplantcollaborative/example_data/porechop/SRR6059710.fastq
 
 Use 'docker pull' to Get the Image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
