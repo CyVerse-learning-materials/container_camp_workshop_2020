@@ -10,25 +10,32 @@ In this breakout session you'll learn about `snakemake <https://snakemake.readth
 
 Snakemake is designed specifically for computationally intensive and/or complex data analysis pipelines. The name is a reference to the programming language Python, which forms the basis for the Snakemake syntax. 
 
+
+SETUP
+-----
+
 .. Note:: 
 
-Right-Click the button below and login to CyVerse Discovery Environemnt for a quick launch of Snakemake VICE app.
+- Right-Click the button below and login to CyVerse Discovery Environemnt for a quick launch of Snakemake VICE app.
 	
 	|smake-vice|_
 
-Click `here <https://nbis-reproducible-research.readthedocs.io/en/latest/snakemake/>`_ for a tutorial.
+- on Cloud with docker installed, run the following:
 
+.. code:: 
+docker run -it --entrypoint bash cyversevice/jupyterlab-snakemake
 
-.. Note:: 
+git clone https://github.com/NBISweden/workshop-reproducible-research.git
 
+cd workshop-reproducible-research/docker/
 
+git checkout devel
 
+ls
 
+snakemake -n
 
-.. Note:: 
-
-	You don't need to be an expert at Python to use Snakemake, but it can sometimes be very useful.
-
+- Click `here <https://nbis-reproducible-research.readthedocs.io/en/latest/snakemake/>`_ for a tutorial by NBISweden.
 
 .. |snakemake| image:: ../img/snakemake.png
   :width: 700
