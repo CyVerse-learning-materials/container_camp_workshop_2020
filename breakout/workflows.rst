@@ -16,26 +16,33 @@ SETUP
 
 .. Note:: 
 
-- Right-Click the button below and login to CyVerse Discovery Environemnt for a quick launch of Snakemake VICE app.
+- Right-Click the button below and login to CyVerse Discovery Environment for a quick launch of Snakemake VICE Jupyter lab app.
 	
 	|smake-vice|_
 
-- on Cloud with docker installed, run the following:
+- To run Snakemake inside a docker container, run the following on your instance with docker installed:
 
-.. code:: 
-docker run -it --entrypoint bash cyversevice/jupyterlab-snakemake
+.. code::
 
-git clone https://github.com/NBISweden/workshop-reproducible-research.git
+  docker run -it --entrypoint bash cyversevice/jupyterlab-snakemake
+  
+- Clone tutorial repository
 
-cd workshop-reproducible-research/docker/
+.. code::  
+  
+  git clone https://github.com/NBISweden/workshop-reproducible-research.git
+  
+  cd workshop-reproducible-research/docker/
+  
+  git checkout devel
+  
+  ls
+  
+  snakemake -n
 
-git checkout devel
 
-ls
 
-snakemake -n
-
-- Click `here <https://nbis-reproducible-research.readthedocs.io/en/latest/snakemake/>`_ for a tutorial by NBISweden.
+- Click `here <https://nbis-reproducible-research.readthedocs.io/en/latest/snakemake/>`_ for a Snakemake tutorial by `NBISweden <https://nbis-reproducible-research.readthedocs.io/en/latest/snakemake/>`_.
 
 .. |snakemake| image:: ../img/snakemake.png
   :width: 700
