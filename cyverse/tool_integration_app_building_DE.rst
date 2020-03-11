@@ -15,14 +15,15 @@
 - Seamlessly integrated with data and high performance computing – not dependent on your hardware
 - Create and publish Apps and workflows so anyone can use them
 - Analysis history and provenance – “avoid forensic bioinformatics”
-- Securetly and easily manage, share, and publish data
+- Securely and easily manage, share, and publish data
 
-
-
-`Apps Window <https://wiki.cyverse.org/wiki/display/DEmanual/Using+the+Apps+Window+and+Submitting+an+Analysis>`_
 
 **Types of apps**
 ^^^^^^^^^^^^^^^^^^
+**CyVerse tool:** Software program that is integrated into the back end of the DE for use in DE apps
+
+**CyVerse app:** graphic interface of a tool made available for use in the DE
+ 
  - **Executable**: user starts an analysis and when the analysis finishes they can find the output files in their 'Analyses' folder
 
     - **DE**: run locally on our cluster
@@ -30,9 +31,6 @@
     - **OSG**: run on the Open Science Grid
 
  - **Interactive**: also called Visual and Interactive Computing Environment (VICE). Allows users to open Integrated Development Environments (IDEs) including RStudio, Project Jupyter and RShiny and work interactively within them.
-- **CyVerse tool:** Software program that is integrated into the back end of the DE for use in DE apps
-- 
-- **CyVerse app:** graphic interface of a tool made available for use in the DE
 
 The (containerized) tool must be integrated into the Cyverse DE first. Then an app (interface) can be built for that tool.
 
