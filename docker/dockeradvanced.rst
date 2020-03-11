@@ -792,6 +792,7 @@ We will also create ``data/`` and ``notebooks/`` folders to stage our future dat
 4. Edit the contents of your ``docker-compose.yml``
 
 .. code-block:: bash
+
 	version: "3"
 	services:
 	  scipy-notebook:
@@ -815,8 +816,17 @@ We will also create ``data/`` and ``notebooks/`` folders to stage our future dat
 
 	Handling containers with Docker Compose is fairly simple
 	
-	``docker-compose up `` mounts the directory and starts the container
-	``docker-compose down `` destroys the container
+	.. code-block:: bash
+	
+		docker-compose up 
+	
+	mounts the directory and starts the container
+	
+	.. code-block:: bash
+	
+		docker-compose down
+	
+	destroys the container
 	
 A brief explanation of ``docker-compose.yml`` is as below:
 
@@ -834,13 +844,7 @@ A brief explanation of ``docker-compose.yml`` is as below:
 And that’s it! You should be able to see the application running on ``http://localhost:8888`` or ``<ipaddress>:8888``
 
 |docker-compose|
-
-
-.. code-block:: bash
-
-	$ cat output.txt 
-	Prediction of DecisionTreeClassifier:['apple' 'orange' 'apple']
-
+	
 .. |docker_image| image:: ../img/docker_image.png
   :width: 500
   
