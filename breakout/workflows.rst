@@ -10,7 +10,7 @@ In this breakout session you'll learn about `snakemake <https://snakemake.readth
 
 Snakemake is designed specifically for computationally intensive and/or complex data analysis pipelines. The name is a reference to the programming language Python, which forms the basis for the Snakemake syntax. 
 
-See Snakemake Slides ` here <https://slides.com/johanneskoester/snakemake-tutorial#/>`_ and `pdf <https://github.com/CyVerse-learning-materials/container_camp_workshop_2020/blob/master/breakout/snakemake.pdf>`_.
+See Snakemake Slides `here <https://slides.com/johanneskoester/snakemake-tutorial#/>`_ and `pdf <https://github.com/CyVerse-learning-materials/container_camp_workshop_2020/blob/master/breakout/snakemake.pdf>`_.
 
 SETUP
 -----
