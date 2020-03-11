@@ -44,16 +44,12 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - time to talk and network
     * - 
       - 2:30-3:00
-      - Searching Image Registries (Amanda Cooksey)
+      - Searching Image Registries (Tyson Swetnam)
       - Finding the right image, downloading (pulling)
     * - 
-      - 3:00-4:00
+      - 3:00-5:00
       - `Running a container <../docker/dockerintro.html>`_ (Tyson Swetnam)   
       - Start a container, add a volume, opening ports, monitor, clean up 
-    * - 
-      - 4:00-5:00
-      - `Modifying a image recipe <../docker/dockeradvanced.html>`_: (Tyson Swetnam) 
-      - Customizing images to fit your specific use
     * -
       - 5:00-5:30
       - Debriefing with instructors
@@ -79,19 +75,19 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - |Containers in Distributed Computing| (Mats Rynge)
       - Containers used at scale
     * - 
-      - 9:45-10:10 
-      - Bringing your container image to CyVerse (Amanda Cooksey)
-      - Tool integration in the DE (interactive, executable, & OpenScienceGrid)
+      - 9:45-10:10
+      - `Make your own container <../docker/dockeradvanced.html>`_: (Tyson Swetnam) 
+      - Customizing base images, setting up Docker-Compose
     * - 
       - 10:10-10:30
       - Break
       - time to talk and network
+    * - 
+      - 10:30-11:15 
+      - Bringing your container image to CyVerse (Amanda Cooksey)
+      - Tool integration in the DE (interactive, executable, & OpenScienceGrid)
     * -
-      - 10:30-11:00
-      - Project pitches (2 min) and BYOD/BYOA
-      - 
-    * -
-      - 11:00-12:00
+      - 11:15-12:00
       - Continuous Integration with GitHub (TBA)
       - Building your images with CI/CD for automation and scaling
     * -
@@ -134,8 +130,12 @@ Below are the schedule and classroom materials for Container Camp at The Univers
       - 12:00-1:00
       - Lunch Break (on your own)
       -
+    * -
+      - 1:00-1:15
+      - Project pitches (2 min) and BYOD/BYOA
+      - 
     * - 
-      - 1:00-3:10
+      - 1:15-3:10
       - Project Time
       - Bring Your Own Data (BYOD) & Bring your Own Analyses (BYOA)
     * - 
