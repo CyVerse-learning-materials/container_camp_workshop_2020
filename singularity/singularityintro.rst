@@ -401,78 +401,14 @@ For running a container on HPC, you need to have Singularity module available on
 .. code-block :: bash
 
 	$ module avail singularity
-	---------------------------------------------------------- /cm/shared/uamodulefiles -----------------------------------------------------------
-	singularity/2/2.6.1  singularity/3/3.0.2  singularity/3/3.1  
+	------------------------------------------ /cm/shared/uamodulefiles -------------------------------------------
+	singularity/2/2.6.1  singularity/3/3.2  singularity/3/3.2.1  singularity/3/3.4.2  singularity/3/3.5.3  
 
 You can see that there are three different versions of Singularity are available. For this workshop, we will use ``singularity/3/3.1``. Let's load it now
 
 .. code-block:: bash
 
 	$ module load singularity/3/3.1
-
-4.3.1 Running fastqc
-
-Let's run fastqc on UA HPC 
-
-.. code-block:: bash
-
-	$ mkdir fastqc && cd fastqc
-
-	$ wget https://de.cyverse.org/dl/d/A48695A7-69A7-46C1-B6BB-E036F4922EB2/test.R1.fq.gz
-
-Write a pbs script (``fastqc_job.sh``) for job submission
-
-.. code-block:: bash
-
-	#!/bin/bash
-	# Your job will use 1 node, 1 core, and 1gb of memory total.
-	#PBS -q standard
-	#PBS -l select=1:ncpus=2:mem=1gb:pcmem=6gb
-
-	### Specify a name for the job
-	#PBS -N fastqc
-
-	### Specify the group name
-	#PBS -W group_list=nirav
-
-	### Used if job requires partial node only
-	#PBS -l place=pack:shared
-
-	### CPUtime required in hhh:mm:ss.
-	### Leading 0's can be omitted e.g 48:0:0 sets 48 hours
-	#PBS -l cput=0:15:0
-
-	### Walltime is created by cputime divided by total cores.
-	### This field can be overwritten by a longer time
-	#PBS -l walltime=0:15:0
-
-	date
-	module load singularity/3/3.1
-	cd /extra/upendradevisetty/fastqc
-	singularity pull docker://quay.io/biocontainers/fastqc:0.11.8--1
-	singularity exec fastqc_0.11.8--1.sif fastqc test.R1.fq.gz
-	date
-
-Submit the job now to UAHPC
-
-.. code-block:: bash
-
-	$ qsub fastqc_job.sh
-
-After the job is submitted, expect to get these outputs
-
-.. code-block:: bash
-
-	-rwxr-xr-x 1 upendradevisetty nirav 260M Mar  8 09:29 fastqc_0.11.8--1.sif
-	-rw------- 1 upendradevisetty nirav 3.4K Mar  8 09:30 fastqc.e1875372
-	-rw-r--r-- 1 upendradevisetty nirav 434K Mar  8 09:30 test.R1_fastqc.zip
-	-rw-r--r-- 1 upendradevisetty nirav 625K Mar  8 09:30 test.R1_fastqc.html
-	-rw------- 1 upendradevisetty nirav  241 Mar  8 09:30 fastqc.o1875372
-
-# Exercsise -2
-##############
-
-- For those of you, who have access to HPC, try to run the container from ``simple-script`` Dockerhub on HPC.
 
 .. |singularity| image:: ../img/singularity.png
   :height: 200
