@@ -125,7 +125,7 @@ Below are the schedule and classroom materials for Container Camp at The Univers
     * -
       - 10:30-12:00
       - Singularity and High Performance Computing (John Fonner)
-      - `Singularity for MPI and GPU workloads <../singularity/singularityhpc.rst>`_
+      - `Singularity for MPI and GPU workloads <../singularity/singularityhpc.html>`_
     * -
       - 12:00-1:00
       - Lunch Break (on your own)
