@@ -51,7 +51,7 @@ A few things to consider when using HPC systems:
 These constraints make HPC systems perfectly suitable for execution environments, but currently a limiting choice for a development environment.  We usually recommend your local laptop or a VM as a development environment where you can iterate on your code rapidly and test container building and execution.
 
 Singularity and MPI
-========================
+===================
 
 Singularity supports MPI fairly well.  Since (by default) the network is the same insde and outside the container, the communication between containers usually just works.  The more complicated bit is making sure that the container has the right set of MPI libraries.  MPI is an open specification, but there are several implementations (OpenMPI, MVAPICH2, and Intel MPI to name three) with some non-overlapping feature sets.  If the host and container are running different MPI implementations, or even different versions of the same implementation, hilarity may ensue.
 
@@ -63,7 +63,7 @@ The general rule is that you want the version of MPI inside the container to be 
 
 
 Base Docker images
-------------------
+~~~~~~~~~~~~~~~~~~
 
 Depending on the system you will use, you may have to build your own MPI enabled Singularity images (to get the versions to match).
 
@@ -112,7 +112,7 @@ For a single node, you can also use the **container MPI** to run in parallel (us
 
 
 Example Containerized MPI App
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In your Docker development environment, make a new directory in which to build up a new image and download (or copy and paste) two files in that directory:
 
@@ -133,7 +133,7 @@ Don't forget to change USERNAME to your DockerHub username.
 Once you have successfully built an image, push it up to DockerHub with the ``docker push`` command so that we can pull it back down on Stampede2.
 
 Running an MPI Container on Stampede2
--------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To test, we can grab an interactive session that has two nodes.  That way we can see if we can make the two nodes work together. On TACC systems, the "idev" command will start an interactive session on a compute node:
 
@@ -165,7 +165,7 @@ When you are don with your interactive session, don't forget to ``exit`` to end 
 
 
 Singularity and GPU Computing
-=================================
+=============================
 
 GPU support in Singularity is very good.
 
