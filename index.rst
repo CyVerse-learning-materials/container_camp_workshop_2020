@@ -55,6 +55,7 @@ Expected outcomes:
 
    singularity/singularityintro
    singularity/singularityadvanced
+   singularity/singularityhpc
 
 .. toctree::
    :maxdepth: 1
