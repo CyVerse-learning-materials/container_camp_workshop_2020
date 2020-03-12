@@ -51,7 +51,7 @@ A few things to consider when using HPC systems:
 These constraints make HPC systems perfectly suitable for execution environments, but currently a limiting choice for a development environment.  We usually recommend your local laptop or a VM as a development environment where you can iterate on your code rapidly and test container building and execution.
 
 Singularity and MPI
-===================
+~~~~~~~~~~~~~~~~~~~
 
 Singularity supports MPI fairly well.  Since (by default) the network is the same insde and outside the container, the communication between containers usually just works.  The more complicated bit is making sure that the container has the right set of MPI libraries.  MPI is an open specification, but there are several implementations (OpenMPI, MVAPICH2, and Intel MPI to name three) with some non-overlapping feature sets.  If the host and container are running different MPI implementations, or even different versions of the same implementation, hilarity may ensue.
 
@@ -165,7 +165,7 @@ When you are don with your interactive session, don't forget to ``exit`` to end 
 
 
 Singularity and GPU Computing
-=============================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 GPU support in Singularity is very good.
 
